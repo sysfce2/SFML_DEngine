@@ -25,11 +25,12 @@ namespace drft::system
 		System(System&&) = default;
 		System& operator=(System&&) = default;
 
+		virtual void init() = 0;
 		virtual void update(const float dt);
 		virtual void render(sf::RenderTarget& target);
 
 	protected:
-		friend class SystemQueue; // SystemQueue needs phase
+		friend class SystemScheduler; // SystemScheduler needs phase
 		entt::registry& registry;
 		Phase phase = Phase::OnUpdate;
 	};

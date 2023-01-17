@@ -4,6 +4,10 @@
 #include "../Utility/SpriteBatch.h"
 
 
+void drft::system::Renderer::init()
+{
+}
+
 void drft::system::Renderer::render(sf::RenderTarget& target)
 {
 	std::cout << "Rendering" << std::endl;

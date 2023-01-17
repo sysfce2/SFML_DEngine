@@ -6,10 +6,12 @@
 namespace drft::system
 {
 
-	class SystemQueue
+	class SystemScheduler
 	{
 	public:
-		SystemQueue(entt::registry& registry) : _registry(registry) {}
+		SystemScheduler(entt::registry& registry) : _registry(registry) {}
+
+		void initAll();
 		void add(std::unique_ptr<System> sys);
 		void update(const float dt);
 		void render(sf::RenderTarget& target);

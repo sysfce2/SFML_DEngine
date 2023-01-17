@@ -5,7 +5,7 @@ namespace drft
 {
 	namespace system
 	{
-		class SystemQueue;
+		class SystemScheduler;
 	}
 
 	class GameState : public State
@@ -24,7 +24,7 @@ namespace drft
 	private:
 		bool _hasStarted = false;
 		entt::registry _registry;
-		std::unique_ptr<system::SystemQueue> _systems;
+		std::unique_ptr<system::SystemScheduler> _systems;
 	};
 
 } // namespace drft

@@ -95,7 +95,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)DrifterEngine\deps\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>..\pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,7 +115,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)DrifterEngine\deps\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>..\pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,7 +135,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)DrifterEngine\deps\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>..\pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,7 +155,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)DrifterEngine\deps\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>..\pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -208,7 +208,7 @@
     </ClCompile>
     <ClCompile Include="src\Systems\Renderer.cpp" />
     <ClCompile Include="src\Systems\System.cpp" />
-    <ClCompile Include="src\Systems\SystemQueue.cpp" />
+    <ClCompile Include="src\Systems\SystemScheduler.cpp" />
     <ClCompile Include="src\Systems\TestSystem.cpp" />
     <ClCompile Include="src\Utility\Grid.cpp" />
     <ClCompile Include="src\Utility\SpriteBatch.cpp" />
@@ -223,7 +223,7 @@
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Systems\Renderer.h" />
     <ClInclude Include="src\Systems\System.h" />
-    <ClInclude Include="src\Systems\SystemQueue.h" />
+    <ClInclude Include="src\Systems\SystemScheduler.h" />
     <ClInclude Include="src\Systems\TestSystem.h" />
     <ClInclude Include="src\Utility\Grid.h" />
     <ClInclude Include="src\Utility\ResourceHolder.h" />

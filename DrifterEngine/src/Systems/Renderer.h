@@ -15,6 +15,7 @@ namespace drft::system
             _spriteBatch.setTexture(textures.get("Sprites"));
         }
 
+        virtual void init() override;
         virtual void render(sf::RenderTarget& target) override;
 
     private:

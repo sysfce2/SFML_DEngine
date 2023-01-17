@@ -45,7 +45,7 @@
     <ClCompile Include="src\Systems\System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\SystemQueue.cpp">
+    <ClCompile Include="src\Systems\SystemScheduler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Systems\TestSystem.cpp">
@@ -89,7 +89,7 @@
     <ClInclude Include="src\Systems\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\SystemQueue.h">
+    <ClInclude Include="src\Systems\SystemScheduler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\TestSystem.h">
