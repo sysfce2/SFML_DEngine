@@ -5,7 +5,7 @@ namespace drft::util
 	class SpriteIndexer
 	{
 	public:
-		static sf::IntRect get(unsigned int index);
+		static sf::IntRect get(unsigned int index, sf::Texture& texture);
 	};
 }
 

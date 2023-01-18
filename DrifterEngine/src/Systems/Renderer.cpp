@@ -10,7 +10,6 @@ void drft::system::Renderer::init()
 
 void drft::system::Renderer::render(sf::RenderTarget& target)
 {
-	std::cout << "Rendering" << std::endl;
 	auto view = registry.view< component::position, component::render >();
 
 	for (auto [entity, pos, ren] : view.each())

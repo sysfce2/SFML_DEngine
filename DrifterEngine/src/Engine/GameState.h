@@ -17,6 +17,7 @@ namespace drft
 		virtual void endState() override;
 
 	private:
+		// Used to setup observers
 		virtual void init() override;
 		// Add all systems to the system queue
 		void importSystems();

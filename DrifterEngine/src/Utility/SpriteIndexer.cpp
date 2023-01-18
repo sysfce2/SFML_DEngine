@@ -3,13 +3,21 @@
 
 using namespace drft::util;
 
-sf::IntRect SpriteIndexer::get(unsigned int index)
+sf::IntRect SpriteIndexer::get(unsigned int index, sf::Texture& texture)
 {
+    sf::Vector2u spriteDimensions = { 16, 16 };
+
+    int width_px = texture.getSize().x;
+    int height_px = texture.getSize().y;
+    int width_sp = width_px / spriteDimensions.x;
+    int height_sp = height_px / spriteDimensions.y;
+
     unsigned int row = 0;
     unsigned int col = 0;
 
-    row = index / 10; // 10 = width of texture in # of sprites
-    col = index % 10; 
+    row = index / width_sp;
+    col = index % width_sp;
 
-    return sf::IntRect(col*16,row*16,16,16); // 16 px is the dimension of all sprites
+    return sf::IntRect(col*spriteDimensions.x, row*spriteDimensions.y,
+        spriteDimensions.x, spriteDimensions.y);
 }

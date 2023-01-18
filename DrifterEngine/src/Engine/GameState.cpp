@@ -3,6 +3,7 @@
 #include "../Systems/SystemScheduler.h"
 #include "../Systems/Renderer.h"
 #include "../Components/Components.h"
+#include "../Utility/TestEntities.h"
 
 
 drft::GameState::GameState(State::Context context) : State(context)
@@ -39,6 +40,8 @@ void drft::GameState::init()
 	importSystems();
 	std::cout << "Initializing Systems..." << std::endl;
 	_systems->initAll();
+
+	util::buildTestEntities(_registry, 10000, { 0,0,1600,1600 });
 }
 
 void drft::GameState::importSystems()
