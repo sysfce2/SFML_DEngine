@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include "../Systems/SystemScheduler.h"
 #include "../Systems/Renderer.h"
+#include "../Components/Components.h"
 
 
 drft::GameState::GameState(State::Context context) : State(context)
@@ -36,7 +37,6 @@ void drft::GameState::init()
 
 	std::cout << "Importing Systems..." << std::endl;
 	importSystems();
-
 	std::cout << "Initializing Systems..." << std::endl;
 	_systems->initAll();
 }

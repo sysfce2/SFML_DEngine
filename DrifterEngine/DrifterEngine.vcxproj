@@ -209,10 +209,9 @@
     <ClCompile Include="src\Systems\Renderer.cpp" />
     <ClCompile Include="src\Systems\System.cpp" />
     <ClCompile Include="src\Systems\SystemScheduler.cpp" />
-    <ClCompile Include="src\Systems\TestSystem.cpp" />
-    <ClCompile Include="src\Utility\Grid.cpp" />
     <ClCompile Include="src\Utility\SpriteBatch.cpp" />
     <ClCompile Include="src\Utility\SpriteIndexer.cpp" />
+    <ClCompile Include="src\Utility\TestEntities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\EnTT\entt.h" />
@@ -224,11 +223,10 @@
     <ClInclude Include="src\Systems\Renderer.h" />
     <ClInclude Include="src\Systems\System.h" />
     <ClInclude Include="src\Systems\SystemScheduler.h" />
-    <ClInclude Include="src\Systems\TestSystem.h" />
-    <ClInclude Include="src\Utility\Grid.h" />
     <ClInclude Include="src\Utility\ResourceHolder.h" />
     <ClInclude Include="src\Utility\SpriteBatch.h" />
     <ClInclude Include="src\Utility\SpriteIndexer.h" />
+    <ClInclude Include="src\Utility\TestEntities.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Utility\ResourceHolder.inl" />
