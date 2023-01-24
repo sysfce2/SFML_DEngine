@@ -8,6 +8,11 @@ namespace drft
 		class SystemScheduler;
 	}
 
+	namespace spatial
+	{
+		class WorldGrid;
+	}
+
 	class GameState : public State
 	{
 	public:
@@ -26,6 +31,7 @@ namespace drft
 		bool _hasStarted = false;
 		entt::registry _registry;
 		std::unique_ptr<system::SystemScheduler> _systems;
+		std::unique_ptr<spatial::WorldGrid> _world;
 	};
 
 } // namespace drft

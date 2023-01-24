@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "SpriteIndexer.h"
 
 using namespace drft::util;

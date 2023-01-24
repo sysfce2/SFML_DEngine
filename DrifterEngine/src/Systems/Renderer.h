@@ -1,7 +1,7 @@
 #pragma once
 #include "System.h"
-#include "../Utility/ResourceHolder.h"
-#include "../Utility/SpriteBatch.h"
+#include "Utility/ResourceHolder.h"
+#include "Utility/SpriteBatch.h"
 
 namespace drft::system
 {

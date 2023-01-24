@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "SystemScheduler.h"
 
 void drft::system::SystemScheduler::initAll()

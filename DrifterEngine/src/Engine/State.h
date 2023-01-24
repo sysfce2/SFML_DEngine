@@ -1,5 +1,5 @@
 #pragma once
-#include "../Utility/ResourceHolder.h"
+#include "Utility/ResourceHolder.h"
 
 namespace drft
 {

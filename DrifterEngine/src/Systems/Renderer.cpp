@@ -1,7 +1,7 @@
-#include "../pch.h"
+#include "pch.h"
 #include "Renderer.h"
-#include "../Components/Components.h"
-#include "../Utility/SpriteBatch.h"
+#include "Components/Components.h"
+#include "Utility/SpriteBatch.h"
 
 
 void drft::system::Renderer::init()

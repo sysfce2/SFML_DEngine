@@ -1,6 +1,6 @@
-#include "../pch.h"
+#include "pch.h"
 #include "TestEntities.h"
-#include "../Components/Components.h"
+#include "Components/Components.h"
 
 void drft::util::buildTestEntities(entt::registry& registry, int numberOfEntities, sf::IntRect inArea)
 {

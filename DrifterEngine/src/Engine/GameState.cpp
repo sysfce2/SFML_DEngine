@@ -1,9 +1,10 @@
-#include "../pch.h"
+#include "pch.h"
 #include "GameState.h"
-#include "../Systems/SystemScheduler.h"
-#include "../Systems/Renderer.h"
-#include "../Components/Components.h"
-#include "../Utility/TestEntities.h"
+#include "Systems/SystemScheduler.h"
+#include "Systems/Renderer.h"
+#include "Components/Components.h"
+#include "Utility/TestEntities.h"
+#include "Spatial/WorldGrid.h"
 
 
 drft::GameState::GameState(State::Context context) : State(context)
@@ -26,6 +27,8 @@ void drft::GameState::render(sf::RenderTarget& target)
 	_systems->render(target);
 }
 
+
+
 void drft::GameState::endState()
 {
 	std::cout << "Leaving GameState" << std::endl;
@@ -35,6 +38,8 @@ void drft::GameState::init()
 {
 	std::cout << "Initializing GameState..." << std::endl;
 	_systems = std::make_unique<system::SystemScheduler>(_registry);
+	_world = std::make_unique<spatial::WorldGrid>(64, 64);
+	_registry.ctx().emplace<spatial::WorldGrid&>(_world);
 
 	std::cout << "Importing Systems..." << std::endl;
 	importSystems();
