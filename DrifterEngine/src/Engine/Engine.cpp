@@ -39,7 +39,8 @@ void drft::Engine::processEvents()
 	sf::Event event;
 	while (_window.pollEvent(event))
 	{
-		if (_states.top()->processEvent(event)) continue;
+
+		if (!_states.empty() && _states.top()->processEvent(event)) continue;
 
 		switch (event.type)
 		{
@@ -52,8 +53,9 @@ void drft::Engine::processEvents()
 		case sf::Event::KeyReleased:
 
 			break;
+
 		case sf::Event::Closed:
-			_window.close();
+			this->shutDown();
 			break;
 		}
 	}

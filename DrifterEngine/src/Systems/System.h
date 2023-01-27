@@ -4,7 +4,8 @@ namespace drft::system
 {
 	enum class Phase
 	{
-		OnStart = -1,
+		OnStartUp = -1,
+		OnProcessInput,
 		OnPreUpdate,
 		OnUpdate,
 		OnPostUpdate,

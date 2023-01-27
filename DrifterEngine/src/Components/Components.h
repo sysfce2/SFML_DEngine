@@ -3,25 +3,34 @@
 
 namespace component
 {
-	struct position
+	// Position in world space.
+	struct Position
 	{
 		float x = 0;
 		float y = 0;
 		int depth = 0;
 	};
 
-	struct render
+	// Sprite and color.
+	struct Render
 	{
 		unsigned int sprite = 0;
 		sf::Color color = sf::Color::Magenta;
 	};
 
-	struct velocity
+	// Change of position in world space.
+	struct Motion
 	{
 		float dx = 0;
 		float dy = 0;
 	};
 
-	struct onScreen {};
+	// 
+	struct PlayerInput
+	{
+		int desiredAction = 0;
+	};
+
+	struct OnScreen {};
 
 } // namespace component

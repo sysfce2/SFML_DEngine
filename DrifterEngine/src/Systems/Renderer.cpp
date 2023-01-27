@@ -10,9 +10,9 @@ void drft::system::Renderer::init()
 
 void drft::system::Renderer::render(sf::RenderTarget& target)
 {
-	auto view = registry.view< component::position, component::render >();
+	auto view = registry.view< const component::Position, const component::Render >();
 
-	for (auto [entity, pos, ren] : view.each())
+	for (auto const & [entity, pos, ren] : view.each())
 	{
 		_spriteBatch.addSprite(ren.sprite, ren.color, { pos.x, pos.y });
 	}

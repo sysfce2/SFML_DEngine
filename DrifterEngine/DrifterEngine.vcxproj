@@ -167,6 +167,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Actions\Action.cpp" />
+    <ClCompile Include="src\Systems\InputHandler.cpp" />
     <ClCompile Include="src\Spatial\Cell.cpp" />
     <ClCompile Include="src\Components\Components.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp">
@@ -215,8 +217,11 @@
     <ClCompile Include="src\Utility\TestEntities.cpp" />
     <ClCompile Include="src\Spatial\WorldGrid.cpp" />
     <ClCompile Include="src\Spatial\WorldChunk.cpp" />
+    <ClCompile Include="src\Systems\WorldGridResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Actions\Action.h" />
+    <ClInclude Include="src\Systems\InputHandler.h" />
     <ClInclude Include="src\Spatial\Cell.h" />
     <ClInclude Include="deps\EnTT\entt.h" />
     <ClInclude Include="src\Spatial\Grid.h" />
@@ -234,6 +239,7 @@
     <ClInclude Include="src\Utility\TestEntities.h" />
     <ClInclude Include="src\Spatial\WorldGrid.h" />
     <ClInclude Include="src\Spatial\WorldChunk.h" />
+    <ClInclude Include="src\Systems\WorldGridResolver.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Spatial\Grid.inl" />

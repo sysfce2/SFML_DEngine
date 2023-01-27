@@ -3,8 +3,9 @@
 #include "WorldGrid.h"
 
 
-drft::spatial::WorldGrid::WorldGrid(int chunkWidth, int chunkHeight)
-	: _chunkWidth(chunkWidth), _chunkHeight(chunkHeight) {}
+drft::spatial::WorldGrid::WorldGrid(sf::Vector2i chunkDimensions, sf::Vector2i tileDimensions)
+	:	_chunkWidth(chunkDimensions.x), _chunkHeight(chunkDimensions.y),
+		_tileWidth(tileDimensions.x), _tileHeight(tileDimensions.y) {}
 
 void drft::spatial::WorldGrid::placeEntity(const entt::entity& entity, const sf::Vector2i worldPosition, Layer layer)
 {
@@ -65,3 +66,5 @@ std::vector<entt::entity> drft::spatial::WorldGrid::entitiesAt(sf::Vector2i worl
 
 	return result;
 }
+
+

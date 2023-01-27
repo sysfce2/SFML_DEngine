@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TestEntities.h"
 #include "Components/Components.h"
+#include "Spatial/WorldGrid.h"
 
 void drft::util::buildTestEntities(entt::registry& registry, int numberOfEntities, sf::IntRect inArea)
 {
@@ -16,7 +17,10 @@ void drft::util::buildTestEntities(entt::registry& registry, int numberOfEntitie
 		char b = std::rand() % 255;
 
 		auto e = registry.create();
-		registry.emplace<component::position>(e, x, y, 0);
-		registry.emplace<component::render>(e, (unsigned int)sprite, sf::Color(r, g, b, 255));
+
+		auto tilePos = spatial::toWorldSpace({ x,y });
+
+		registry.emplace<component::Position>(e, tilePos.x, tilePos.y, 0);
+		registry.emplace<component::Render>(e, (unsigned int)sprite, sf::Color(r, g, b, 255));
 	}
 }
