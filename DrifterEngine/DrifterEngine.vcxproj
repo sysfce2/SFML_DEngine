@@ -167,7 +167,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Actions\Action.cpp" />
+    <ClCompile Include="src\Utility\DebugInfo.cpp" />
+    <ClCompile Include="src\Actions\Actions.cpp" />
+    <ClCompile Include="src\Systems\ActionHandler.cpp" />
     <ClCompile Include="src\Systems\InputHandler.cpp" />
     <ClCompile Include="src\Spatial\Cell.cpp" />
     <ClCompile Include="src\Components\Components.cpp" />
@@ -218,9 +220,13 @@
     <ClCompile Include="src\Spatial\WorldGrid.cpp" />
     <ClCompile Include="src\Spatial\WorldChunk.cpp" />
     <ClCompile Include="src\Systems\WorldGridResolver.cpp" />
+    <ClCompile Include="src\Systems\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Actions\Action.h" />
+    <ClInclude Include="src\Utility\DebugInfo.h" />
+    <ClInclude Include="src\Actions\Actions.h" />
+    <ClInclude Include="src\Systems\ActionHandler.h" />
+    <ClInclude Include="src\Actions\ActionTypes.h" />
     <ClInclude Include="src\Systems\InputHandler.h" />
     <ClInclude Include="src\Spatial\Cell.h" />
     <ClInclude Include="deps\EnTT\entt.h" />
@@ -240,6 +246,7 @@
     <ClInclude Include="src\Spatial\WorldGrid.h" />
     <ClInclude Include="src\Spatial\WorldChunk.h" />
     <ClInclude Include="src\Systems\WorldGridResolver.h" />
+    <ClInclude Include="src\Systems\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Spatial\Grid.inl" />

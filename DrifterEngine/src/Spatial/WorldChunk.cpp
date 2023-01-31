@@ -50,6 +50,11 @@ std::vector<entt::entity> drft::spatial::WorldChunk::entitiesAt(sf::Vector2i chu
 	return result;
 }
 
+std::vector<entt::entity> drft::spatial::WorldChunk::getAllEntities()
+{
+	return std::vector<entt::entity>(_entities.begin(), _entities.end());
+}
+
 void drft::spatial::WorldChunk::clear()
 {
 	_entities.clear();

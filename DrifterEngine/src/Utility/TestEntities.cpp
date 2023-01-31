@@ -9,9 +9,9 @@ void drft::util::buildTestEntities(entt::registry& registry, int numberOfEntitie
 
 	for (int i = 0; i < numberOfEntities; ++i)
 	{
-		float x = (std::rand() % inArea.width) + inArea.left;
-		float y = (std::rand() % inArea.height) + inArea.top;
-		int sprite = std::rand() % 10;
+		int x = (std::rand() % inArea.width) + inArea.left;
+		int y = (std::rand() % inArea.height) + inArea.top;
+		int sprite = (std::rand() % 10) + 1;
 		char r = std::rand() % 255;
 		char g = std::rand() % 255;
 		char b = std::rand() % 255;
@@ -20,7 +20,7 @@ void drft::util::buildTestEntities(entt::registry& registry, int numberOfEntitie
 
 		auto tilePos = spatial::toWorldSpace({ x,y });
 
-		registry.emplace<component::Position>(e, tilePos.x, tilePos.y, 0);
+		registry.emplace<component::Position>(e, tilePos, (int)spatial::Layer::Actor);
 		registry.emplace<component::Render>(e, (unsigned int)sprite, sf::Color(r, g, b, 255));
 	}
 }

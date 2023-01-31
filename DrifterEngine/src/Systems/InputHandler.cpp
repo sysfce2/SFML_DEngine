@@ -7,35 +7,32 @@ using namespace sf;
 
 void drft::system::InputHandler::init()
 {
-	// maybe read input mapping from file??
+	// TODO: move to file
 	_keyBindings = {
-		{action::Type::Wait,				Keyboard::Numpad5},
-		{action::Type::MoveNorth,			Keyboard::Numpad8},
-		{action::Type::MoveSouth,			Keyboard::Numpad2},
-		{action::Type::MoveWest,			Keyboard::Numpad4},
-		{action::Type::MoveEast,			Keyboard::Numpad6},
-		{action::Type::MoveSouthEast,		Keyboard::Numpad3},
-		{action::Type::MoveSouthWest,		Keyboard::Numpad1},
-		{action::Type::MoveNorthEast,		Keyboard::Numpad9},
-		{action::Type::MoveNorthWest,		Keyboard::Numpad7},
-		{action::Type::PickUp,				Keyboard::G},
-		{action::Type::Drop,				Keyboard::D},
-		{action::Type::Talk,				Keyboard::T},
-		{action::Type::Contextual,			Keyboard::Space},
+		{ActionType::Wait,				Keyboard::Numpad5},
+		{ActionType::MoveNorth,			Keyboard::Numpad8},
+		{ActionType::MoveSouth,			Keyboard::Numpad2},
+		{ActionType::MoveWest,			Keyboard::Numpad4},
+		{ActionType::MoveEast,			Keyboard::Numpad6},
+		{ActionType::MoveSouthEast,		Keyboard::Numpad3},
+		{ActionType::MoveSouthWest,		Keyboard::Numpad1},
+		{ActionType::MoveNorthEast,		Keyboard::Numpad9},
+		{ActionType::MoveNorthWest,		Keyboard::Numpad7},
+		{ActionType::PickUp,			Keyboard::G},
+		{ActionType::Drop,				Keyboard::D},
+		{ActionType::Talk,				Keyboard::T},
+		{ActionType::Contextual,		Keyboard::Space},
 	};
 }
 
 void drft::system::InputHandler::update(const float dt)
 {
-	auto view = registry.view<component::PlayerInput>();
+	auto view = registry.view<component::Player>();
 
-	for (auto [entity, input] : view.each())
+	for (auto entity : view)
 	{
-		input.desiredAction = action::Type::None;
-		for (int k = 1; k < action::Type::Total; ++k)
+		for (auto&& [thisAction, key] : _keyBindings)
 		{
-			action::Type thisAction = (action::Type)k;
-
 			if (Keyboard::isKeyPressed(_keyBindings[thisAction]))
 			{
 				_keyState[thisAction].active = false;
@@ -53,6 +50,10 @@ void drft::system::InputHandler::update(const float dt)
 				}
 				
 				_keyState[thisAction].timeHeld += dt;
+				if (_keyState[thisAction].timeHeld > _holdTime)
+				{
+					_keyState[thisAction].timeHeld = _holdTime;
+				}
 			}
 			else
 			{
@@ -62,10 +63,8 @@ void drft::system::InputHandler::update(const float dt)
 
 			if (_keyState[thisAction].active)
 			{
-				if (input.desiredAction == action::Type::None)
-				{
-					input.desiredAction = thisAction;
-				}
+				if (registry.any_of<component::Input>(entity)) break;
+				registry.emplace<component::Input>(entity, thisAction);
 			}
 		}
 	}

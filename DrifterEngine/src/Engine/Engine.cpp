@@ -24,7 +24,9 @@ void drft::Engine::run()
 void drft::Engine::initialize()
 {
 	loadResources();
-	_states.push(std::make_unique<GameState>(State::Context{_textures, _fonts}));
+	_states.push(std::make_unique<GameState>(State::Context{ _textures, _fonts, {960, 540}, debugInfo }));
+	debugInfo.addString("FPS", "");
+	debugInfo.addString("dt", "");
 }
 
 void drft::Engine::loadResources()
@@ -45,7 +47,7 @@ void drft::Engine::processEvents()
 		switch (event.type)
 		{
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::D)
+			if (event.key.code == sf::Keyboard::F5)
 			{
 				_showDebug = !_showDebug;
 			}
@@ -79,8 +81,9 @@ void drft::Engine::update(const float dt)
 			debugText.setFillColor(sf::Color::Yellow);
 			debugText.setPosition({ 16,16 });
 			debugText.setCharacterSize(16);
-			debugText.setString("fps:    \t" + std::to_string(fps) + "\n" +
-								"dt:     \t" + std::to_string(dt) + " s");
+			debugInfo.addString("FPS", std::to_string(fps));
+			debugInfo.addString("dt", std::to_string(dt));
+			debugInfo.setStrings(debugText);
 		}
 	}
 	else

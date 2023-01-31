@@ -3,6 +3,7 @@
 
 void drft::system::SystemScheduler::initAll()
 {
+	std::cout << "Initializing Systems..." << std::endl;
 	for (auto &phase : _systems)
 	{
 		for (auto &sys : phase.second)

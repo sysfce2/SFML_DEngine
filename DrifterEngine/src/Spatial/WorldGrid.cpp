@@ -2,50 +2,53 @@
 #include "WorldChunk.h"
 #include "WorldGrid.h"
 
-
-drft::spatial::WorldGrid::WorldGrid(sf::Vector2i chunkDimensions, sf::Vector2i tileDimensions)
-	:	_chunkWidth(chunkDimensions.x), _chunkHeight(chunkDimensions.y),
-		_tileWidth(tileDimensions.x), _tileHeight(tileDimensions.y) {}
-
 void drft::spatial::WorldGrid::placeEntity(const entt::entity& entity, const sf::Vector2i worldPosition, Layer layer)
 {
-	int xChunk = worldPosition.x / _chunkWidth;
-	int yChunk = worldPosition.y / _chunkHeight;
-	int xPos = std::abs(worldPosition.x % _chunkWidth);
-	int yPos = std::abs(worldPosition.y % _chunkHeight);
+	auto chunkCoordinate = toChunkCoordinate(worldPosition);
+	auto localPosition = toLocalChunkSpace(worldPosition);
+	auto keyablePair = std::make_pair(chunkCoordinate.x, chunkCoordinate.y);
 
-	if (!_chunks.contains({ xChunk, yChunk }))
+	if (!_chunks.contains(keyablePair))
 	{
-		_chunks[{ xChunk, yChunk }] = std::make_unique<WorldChunk>(_chunkWidth, _chunkHeight);
+		_chunks[keyablePair] = std::make_unique<WorldChunk>(CHUNK_WIDTH, CHUNK_HEIGHT);
+		_activeChunks.push_back(chunkCoordinate);
 	}
-	_chunks[{xChunk, yChunk}]->placeEntity(entity, { xPos, yPos }, (int)layer);
+	_chunks[keyablePair]->placeEntity(entity, localPosition, (int)layer);
 }
 
 entt::entity drft::spatial::WorldGrid::removeEntity(const entt::entity& entity, const sf::Vector2i worldPosition, Layer layer)
 {
 	entt::entity result = entt::null;
 
-	int xChunk = worldPosition.x / _chunkWidth;
-	int yChunk = worldPosition.y / _chunkHeight;
-	int xPos = std::abs(worldPosition.x % _chunkWidth);
-	int yPos = std::abs(worldPosition.y % _chunkHeight);
+	auto chunkCoordinate = toChunkCoordinate(worldPosition);
+	auto localPosition = toLocalChunkSpace(worldPosition);
+	auto keyablePair = std::make_pair(chunkCoordinate.x, chunkCoordinate.y);
 
-	if (!_chunks.contains({ xChunk,yChunk })) return result;
-	result = _chunks.at({ xChunk, yChunk })->removeEntity(entity, { xPos, yPos }, (int)layer);
+	if (!_chunks.contains(keyablePair)) return result;
+	result = _chunks.at(keyablePair)->removeEntity(entity, localPosition, (int)layer);
+	if (_chunks.at(keyablePair)->empty())
+	{
+		auto it = std::find(_activeChunks.begin(), _activeChunks.end(), chunkCoordinate);
+		if (it != _activeChunks.end())
+		{
+			_activeChunks.erase(it);
+		}
+		_chunks.at(keyablePair).release();
+		_chunks.erase(keyablePair);
+	}
 
 	return result;
 }
 
 bool drft::spatial::WorldGrid::moveEntity(const entt::entity entity, const sf::Vector2i fromWorldPosition, const sf::Vector2i toWorldPosition, Layer layer)
 {
-	int from_xChunk = fromWorldPosition.x / _chunkWidth;
-	int from_yChunk = fromWorldPosition.y / _chunkHeight;
-	int from_xPos	= std::abs(fromWorldPosition.x % _chunkWidth);
-	int from_yPos	= std::abs(fromWorldPosition.y % _chunkHeight);
+	auto chunkCoordinate = toChunkCoordinate(fromWorldPosition);
+	auto localPosition = toLocalChunkSpace(fromWorldPosition);
+	auto keyablePair = std::make_pair(chunkCoordinate.x, chunkCoordinate.y);
 
-	if (!_chunks.contains({ from_xChunk, from_yChunk })) return false;
+	if (!_chunks.contains(keyablePair)) return false;
 
-	_chunks[{from_xChunk, from_yChunk}]->removeEntity(entity, { from_xPos, from_yPos }, (int)layer);
+	_chunks[keyablePair]->removeEntity(entity, localPosition, (int)layer);
 	this->placeEntity(entity, toWorldPosition, layer);
 
 	return true;
@@ -55,16 +58,38 @@ std::vector<entt::entity> drft::spatial::WorldGrid::entitiesAt(sf::Vector2i worl
 {
 	std::vector<entt::entity> result;
 
-	int xChunk = worldPosition.x / _chunkWidth;
-	int yChunk = worldPosition.y / _chunkHeight;
-	int xPos = std::abs(worldPosition.x % _chunkWidth);
-	int yPos = std::abs(worldPosition.y % _chunkHeight);
+	auto chunkCoordinate = toChunkCoordinate(worldPosition);
+	auto localPosition = toLocalChunkSpace(worldPosition);
+	auto keyablePair = std::make_pair(chunkCoordinate.x, chunkCoordinate.y);
 
-	if (!_chunks.contains({ xChunk, yChunk })) return result;
+	if (!_chunks.contains(keyablePair)) return result;
 
-	result = _chunks.at({ xChunk, yChunk })->entitiesAt({ xPos, yPos }, (int)layer);
+	result = _chunks.at(keyablePair)->entitiesAt(localPosition, (int)layer);
 
 	return result;
+}
+
+const std::vector<sf::Vector2i>& drft::spatial::WorldGrid::getActiveChunks()
+{
+	return _activeChunks;
+}
+
+void drft::spatial::WorldGrid::clearChunk(sf::Vector2i coordinate)
+{
+	if (_chunks.contains({ coordinate.x, coordinate.y }))
+	{
+		_chunks.at({ coordinate.x, coordinate.y })->clear();
+		_chunks.erase({ coordinate.x, coordinate.y });
+	}
+}
+
+std::vector<entt::entity> drft::spatial::WorldGrid::getAllEntities(sf::Vector2i coordinate)
+{
+	if (_chunks.contains({ coordinate.x, coordinate.y }))
+	{
+		return _chunks.at({ coordinate.x, coordinate.y })->getAllEntities();
+	}
+	return std::vector<entt::entity>();
 }
 
 

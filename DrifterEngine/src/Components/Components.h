@@ -6,8 +6,7 @@ namespace component
 	// Position in world space.
 	struct Position
 	{
-		float x = 0;
-		float y = 0;
+		sf::Vector2f position;
 		int depth = 0;
 	};
 
@@ -18,17 +17,24 @@ namespace component
 		sf::Color color = sf::Color::Magenta;
 	};
 
-	// Change of position in world space.
-	struct Motion
+	struct Camera
 	{
-		float dx = 0;
-		float dy = 0;
+		sf::FloatRect viewport;
+		entt::entity target;
 	};
 
-	// 
-	struct PlayerInput
+	// Represents a player
+	struct Player
+	{};
+
+	// Represents an AI
+	struct AI
+	{};
+
+	// Desired input for the turn
+	struct Input
 	{
-		int desiredAction = 0;
+		int desiredAction;
 	};
 
 	struct OnScreen {};

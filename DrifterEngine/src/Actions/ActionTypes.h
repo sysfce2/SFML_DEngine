@@ -1,8 +1,8 @@
 #pragma once
 
-namespace drft::action
+namespace drft
 {
-	enum Type
+	enum ActionType
 	{
 		None,
 		Wait,
@@ -14,6 +14,7 @@ namespace drft::action
 		MoveSouthWest,
 		MoveNorthEast,
 		MoveNorthWest,
+		Swap,
 		Attack,
 		PickUp,
 		Drop,
@@ -21,13 +22,6 @@ namespace drft::action
 		Contextual,
 		Total
 	};
-
-	class IAction
-	{
-	public:
-		virtual bool execute()
-	};
-
 } // namespace drft::action
 
 

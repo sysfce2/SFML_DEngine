@@ -1,9 +1,11 @@
 #pragma once
 #include "Utility/ResourceHolder.h"
 #include "State.h"
+#include "Utility/DebugInfo.h"
 
 namespace drft
 {
+	
 
 	class Engine
 	{
@@ -28,6 +30,7 @@ namespace drft
 		const float _renderRate = 60.0f;
 
 		// Debug
+		util::DebugInfo debugInfo;
 		sf::Text debugText;
 		bool _showDebug;
 	};

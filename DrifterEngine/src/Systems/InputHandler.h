@@ -1,13 +1,10 @@
 #pragma once
 #include "System.h"
-#include "Actions/Action.h"
+#include "Actions/ActionTypes.h"
 
 
 namespace drft::system
 {
-
-
-
 	struct KeyState
 	{
 		float timeHeld = 0;
@@ -27,10 +24,10 @@ namespace drft::system
 		virtual void update(const float dt) override;
 
 	private:
-		std::unordered_map<action::Type, sf::Keyboard::Key> _keyBindings;
-		std::unordered_map<action::Type, KeyState> _keyState;
-		float _refractoryPeriod = 0.15f; // sec
-		float _holdTime = 0.75f; // sec
+		std::unordered_map<ActionType, sf::Keyboard::Key> _keyBindings;
+		std::unordered_map<ActionType, KeyState> _keyState;
+		float _refractoryPeriod = 0.05f; // sec
+		float _holdTime = 0.4f; // sec
 	};
 
 }

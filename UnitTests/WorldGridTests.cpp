@@ -44,7 +44,7 @@ namespace UnitTests
 
 		TEST_METHOD(EmptyWorldGrid_OnCreation_DoesNotThrow)
 		{
-			spatial::WorldGrid world(64, 64);
+			spatial::WorldGrid world;
 		}
 
 		TEST_METHOD(EmptyWorldGrid_OnAccessPositiveCoordinates_ReturnsEmptyVector)
@@ -108,9 +108,13 @@ namespace UnitTests
 			world.placeEntity(entity2, { -1000, -1000 }, spatial::Layer::Item);
 			world.placeEntity(entity3, { 0, 0 }, spatial::Layer::Prop);
 
-			Assert::AreEqual(entity1, world.removeEntity(entity1, { 1000, 1000 }, spatial::Layer::Actor));
-			Assert::AreEqual(entity2, world.removeEntity(entity2, { -1000, -1000 }, spatial::Layer::Item));
-			Assert::AreEqual(entity3, world.removeEntity(entity3, { 0, 0 }, spatial::Layer::Prop));
+			auto foundEntity1 = world.removeEntity(entity1, { 1000, 1000 }, spatial::Layer::Actor);
+			auto foundEntity2 = world.removeEntity(entity2, { -1000, -1000 }, spatial::Layer::Item);
+			auto foundEntity3 = world.removeEntity(entity3, { 0, 0 }, spatial::Layer::Prop);
+
+			Assert::AreEqual(entity1, foundEntity1);
+			Assert::AreEqual(entity2, foundEntity2);
+			Assert::AreEqual(entity3, foundEntity3);
 		}
 
 		TEST_METHOD(WorldGrid_OnMoveEntity_InNewLocationNotInOldLocation)

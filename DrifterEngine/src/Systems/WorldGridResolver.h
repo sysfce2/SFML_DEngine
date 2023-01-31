@@ -8,8 +8,8 @@ namespace drft::system
 	class WorldGridResolver : public System
 	{
 	public:
-		WorldGridResolver(entt::registry& registry, spatial::WorldGrid& world)
-			: world(world), System(registry)
+		WorldGridResolver(entt::registry& registry)
+			: System(registry)
 		{
 			phase = Phase::OnValidation;
 		}
@@ -19,9 +19,6 @@ namespace drft::system
 	private:
 		void OnPositionAdd(entt::registry& registry, entt::entity);
 		void OnPositionRemove(entt::registry& registry, entt::entity);
-
-	private:
-		spatial::WorldGrid& world;
 	};
 
 } // namespace dft::system
