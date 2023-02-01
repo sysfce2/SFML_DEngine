@@ -19,16 +19,17 @@ namespace drft::spatial
 		Total
 	};
 
-	inline Layer toLayer(int depth)
+
+	// Spatial conversion functions //
+
+	// Converts an int to a layer on the grid.
+	inline Layer toLayer(const int depth)
 	{
 		assert(depth > 0);
 		assert(depth < (int)Layer::Total);
 
 		return (Layer)depth;
 	}
-
-	// Spatial conversion functions //
-
 	// Converts a position in world space into a position in tile space.
 	inline sf::Vector2i toTileSpace(const sf::Vector2f worldPosition)
 	{
@@ -36,6 +37,14 @@ namespace drft::spatial
 		int y = std::floor(worldPosition.y / TILE_HEIGHT);
 
 		return { x, y };
+	}
+	// Converts a chunk coordinate into a position in tile space.
+	inline sf::Vector2i toTileSpace(const sf::Vector2i chunkCoordinate)
+	{
+		int x = chunkCoordinate.x * CHUNK_WIDTH;
+		int y = chunkCoordinate.y * CHUNK_HEIGHT;
+
+		return { x,y };
 	}
 	// Converts a position in tile space into a position in world space.
 	inline sf::Vector2f toWorldSpace(const sf::Vector2i tilePosition)
@@ -78,7 +87,6 @@ namespace drft::spatial
 	}
 	// Converts a tile position into a chunk-relative position.
 	// Upper-left corner of chunk is (0,0)
-	// WARNING: Does not contain the chunk coordinate - absolute position information will be lost
 	inline sf::Vector2i toLocalChunkSpace(const sf::Vector2i tilePosition)
 	{
 		int xPos = tilePosition.x % CHUNK_WIDTH;
@@ -119,7 +127,7 @@ namespace drft::spatial
 		bool moveEntity(const entt::entity, const sf::Vector2i fromTilePosition, const sf::Vector2i toTilePosition, Layer layer);
 
 		// Returns all entities at the given world tile position.
-		std::vector<entt::entity> entitiesAt(sf::Vector2i tilePosition, Layer layer);
+		std::vector<entt::entity> entitiesAt(const sf::Vector2i tilePosition, const Layer layer);
 
 		// Chunks //
 
@@ -127,10 +135,10 @@ namespace drft::spatial
 		const std::vector<sf::Vector2i>& getActiveChunks();
 
 		// Clears the chunk of all entities and removes the chunk.
-		void clearChunk(sf::Vector2i coordinate);
+		void removeChunk(const sf::Vector2i coordinate);
 
 		// Returns all entities at the given chunk coordinate.
-		std::vector<entt::entity> getAllEntities(sf::Vector2i coordinate);
+		std::vector<entt::entity> getAllEntities(const sf::Vector2i coordinate);
 
 	private:
 		std::map<std::pair<int, int>, std::unique_ptr<WorldChunk>> _chunks;

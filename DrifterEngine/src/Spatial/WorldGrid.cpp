@@ -54,7 +54,7 @@ bool drft::spatial::WorldGrid::moveEntity(const entt::entity entity, const sf::V
 	return true;
 }
 
-std::vector<entt::entity> drft::spatial::WorldGrid::entitiesAt(sf::Vector2i worldPosition, Layer layer)
+std::vector<entt::entity> drft::spatial::WorldGrid::entitiesAt(const sf::Vector2i worldPosition, const Layer layer)
 {
 	std::vector<entt::entity> result;
 
@@ -74,16 +74,21 @@ const std::vector<sf::Vector2i>& drft::spatial::WorldGrid::getActiveChunks()
 	return _activeChunks;
 }
 
-void drft::spatial::WorldGrid::clearChunk(sf::Vector2i coordinate)
+void drft::spatial::WorldGrid::removeChunk(const sf::Vector2i coordinate)
 {
 	if (_chunks.contains({ coordinate.x, coordinate.y }))
 	{
 		_chunks.at({ coordinate.x, coordinate.y })->clear();
 		_chunks.erase({ coordinate.x, coordinate.y });
+		auto it = std::find(_activeChunks.begin(), _activeChunks.end(), coordinate);
+		if (it != _activeChunks.end())
+		{
+			_activeChunks.erase(it);
+		}
 	}
 }
 
-std::vector<entt::entity> drft::spatial::WorldGrid::getAllEntities(sf::Vector2i coordinate)
+std::vector<entt::entity> drft::spatial::WorldGrid::getAllEntities(const sf::Vector2i coordinate)
 {
 	if (_chunks.contains({ coordinate.x, coordinate.y }))
 	{

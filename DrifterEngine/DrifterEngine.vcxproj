@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\ChunkManager.cpp" />
     <ClCompile Include="src\Utility\DebugInfo.cpp" />
     <ClCompile Include="src\Actions\Actions.cpp" />
     <ClCompile Include="src\Systems\ActionHandler.cpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="src\Systems\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\ChunkManager.h" />
     <ClInclude Include="src\Utility\DebugInfo.h" />
     <ClInclude Include="src\Actions\Actions.h" />
     <ClInclude Include="src\Systems\ActionHandler.h" />

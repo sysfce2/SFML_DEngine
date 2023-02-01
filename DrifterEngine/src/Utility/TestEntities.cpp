@@ -3,18 +3,18 @@
 #include "Components/Components.h"
 #include "Spatial/WorldGrid.h"
 
-void drft::util::buildTestEntities(entt::registry& registry, int numberOfEntities, sf::IntRect inArea)
+void drft::util::buildTestTrees(entt::registry& registry, int numberOfTrees, sf::IntRect inArea)
 {
-	std::srand((unsigned int)&numberOfEntities);
+	std::srand((unsigned int)&numberOfTrees);
 
-	for (int i = 0; i < numberOfEntities; ++i)
+	for (int i = 0; i < numberOfTrees; ++i)
 	{
 		int x = (std::rand() % inArea.width) + inArea.left;
 		int y = (std::rand() % inArea.height) + inArea.top;
-		int sprite = (std::rand() % 10) + 1;
-		char r = std::rand() % 255;
-		char g = std::rand() % 255;
-		char b = std::rand() % 255;
+		int sprite = 5;
+		char r = (std::rand() % 55) + 20;
+		char g = (std::rand() % 25) + 100;
+		char b = (std::rand() % 55) + 20;
 
 		auto e = registry.create();
 

@@ -39,5 +39,8 @@ void drft::system::Camera::update(const float dt)
 		auto tilePos = spatial::toTileSpace(target.position);
 		std::string dataStr = std::to_string(tilePos.x) + ", " + std::to_string(tilePos.y);
 		debug.addString("Position", dataStr);
+		auto chunkPos = spatial::toChunkCoordinate(target.position);
+		dataStr = std::to_string(chunkPos.x) + ", " + std::to_string(chunkPos.y);
+		debug.addString("Coords", dataStr);
 	}
 }

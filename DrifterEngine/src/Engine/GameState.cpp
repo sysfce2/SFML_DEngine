@@ -7,6 +7,7 @@
 #include "Systems/InputHandler.h"
 #include "Systems/ActionHandler.h"
 #include "Systems/Camera.h"
+#include "Systems/ChunkManager.h"
 #include "Components/Components.h"
 #include "Utility/TestEntities.h"
 
@@ -42,12 +43,14 @@ void drft::GameState::init()
 
 	_systems = std::make_unique<system::SystemScheduler>(_registry);
 	_world = std::make_unique<spatial::WorldGrid>();
+
 	_registry.ctx().emplace<spatial::WorldGrid&>(*_world);
 	_registry.ctx().emplace<util::DebugInfo&>(getContext().debugInfo);
 	
 	importSystems();
 	_systems->initAll();
-	util::buildTestEntities(_registry, 1000, { -64,-64,128,128 });
+
+	//util::buildTestEntities(_registry, 1000, { -64,-64,128,128 });
 
 	// ADD PLAYER ENTITY // ** temporary just for testing **
 	//
@@ -79,5 +82,6 @@ void drft::GameState::importSystems()
 	_systems->add(std::make_unique<system::WorldGridResolver>(_registry));
 	_systems->add(std::make_unique<system::InputHandler>(_registry));
 	_systems->add(std::make_unique<system::ActionHandler>(_registry));
+	_systems->add(std::make_unique<system::ChunkManager>(_registry));
 	
 }
