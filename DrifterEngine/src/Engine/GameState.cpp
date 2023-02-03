@@ -2,7 +2,8 @@
 #include "GameState.h"
 #include "Spatial/WorldGrid.h"
 #include "Systems/SystemScheduler.h"
-#include "Systems/Renderer.h"
+#include "Systems/TileRenderer.h"
+#include "Systems/EntityRenderer.h"
 #include "Systems/WorldGridResolver.h"
 #include "Systems/InputHandler.h"
 #include "Systems/ActionHandler.h"
@@ -46,11 +47,10 @@ void drft::GameState::init()
 
 	_registry.ctx().emplace<spatial::WorldGrid&>(*_world);
 	_registry.ctx().emplace<util::DebugInfo&>(getContext().debugInfo);
+	_registry.ctx().emplace<sf::Texture&>(getContext().textures.get("Sprites"));
 	
 	importSystems();
 	_systems->initAll();
-
-	//util::buildTestEntities(_registry, 1000, { -64,-64,128,128 });
 
 	// ADD PLAYER ENTITY // ** temporary just for testing **
 	//
@@ -77,7 +77,8 @@ void drft::GameState::importSystems()
 {
 	std::cout << "Importing Systems..." << std::endl;
 	// Import all systems into game state
-	_systems->add(std::make_unique<system::Renderer>(_registry, getContext().textures));
+	_systems->add(std::make_unique<system::TileRenderer>(_registry));
+	_systems->add(std::make_unique<system::EntityRenderer>(_registry));
 	_systems->add(std::make_unique<system::Camera>(_registry));
 	_systems->add(std::make_unique<system::WorldGridResolver>(_registry));
 	_systems->add(std::make_unique<system::InputHandler>(_registry));

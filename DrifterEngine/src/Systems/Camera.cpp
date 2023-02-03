@@ -15,7 +15,8 @@ void drft::system::Camera::update(const float dt)
 	for (auto [entity, camera, pos] : cameraView.each())
 	{
 		auto const & target = registry.get<const component::Position>(camera.target);
-		if (std::abs(pos.position.x - target.position.x) < 0.25f)
+
+		if (std::abs(pos.position.x - target.position.x) < 0.5f)
 		{
 			pos.position.x = target.position.x;
 		}
@@ -23,7 +24,7 @@ void drft::system::Camera::update(const float dt)
 		{
 			pos.position.x = std::lerp(pos.position.x, target.position.x, _speed * dt);
 		}
-		if (std::abs(pos.position.y - target.position.y) < 0.25f)
+		if (std::abs(pos.position.y - target.position.y) < 0.5f)
 		{
 			pos.position.y = target.position.y;
 		}
@@ -36,6 +37,7 @@ void drft::system::Camera::update(const float dt)
 		camera.viewport.top = pos.position.y - (camera.viewport.height / 2);
 
 		auto& debug = registry.ctx().get<util::DebugInfo>();
+
 		auto tilePos = spatial::toTileSpace(target.position);
 		std::string dataStr = std::to_string(tilePos.x) + ", " + std::to_string(tilePos.y);
 		debug.addString("Position", dataStr);

@@ -5,22 +5,22 @@
 
 namespace drft::system
 {
-    class Renderer : public System
+    class EntityRenderer : public System
     {
     public:
-        Renderer(entt::registry& registry, ResourceHolder<sf::Texture, std::string>& textures) 
-            : _textures(textures), System(registry)
+        EntityRenderer(entt::registry& registry) 
+            : System(registry)
         {
             phase = Phase::OnRender;
-            _spriteBatch.setTexture(textures.get("Sprites"));
+           _sprites = registry.ctx().get<sf::Texture&>();
         }
 
         virtual void init() override;
         virtual void render(sf::RenderTarget& target) override;
 
     private:
-        ResourceHolder<sf::Texture, std::string>& _textures;
-        SpriteBatch _spriteBatch;
+        sf::Texture _sprites;
+        std::map<int, SpriteBatch> _spriteLayers;
     };
 
 } // namespace system

@@ -3,6 +3,7 @@
 #include "Spatial/WorldGrid.h"
 #include "Components/Components.h"
 #include "Utility/TestEntities.h"
+#include "Utility/DebugInfo.h"
 
 using namespace drft::system;
 
@@ -21,82 +22,101 @@ void drft::system::ChunkManager::update(const float dt)
 		newPosition = spatial::toChunkCoordinate(pos.position);
 	}
 
-
-
-	if (newPosition != _currentPosition)
-	{
-		auto newChunks = getChunksInRadius(newPosition, _activeChunkRadius);
-		auto& activeChunks = _grid.get().getActiveChunks();
-
-		// get chunks in newChunks that aren't in activeChunks
-		auto diff = compareChunkList(activeChunks, newChunks);
-
-		for (auto& chunk : diff)
-		{
-			if (!_chunkStates.contains({ chunk.x, chunk.y }))
-			{
-				_toBuild.push(chunk);
-				continue;
-			}
-			auto state = _chunkStates[{chunk.x, chunk.y}];
-			switch (state)
-			{
-			case ChunkState::Built:
-				_chunkStates[{chunk.x, chunk.y}] = ChunkState::Active;
-				break;
-			case ChunkState::Saved:
-				_toLoad.push(chunk);
-				break;
-			case ChunkState::Loaded:
-				_chunkStates[{chunk.x, chunk.y}] = ChunkState::Active;
-				break;
-			default:
-				std::cout << "ChunkState " << (int)state << " can not be handled yet." << std::endl;
-				break;
-			}
-
-		}
-
-
-		for (auto& chunk : activeChunks)
-		{
-			std::cout << "Chunk (" << chunk.x << ", " << chunk.y << ")" << " is active" << std::endl;
-			float distance = std::hypotf((chunk.x - newPosition.x), (chunk.y - newPosition.y));
-			if (distance > _toSaveRadius)
-			{
-				std::cout << "----> To save (" << chunk.x << ", " << chunk.y << ")" << std::endl;
-				_toSave.push(chunk);
-			}
-		}
-		std::cout << "\n";
-
-		_currentPosition = newPosition;
-	}
-
+	updateChunks(newPosition);
 
 	if (!_toSave.empty())
 	{
-		save(_toSave.front());
+		auto& coord = _toSave.front();
+		save(coord);
+		_toSave.pop();
 	}
 	if (!_toBuild.empty())
 	{
-		build(_toBuild.front());
+		auto& coord = _toBuild.front();
+		build(coord);
+		_toBuild.pop();
 	}
 	if (!_toLoad.empty())
 	{
-		build(_toLoad.front());
+		auto& coord = _toLoad.front();
+		build(coord);
+		_toLoad.pop();
 	}
 }
 
-std::vector<sf::Vector2i> drft::system::ChunkManager::getChunksInRadius(const sf::Vector2i centerPosition, const float radius)
+void drft::system::ChunkManager::updateChunks(sf::Vector2i newPosition)
+{
+	auto activeCoords = getCoordinatesInRadius(newPosition, _activeChunkRadius);
+
+	// Ensure active chunks are active or will be built
+	for (auto& coord : activeCoords)
+	{
+		ChunkState state = _chunks[{ coord.x, coord.y }].state;
+		switch (state)
+		{
+		case ChunkState::None:
+			setState(coord, ChunkState::Building);
+			_toBuild.push(coord);
+			break;
+		case ChunkState::Active:
+			// No need to do anything, already active
+			break;
+		case ChunkState::Building:
+			break;
+		case ChunkState::Loading:
+			std::cout << "Loading state unhandled. Loading too slow?" << std::endl;
+			break;
+		case ChunkState::Saving:
+			std::cout << "Saving state unhandled. Saving too slow?" << std::endl;
+			break;
+		case ChunkState::Built:
+			setState(coord, ChunkState::Active);
+			break;
+		case ChunkState::Loaded:
+			setState(coord, ChunkState::Active);
+			break;
+		case ChunkState::Saved:
+			setState(coord, ChunkState::Loading);
+			_toLoad.push(coord);
+			break;
+		default:
+			std::cout << "No way to handle chunk state " << (int)state << std::endl;
+			break;
+		}
+	}
+
+	// Then, scan for chunks to save
+	for (auto [coord, chunk] : _chunks)
+	{
+		if (!(_chunks.at(coord).state == ChunkState::Active))
+		{
+			continue;
+		}
+		float distance = std::hypotf((newPosition.x - coord.first), (newPosition.y - coord.second));
+		if (distance > _toSaveRadius)
+		{
+			_toSave.push({ coord.first, coord.second });
+			_chunks.at(coord).state = ChunkState::Saving;
+		}
+	}
+
+	auto& debug = registry.ctx().get<util::DebugInfo>();
+	std::string dataStr = std::to_string(_chunks.size());
+	debug.addString("Chunks Active", dataStr);
+
+	_currentPosition = newPosition;
+}
+
+std::vector<sf::Vector2i> drft::system::ChunkManager::getCoordinatesInRadius(const sf::Vector2i centerPosition, const float radius)
 {
 	std::vector<sf::Vector2i> result;
-	for (int y = centerPosition.y - _activeChunkRadius; y <= centerPosition.y + _activeChunkRadius; ++y)
+	for (int y = centerPosition.y - radius; y <= centerPosition.y + radius; ++y)
 	{
-		for (int x = centerPosition.x - _activeChunkRadius; x <= centerPosition.x + _activeChunkRadius; ++x)
+		for (int x = centerPosition.x - radius; x <= centerPosition.x + radius; ++x)
 		{
 			float distance = std::hypotf((centerPosition.x - x), (centerPosition.y - y));
-			if (distance <= radius)
+
+			if (distance < radius)
 			{
 				result.push_back({ x,y });
 			}
@@ -106,46 +126,27 @@ std::vector<sf::Vector2i> drft::system::ChunkManager::getChunksInRadius(const sf
 	return result;
 }
 
-std::vector<sf::Vector2i> drft::system::ChunkManager::compareChunkList(const std::vector<sf::Vector2i>& inVec, const std::vector<sf::Vector2i>& compVec)
+void drft::system::ChunkManager::setState(sf::Vector2i coordinate, ChunkState state)
 {
-	std::vector<sf::Vector2i> result;
-
-	for (auto& comp : compVec)
-	{
-		auto coord = std::find(inVec.begin(), inVec.end(), comp);
-		if (coord == inVec.end())
-		{
-			result.push_back(comp);
-		}
-	}
-
-	return result;
+	_chunks.at({ coordinate.x, coordinate.y }).state = state;
 }
 
 void drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate)
 {
-	_chunkStates[{ chunkCoordinate.x, chunkCoordinate.y }] = ChunkState::Building;
 	std::cout << "Building chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
-
 	auto origin = spatial::toTileSpace(chunkCoordinate);
 	util::buildTestTrees(registry, 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT });
-	_chunkStates.at({ chunkCoordinate.x, chunkCoordinate.y }) = ChunkState::Built;
-	_toBuild.pop();
+	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Built;
 }
 
 void drft::system::ChunkManager::load(sf::Vector2i chunkCoordinate)
 {
-	_chunkStates[{ chunkCoordinate.x, chunkCoordinate.y }] = ChunkState::Loading;
 	std::cout << "Loading chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
-	_chunkStates.at({ chunkCoordinate.x, chunkCoordinate.y }) = ChunkState::Loaded;
-	_toLoad.pop();
+	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Loaded;
 }
 
 void drft::system::ChunkManager::save(sf::Vector2i chunkCoordinate)
 {
-	_chunkStates[{ chunkCoordinate.x, chunkCoordinate.y }] = ChunkState::Saving;
 	std::cout << "Saving chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
-	_chunkStates.at({ chunkCoordinate.x, chunkCoordinate.y }) = ChunkState::Saved;
-	_grid.get().removeChunk(_toSave.front());
-	_toSave.pop();
+	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Saved;
 }

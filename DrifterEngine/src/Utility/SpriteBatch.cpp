@@ -13,7 +13,7 @@ drft::SpriteBatch::SpriteBatch(sf::Texture& texture)
 	_vertices.setPrimitiveType(sf::Quads);
 }
 
-void drft::SpriteBatch::setTexture(sf::Texture& texture)
+void drft::SpriteBatch::setTexture(const sf::Texture& texture)
 {
 	_spriteSheet = texture;
 }

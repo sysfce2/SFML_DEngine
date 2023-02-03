@@ -1,14 +1,19 @@
 #include "pch.h"
-#include "Renderer.h"
+#include "EntityRenderer.h"
 #include "Components/Components.h"
 #include "Utility/SpriteBatch.h"
+#include "Spatial/WorldGrid.h"
 
 
-void drft::system::Renderer::init()
+void drft::system::EntityRenderer::init()
 {
+	for (int l = 0; l < (int)spatial::Layer::Total; ++l)
+	{
+		_spriteLayers[l].setTexture(_sprites);
+	}
 }
 
-void drft::system::Renderer::render(sf::RenderTarget& target)
+void drft::system::EntityRenderer::render(sf::RenderTarget& target)
 {
 	sf::Vector2f cameraOrigin = { 0.0f, 0.0f };
 	auto camera = registry.view<const component::Camera, const component::Position>();
@@ -23,9 +28,14 @@ void drft::system::Renderer::render(sf::RenderTarget& target)
 
 	for (auto const & [entity, pos, ren] : view.each())
 	{
-		_spriteBatch.addSprite(ren.sprite, ren.color, pos.position - cameraOrigin);
+		float x = std::round(pos.position.x - cameraOrigin.x);
+		float y = std::round(pos.position.y - cameraOrigin.y);
+		_spriteLayers[pos.depth].addSprite(ren.sprite, ren.color, {x, y});
 	}
 
-	target.draw(_spriteBatch);
-	_spriteBatch.clear();
+	for (auto& [depth, batch] : _spriteLayers)
+	{
+		target.draw(batch);
+		batch.clear();
+	}
 }

@@ -12,7 +12,7 @@ namespace drft
 		SpriteBatch(SpriteBatch&&) = default;
 		SpriteBatch& operator=(SpriteBatch&&) = default;
 
-		void setTexture(sf::Texture& texture);
+		void setTexture(const sf::Texture& texture);
 		void addSprite(unsigned int spriteNum, sf::Color color, sf::Vector2f position);
 		void clear();
 
