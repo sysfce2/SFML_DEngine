@@ -6,8 +6,8 @@
 
 void drft::system::WorldGridResolver::init()
 {
-	registry.on_construct<component::Position>().connect<&WorldGridResolver::OnPositionAdd>(this);
-	registry.on_destroy<component::Position>().connect<&WorldGridResolver::OnPositionRemove>(this);
+	registry->on_construct<component::Position>().connect<&WorldGridResolver::OnPositionAdd>(this);
+	registry->on_destroy<component::Position>().connect<&WorldGridResolver::OnPositionRemove>(this);
 }
 
 void drft::system::WorldGridResolver::OnPositionAdd(entt::registry& registry, entt::entity entity)

@@ -13,12 +13,6 @@ void drft::system::SystemScheduler::initAll()
 	}
 }
 
-void drft::system::SystemScheduler::add(std::unique_ptr<System> sys)
-{
-	auto phase = sys->phase;
-	_systems[phase].push_back(std::move(sys));
-}
-
 void drft::system::SystemScheduler::update(const float dt)
 {
 	for (int i = 0; i < (int)Phase::AllUpdate; ++i)

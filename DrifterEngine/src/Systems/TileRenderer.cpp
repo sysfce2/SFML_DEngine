@@ -5,6 +5,8 @@
 
 void drft::system::TileRenderer::init()
 {
+	_spriteBatch.setTexture(registry->ctx().get<sf::Texture&>());
+
 	// Build the tile sprite batch
 	for (int y = 0; y < spatial::CHUNK_HEIGHT; ++y)
 	{
@@ -19,7 +21,7 @@ void drft::system::TileRenderer::render(sf::RenderTarget& target)
 {
 	sf::Vector2f cameraOrigin = { 0,0 };
 	sf::Vector2f cameraCenter = { 0,0 };
-	auto cameraView = registry.view<const component::Camera, const component::Position>();
+	auto cameraView = registry->view<const component::Camera, const component::Position>();
 	for (auto const& [entity, cam, pos] : cameraView.each())
 	{
 		cameraOrigin = { cam.viewport.left, cam.viewport.top };

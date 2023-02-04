@@ -2,6 +2,11 @@
 #include "System.h"
 
 
+void drft::system::System::setRegistry(entt::registry& registry)
+{
+	this->registry = &registry;
+}
+
 void drft::system::System::update(const float dt)
 {
 }

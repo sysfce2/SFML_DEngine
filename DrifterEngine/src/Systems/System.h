@@ -19,20 +19,21 @@ namespace drft::system
 	class System
 	{
 	public:
-		System(entt::registry& registry) : registry(registry) {};
+		System() {};
 		virtual ~System() = default;
 		System(const System&) = default;
 		System& operator=(const System&) = default;
 		System(System&&) = default;
 		System& operator=(System&&) = default;
 
+		void setRegistry(entt::registry& registry);
 		virtual void init() = 0;
 		virtual void update(const float dt);
 		virtual void render(sf::RenderTarget& target);
 
 	protected:
 		friend class SystemScheduler; // SystemScheduler needs phase
-		entt::registry& registry;
+		entt::registry* registry = nullptr;
 		Phase phase = Phase::OnUpdate;
 	};
 

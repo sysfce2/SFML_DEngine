@@ -8,8 +8,7 @@ namespace drft::system
 	class WorldGridResolver : public System
 	{
 	public:
-		WorldGridResolver(entt::registry& registry)
-			: System(registry)
+		WorldGridResolver()
 		{
 			phase = Phase::OnValidation;
 		}

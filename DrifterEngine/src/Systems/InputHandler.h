@@ -14,8 +14,7 @@ namespace drft::system
 	class InputHandler : public System
 	{
 	public:
-		InputHandler(entt::registry& registry)
-			: System(registry)
+		InputHandler()
 		{
 			phase = Phase::OnProcessInput;
 		}

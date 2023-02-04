@@ -76,13 +76,13 @@ void drft::GameState::init()
 void drft::GameState::importSystems()
 {
 	std::cout << "Importing Systems..." << std::endl;
+
 	// Import all systems into game state
-	_systems->add(std::make_unique<system::TileRenderer>(_registry));
-	_systems->add(std::make_unique<system::EntityRenderer>(_registry));
-	_systems->add(std::make_unique<system::Camera>(_registry));
-	_systems->add(std::make_unique<system::WorldGridResolver>(_registry));
-	_systems->add(std::make_unique<system::InputHandler>(_registry));
-	_systems->add(std::make_unique<system::ActionHandler>(_registry));
-	_systems->add(std::make_unique<system::ChunkManager>(_registry));
-	
+	_systems->add(system::TileRenderer());
+	_systems->add(system::EntityRenderer());
+	_systems->add(system::Camera());
+	_systems->add(system::WorldGridResolver());
+	_systems->add(system::InputHandler());
+	_systems->add(system::ActionHandler());
+	_systems->add(system::ChunkManager());
 }

@@ -27,7 +27,7 @@ void drft::system::InputHandler::init()
 
 void drft::system::InputHandler::update(const float dt)
 {
-	auto view = registry.view<component::Player>();
+	auto view = registry->view<component::Player>();
 
 	for (auto entity : view)
 	{
@@ -63,8 +63,8 @@ void drft::system::InputHandler::update(const float dt)
 
 			if (_keyState[thisAction].active)
 			{
-				if (registry.any_of<component::Input>(entity)) break;
-				registry.emplace<component::Input>(entity, thisAction);
+				if (registry->any_of<component::Input>(entity)) break;
+				registry->emplace<component::Input>(entity, thisAction);
 			}
 		}
 	}

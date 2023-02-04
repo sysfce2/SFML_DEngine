@@ -7,8 +7,7 @@ namespace drft::system
 	class ActionHandler : public System
 	{
 	public:
-		ActionHandler(entt::registry& registry)
-			: System(registry)
+		ActionHandler()
 		{
 			phase = Phase::OnUpdate;
 		}

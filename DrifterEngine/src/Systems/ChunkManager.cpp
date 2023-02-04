@@ -14,7 +14,7 @@ void drft::system::ChunkManager::init()
 
 void drft::system::ChunkManager::update(const float dt)
 {
-	auto cameraView = registry.view<const component::Camera, const component::Position>();
+	auto cameraView = registry->view<const component::Camera, const component::Position>();
 	sf::Vector2i newPosition = { 0,0 };
 
 	for (auto [entity, cam, pos] : cameraView.each())
@@ -100,7 +100,7 @@ void drft::system::ChunkManager::updateChunks(sf::Vector2i newPosition)
 		}
 	}
 
-	auto& debug = registry.ctx().get<util::DebugInfo>();
+	auto& debug = registry->ctx().get<util::DebugInfo>();
 	std::string dataStr = std::to_string(_chunks.size());
 	debug.addString("Chunks Active", dataStr);
 
@@ -135,7 +135,7 @@ void drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate)
 {
 	std::cout << "Building chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
 	auto origin = spatial::toTileSpace(chunkCoordinate);
-	util::buildTestTrees(registry, 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT });
+	util::buildTestTrees(*registry, 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT });
 	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Built;
 }
 

@@ -8,11 +8,9 @@ namespace drft::system
     class EntityRenderer : public System
     {
     public:
-        EntityRenderer(entt::registry& registry) 
-            : System(registry)
+        EntityRenderer()
         {
             phase = Phase::OnRender;
-           _sprites = registry.ctx().get<sf::Texture&>();
         }
 
         virtual void init() override;

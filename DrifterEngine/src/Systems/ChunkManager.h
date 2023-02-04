@@ -30,8 +30,7 @@ namespace drft::system
 	class ChunkManager : public System
 	{
 	public:
-		ChunkManager(entt::registry& registry)
-			: _grid(registry.ctx().get<spatial::WorldGrid&>()), System(registry)
+		ChunkManager()
 		{
 			phase = Phase::OnPostUpdate;
 		}
@@ -51,8 +50,6 @@ namespace drft::system
 
 	private:
 		bool _isFirstPass = true;
-
-		std::reference_wrapper<spatial::WorldGrid> _grid;
 		std::map<std::pair<int, int>, VirtualChunk> _chunks;
 
 		const float _activeChunkRadius = 2;

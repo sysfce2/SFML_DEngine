@@ -6,8 +6,7 @@ namespace drft::system
 	class Camera : public System
 	{
 	public:
-		Camera(entt::registry& registry)
-			: System(registry)
+		Camera()
 		{
 			phase = Phase::OnPostUpdate;
 		}

@@ -7,11 +7,9 @@ namespace drft::system
 	class TileRenderer : public System
 	{
     public:
-        TileRenderer(entt::registry& registry)
-            : System(registry)
+        TileRenderer()
         {
             phase = Phase::OnRender;
-            _spriteBatch.setTexture(registry.ctx().get<sf::Texture&>());
         }
 
         virtual void init() override;
