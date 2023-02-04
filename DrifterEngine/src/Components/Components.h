@@ -1,4 +1,5 @@
 #pragma once
+#include "Actions/Action.h"
 
 
 namespace component
@@ -34,7 +35,7 @@ namespace component
 	// Desired input for the turn
 	struct Input
 	{
-		int desiredAction;
+		std::unique_ptr<drft::action::Action> desiredAction;
 	};
 
 	struct OnScreen {};

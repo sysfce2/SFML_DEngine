@@ -20,6 +20,7 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <optional>
 #include <type_traits>
 #include <typeindex>
 #include <string>

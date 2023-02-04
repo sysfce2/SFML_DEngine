@@ -1,9 +1,15 @@
 #pragma once
 #include "System.h"
-#include "Actions/Actions.h"
+#include "Actions/Action.h"
 
 namespace drft::system
 {
+	struct EntityActionPair
+	{
+		entt::entity entity;
+		std::unique_ptr<action::Action> action = nullptr;
+	};
+
 	class ActionHandler : public System
 	{
 	public:
@@ -16,8 +22,7 @@ namespace drft::system
 		virtual void update(const float dt) override;
 
 	private:
-		// Performs the action, returning the fallback action in case of failure.
-		drft::action::ActionResult performAction(entt::entity, action::ActionResult action);
+		std::queue<EntityActionPair> _actionQueue;
 	};
 }
 

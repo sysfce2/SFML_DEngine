@@ -167,10 +167,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Actions\Attack.cpp" />
+    <ClCompile Include="src\Actions\Move.cpp" />
+    <ClCompile Include="src\Actions\Action.cpp" />
     <ClCompile Include="Serialization.cpp" />
     <ClCompile Include="src\Systems\ChunkManager.cpp" />
     <ClCompile Include="src\Utility\DebugInfo.cpp" />
-    <ClCompile Include="src\Actions\Actions.cpp" />
     <ClCompile Include="src\Systems\ActionHandler.cpp" />
     <ClCompile Include="src\Systems\InputHandler.cpp" />
     <ClCompile Include="src\Spatial\Cell.cpp" />
@@ -226,12 +228,13 @@
     <ClCompile Include="src\Systems\TileRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Actions\Attack.h" />
+    <ClInclude Include="src\Actions\Move.h" />
+    <ClInclude Include="src\Actions\Action.h" />
     <ClInclude Include="Serialization.h" />
     <ClInclude Include="src\Systems\ChunkManager.h" />
     <ClInclude Include="src\Utility\DebugInfo.h" />
-    <ClInclude Include="src\Actions\Actions.h" />
     <ClInclude Include="src\Systems\ActionHandler.h" />
-    <ClInclude Include="src\Actions\ActionTypes.h" />
     <ClInclude Include="src\Systems\InputHandler.h" />
     <ClInclude Include="src\Spatial\Cell.h" />
     <ClInclude Include="deps\EnTT\entt.h" />

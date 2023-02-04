@@ -1,27 +1,32 @@
 #include "pch.h"
-#include "Actions.h"
+#include "Move.h"
+#include "Spatial/WorldGrid.h"
 #include "Components/Components.h"
+#include "Actions/Attack.h"
 
 using namespace drft::action;
 
-ActionResult drft::action::move(entt::registry& registry, entt::entity actor, sf::Vector2i direction, spatial::WorldGrid& grid)
+std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, const entt::entity actor)
 {
 	auto& pos = registry.get<component::Position>(actor);
+	auto& grid = registry.ctx().get<spatial::WorldGrid&>();
+
 	sf::Vector2f targetPosition = pos.position;
 	targetPosition += spatial::toWorldSpace(direction);
 
 	if (spatial::toLayer(pos.depth) == spatial::Layer::Item)
 	{
 		grid.moveEntity(actor, spatial::toTileSpace(pos.position), spatial::toTileSpace(targetPosition), spatial::Layer::Item);
-		registry.patch<component::Position>(actor, 
-			[&](auto& p) 
+
+		registry.patch<component::Position>(actor,
+			[&](auto& p)
 			{
 				p.position = targetPosition;
 				p.depth = pos.depth;
 			}
 		);
 
-		return { ActionType::None, spatial::toTileSpace(targetPosition)};
+		return nullptr;
 	}
 	else
 	{
@@ -29,6 +34,7 @@ ActionResult drft::action::move(entt::registry& registry, entt::entity actor, sf
 		if (potentialBlockers.empty())
 		{
 			grid.moveEntity(actor, spatial::toTileSpace(pos.position), spatial::toTileSpace(targetPosition), spatial::toLayer(pos.depth));
+
 			registry.patch<component::Position>(actor,
 				[&](auto& p)
 				{
@@ -37,21 +43,15 @@ ActionResult drft::action::move(entt::registry& registry, entt::entity actor, sf
 				}
 			);
 
-			return { ActionType::None, spatial::toTileSpace(targetPosition) };
+			return nullptr;
 		}
 	}
 
-	return { ActionType::Attack, spatial::toTileSpace(targetPosition) };
+
+	return std::make_unique<action::Attack>(direction);
 }
 
-ActionResult drft::action::attack(entt::registry& registry, entt::entity actor, sf::Vector2i targetPosition, spatial::WorldGrid& grid)
+std::unique_ptr<Action> drft::action::Move::clone() const
 {
-	auto targets = grid.entitiesAt(targetPosition, spatial::Layer::Actor);
-	for (auto&& target : targets)
-	{
-		std::cout << "Target id: " << (int)target << std::endl;
-	}
-	std::cout << "Attack (" << targetPosition.x << ", " << targetPosition.y << ")" << std::endl;
-
-	return { ActionType::Swap, targetPosition };
+	return std::make_unique<Move>(direction);
 }

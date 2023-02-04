@@ -1,28 +1,23 @@
 #include "pch.h"
 #include "InputHandler.h"
 #include "Components/Components.h"
-
-using namespace sf;
-
+#include "Actions/Action.h"
+#include "Actions/Move.h"
 
 void drft::system::InputHandler::init()
 {
-	// TODO: move to file
-	_keyBindings = {
-		{ActionType::Wait,				Keyboard::Numpad5},
-		{ActionType::MoveNorth,			Keyboard::Numpad8},
-		{ActionType::MoveSouth,			Keyboard::Numpad2},
-		{ActionType::MoveWest,			Keyboard::Numpad4},
-		{ActionType::MoveEast,			Keyboard::Numpad6},
-		{ActionType::MoveSouthEast,		Keyboard::Numpad3},
-		{ActionType::MoveSouthWest,		Keyboard::Numpad1},
-		{ActionType::MoveNorthEast,		Keyboard::Numpad9},
-		{ActionType::MoveNorthWest,		Keyboard::Numpad7},
-		{ActionType::PickUp,			Keyboard::G},
-		{ActionType::Drop,				Keyboard::D},
-		{ActionType::Talk,				Keyboard::T},
-		{ActionType::Contextual,		Keyboard::Space},
-	};
+	using Key = sf::Keyboard;
+
+	_actionMap.addAction(Key::Numpad1, new action::Move({ -1,  1 }));
+	_actionMap.addAction(Key::Numpad2, new action::Move({  0,  1 }));
+	_actionMap.addAction(Key::Numpad3, new action::Move({  1,  1 }));
+	_actionMap.addAction(Key::Numpad4, new action::Move({ -1,  0 }));
+	_actionMap.addAction(Key::Numpad5, new action::Move({  0,  0 }));
+	_actionMap.addAction(Key::Numpad6, new action::Move({  1,  0 }));
+	_actionMap.addAction(Key::Numpad7, new action::Move({ -1, -1 }));
+	_actionMap.addAction(Key::Numpad8, new action::Move({  0, -1 }));
+	_actionMap.addAction(Key::Numpad9, new action::Move({  1, -1 }));
+	
 }
 
 void drft::system::InputHandler::update(const float dt)
@@ -31,41 +26,57 @@ void drft::system::InputHandler::update(const float dt)
 
 	for (auto entity : view)
 	{
-		for (auto&& [thisAction, key] : _keyBindings)
+		for (auto&& [key, action] : _actionMap.iterate())
 		{
-			if (Keyboard::isKeyPressed(_keyBindings[thisAction]))
+			if (sf::Keyboard::isKeyPressed(key))
 			{
-				_keyState[thisAction].active = false;
-				if (_keyState[thisAction].timeHeld <= std::numeric_limits<float>::epsilon())
+				_keyState[key].active = false;
+				if (_keyState[key].timeHeld <= std::numeric_limits<float>::epsilon())
 				{
 					// Just pressed
-					_keyState[thisAction].active = true;
-					_keyState[thisAction].timeHeld = 0.0f;
+					_keyState[key].active = true;
+					_keyState[key].timeHeld = 0.0f;
 				}
-				else if (_keyState[thisAction].timeHeld >= _holdTime)
+				else if (_keyState[key].timeHeld >= _holdTime)
 				{
 					// Held key long enough
-					_keyState[thisAction].active = true;
-					_keyState[thisAction].timeHeld -= _refractoryPeriod;
+					_keyState[key].active = true;
+					_keyState[key].timeHeld -= _refractoryPeriod;
 				}
 				
-				_keyState[thisAction].timeHeld += dt;
-				if (_keyState[thisAction].timeHeld > _holdTime)
+				_keyState[key].timeHeld += dt;
+				if (_keyState[key].timeHeld > _holdTime)
 				{
-					_keyState[thisAction].timeHeld = _holdTime;
+					_keyState[key].timeHeld = _holdTime;
 				}
 			}
 			else
 			{
-				_keyState[thisAction].timeHeld = 0.0f;
-				_keyState[thisAction].active = false;
+				_keyState[key].timeHeld = 0.0f;
+				_keyState[key].active = false;
 			}
 
-			if (_keyState[thisAction].active)
+			if (_keyState[key].active)
 			{
-				if (registry->any_of<component::Input>(entity)) break;
-				registry->emplace<component::Input>(entity, thisAction);
+				if (registry->any_of<component::Input>(entity)) return;
+
+				registry->emplace<component::Input>(entity, _actionMap[key]);
 			}
 		}
 	}
+}
+
+void drft::system::ActionMap::addAction(sf::Keyboard::Key key, action::Action* action)
+{
+	_map[key] = std::unique_ptr<action::Action>(action);
+}
+
+std::unique_ptr<drft::action::Action> drft::system::ActionMap::operator[](sf::Keyboard::Key key)
+{
+	return _map[key]->clone();
+}
+
+std::unordered_map<sf::Keyboard::Key, std::unique_ptr<drft::action::Action>>& drft::system::ActionMap::iterate()
+{
+	return _map;
 }
