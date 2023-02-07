@@ -21,7 +21,7 @@ namespace Microsoft
 				std::uint32_t id = static_cast<std::uint32_t>(entity);
 
 				std::string str("Entity ID: ");
-				str += (unsigned int)id;
+				str += (std::uint32_t)id;
 				std::wstring wstr;
 				std::copy(str.begin(), str.end(), std::back_inserter(wstr));
 

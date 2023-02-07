@@ -5,14 +5,14 @@ namespace drft::action
 {
 	struct Attack : public Action
 	{
-		Attack(sf::Vector2i direction)
-			: direction(direction) {}
+		Attack(std::vector<entt::entity> targets)
+			: potentialTargets(targets) {}
 
 		std::unique_ptr<Action> execute(entt::registry& registry, const entt::entity actor) override;
 		std::unique_ptr<Action> clone() const override;
 
 	private:
-		sf::Vector2i direction;
+		std::vector<entt::entity> potentialTargets;;
 	};
 }
 

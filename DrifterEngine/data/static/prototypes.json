@@ -1,0 +1,47 @@
+{
+  "Prototypes": [
+    {
+      "Name": "PhysicalObject",
+      "Components": [
+        {
+          "Name": "Position",
+          "Data": {
+            "position": [ 0.0, 0.0 ],
+            "depth": 2
+          }
+        },
+        {
+          "Name": "Render",
+          "Data": {
+            "sprite": 0,
+            "color": [ 255, 255, 255 ]
+          }
+        }
+      ]
+    },
+
+    {
+      "Name": "Tree",
+      "Inherits": [
+        "PhysicalObject"
+      ],
+      "Components": [
+        {
+          "Name": "Info",
+          "Data": {
+            "name": "Tree",
+            "extendedName": "",
+            "description": "A wooden trunk with many leaves."
+          }
+        },
+        {
+          "Name": "Render",
+          "Data": {
+            "sprite": 5,
+            "color": [ 80, 100, 80 ]
+          }
+        }
+      ]
+    }
+  ]
+}

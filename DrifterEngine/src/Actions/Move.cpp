@@ -45,10 +45,14 @@ std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, co
 
 			return nullptr;
 		}
+		else
+		{
+			return std::make_unique<Attack>(potentialBlockers);
+		}
 	}
 
 
-	return std::make_unique<action::Attack>(direction);
+	return nullptr;
 }
 
 std::unique_ptr<Action> drft::action::Move::clone() const

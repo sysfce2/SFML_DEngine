@@ -10,7 +10,9 @@
 #include "Systems/Camera.h"
 #include "Systems/ChunkManager.h"
 #include "Components/Components.h"
+#include "Components/Meta.h"
 #include "Utility/TestEntities.h"
+#include "Factory/EntityFactory.h"
 
 
 drft::GameState::GameState(State::Context context) : State(context)
@@ -42,6 +44,12 @@ void drft::GameState::init()
 {
 	std::cout << "Initializing GameState..." << std::endl;
 
+	component::Meta::initialize();
+
+	EntityFactory factory(_registry);
+
+	factory.loadPrototypes("prototypes.json");
+
 	_systems = std::make_unique<system::SystemScheduler>(_registry);
 	_world = std::make_unique<spatial::WorldGrid>();
 
@@ -56,6 +64,7 @@ void drft::GameState::init()
 	//
 	auto player = _registry.create();
 	auto startingPosition = spatial::toWorldSpace({ 10, 10 });
+	_registry.emplace<component::Info>(player, "Player", "", "");
 	_registry.emplace<component::Position>(player, startingPosition, (int)spatial::Layer::Actor);
 	_registry.emplace<component::Render>(player, 1u, sf::Color::White);
 	_registry.emplace<component::Player>(player);

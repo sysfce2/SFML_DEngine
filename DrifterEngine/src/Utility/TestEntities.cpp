@@ -20,6 +20,7 @@ void drft::util::buildTestTrees(entt::registry& registry, int numberOfTrees, sf:
 
 		auto tilePos = spatial::toWorldSpace({ x,y });
 
+		registry.emplace<component::Info>(e, "tree", "", "");
 		registry.emplace<component::Position>(e, tilePos, (int)spatial::Layer::Actor);
 		registry.emplace<component::Render>(e, (unsigned int)sprite, sf::Color(r, g, b, 255));
 	}

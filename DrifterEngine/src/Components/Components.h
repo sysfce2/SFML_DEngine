@@ -4,10 +4,17 @@
 
 namespace component
 {
+	struct Info
+	{
+		std::string name = "";
+		std::string extendedName = "";
+		std::string despription = "";
+	};
+
 	// Position in world space.
 	struct Position
 	{
-		sf::Vector2f position;
+		sf::Vector2f position = { 0,0 };
 		int depth = 0;
 	};
 
@@ -20,8 +27,8 @@ namespace component
 
 	struct Camera
 	{
-		sf::FloatRect viewport;
-		entt::entity target;
+		sf::FloatRect viewport = { 0,0,0,0 };
+		entt::entity target = entt::null;
 	};
 
 	// Represents a player
@@ -37,7 +44,5 @@ namespace component
 	{
 		std::unique_ptr<drft::action::Action> desiredAction;
 	};
-
-	struct OnScreen {};
 
 } // namespace component
