@@ -6,18 +6,19 @@ namespace drft
 	class EntityFactory
 	{
 	public:
-		EntityFactory(entt::registry& registry);
+		EntityFactory();
 
-		// Load entity prototypes from the given file.
-		bool loadPrototypes(std::string filename);
+		// Load entity prototypes from the given file into the given registry.
+		bool loadPrototypes(std::string filename, entt::registry& registry);
 
-		// Use EnTT hashed string to index desired prototype.
-		entt::entity build(std::size_t);
-		bool copyEntity(entt::entity from, entt::entity to);
+		// Build a new entity and place into the given registry.
+		entt::entity build(std::string name, entt::registry& registry);
 
 	private:
-		std::unordered_map<std::size_t, entt::entity> _prototypes;
-		entt::registry& registry;
+		entt::entity copyEntity(entt::entity from, entt::registry& registry);
+
+	private:
+		std::unordered_map<std::string, entt::entity> _prototypes;
 	};
 }
 

@@ -10,7 +10,7 @@ void component::Meta::initialize()
 		.ctor<&entt::registry::emplace_or_replace<Info>, entt::as_ref_t>()
 		.data<&Info::name>("name"_hs)
 		.data<&Info::extendedName>("extendedName"_hs)
-		.data<&Info::despription>("description"_hs);
+		.data<&Info::description>("description"_hs);
 
 	entt::meta<component::Position>().type("Position"_hs)
 		.ctor<&entt::registry::emplace_or_replace<Position>, entt::as_ref_t>()

@@ -8,7 +8,7 @@ namespace component
 	{
 		std::string name = "";
 		std::string extendedName = "";
-		std::string despription = "";
+		std::string description = "";
 	};
 
 	// Position in world space.

@@ -44,12 +44,6 @@ void drft::GameState::init()
 {
 	std::cout << "Initializing GameState..." << std::endl;
 
-	component::Meta::initialize();
-
-	EntityFactory factory(_registry);
-
-	factory.loadPrototypes("prototypes.json");
-
 	_systems = std::make_unique<system::SystemScheduler>(_registry);
 	_world = std::make_unique<spatial::WorldGrid>();
 
