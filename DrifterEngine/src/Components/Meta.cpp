@@ -6,6 +6,8 @@ using namespace entt::literals;
 
 void component::Meta::initialize()
 {
+	// Meta types initialized here. Use the current ones as examples to 'meta' new compenents
+
 	entt::meta<component::Info>().type("Info"_hs)
 		.ctor<&entt::registry::emplace_or_replace<Info>, entt::as_ref_t>()
 		.data<&Info::name>("name"_hs)
@@ -22,12 +24,9 @@ void component::Meta::initialize()
 		.data<&Render::sprite>("sprite"_hs)
 		.data<&Render::color>("color"_hs);
 
-	/*
 	entt::meta<component::Player>().type("Player"_hs)
-		.ctor<&entt::registry::emplace_or_replace<Player>>();
-
+		.func<&entt::registry::emplace_or_replace<Player>>("tag"_hs);
 
 	entt::meta<component::AI>().type("AI"_hs)
-		.ctor<&entt::registry::emplace_or_replace<AI>>();
-		*/
+		.func<&entt::registry::emplace_or_replace<AI>>("tag"_hs);
 }

@@ -15,7 +15,8 @@ namespace drft
 		entt::entity build(std::string name, entt::registry& registry);
 
 	private:
-		entt::entity copyEntity(entt::entity from, entt::registry& registry);
+		void			copyEntity(entt::entity to, entt::entity from, entt::registry& registry);
+		entt::entity	copyEntity(entt::entity from, entt::registry& registry);
 
 	private:
 		std::unordered_map<std::string, entt::entity> _prototypes;

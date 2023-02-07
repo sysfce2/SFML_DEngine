@@ -1,12 +1,35 @@
 {
   "Prototypes": [
     {
-      "Name": "PhysicalObject",
+      "Name": "TesterBase",
+      "Components": [
+        {
+          "Name": "Info",
+          "Data": {
+            "name": "Test",
+            "extendedName": "Tester",
+            "description": "An entity used for testing purposes."
+          }
+        },
+        {
+          "Name": "Position",
+          "Data": {
+            "position": [ -0.0, 0.0 ],
+            "depth": 2
+          }
+        }
+      ]
+    },
+    {
+      "Name": "TesterObject",
+      "Inherits": [
+        "TesterBase"
+      ],
       "Components": [
         {
           "Name": "Position",
           "Data": {
-            "position": [ 0.0, 0.0 ],
+            "position": [ -30.0, 90.0 ],
             "depth": 2
           }
         },
@@ -14,8 +37,11 @@
           "Name": "Render",
           "Data": {
             "sprite": 0,
-            "color": [ 255, 255, 255 ]
+            "color": [ 200, 150, 100 ]
           }
+        },
+        {
+          "Name": "AI"
         }
       ]
     },
@@ -23,7 +49,7 @@
     {
       "Name": "Tree",
       "Inherits": [
-        "PhysicalObject"
+        ""
       ],
       "Components": [
         {

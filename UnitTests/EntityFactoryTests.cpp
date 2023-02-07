@@ -77,11 +77,12 @@ namespace UnitTests
 
 			factory.loadPrototypes("prototypes.json", registry);
 
-			auto e = factory.build("Tree", registry);
+			auto e = factory.build("TesterObject", registry);
 
 			Assert::IsTrue(registry.all_of<component::Info>(e));
 			Assert::IsTrue(registry.all_of<component::Position>(e));
 			Assert::IsTrue(registry.all_of<component::Render>(e));
+			Assert::IsTrue(registry.all_of<component::AI>(e));
 		}
 
 		TEST_METHOD(NewFactory_BuildEntity_HasAllExpectedValues)
@@ -89,17 +90,17 @@ namespace UnitTests
 			entt::registry registry;
 			drft::EntityFactory factory;
 			factory.loadPrototypes("prototypes.json", registry);
-			auto e = factory.build("Tree", registry);
+			auto e = factory.build("TesterObject", registry);
 
 			auto pos = registry.get<component::Position>(e);
 			auto info = registry.get<component::Info>(e);
 			auto ren = registry.get<component::Render>(e);
 
-			Assert::AreEqual(sf::Vector2f(10.f, 10.f), pos.position);
+			Assert::AreEqual(sf::Vector2f(-30.f, 90.f), pos.position);
 			Assert::AreEqual(2, pos.depth);
-			Assert::AreEqual(std::string("Tree"), info.name);
-			Assert::AreEqual(5u, ren.sprite);
-			Assert::AreEqual(sf::Color(80, 100, 80), ren.color);
+			Assert::AreEqual(std::string("Test"), info.name);
+			Assert::AreEqual(0u, ren.sprite);
+			Assert::AreEqual(sf::Color(200, 150, 100), ren.color);
 		}
 	};
 
