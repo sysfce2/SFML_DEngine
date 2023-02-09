@@ -23,10 +23,8 @@ entt::entity drft::spatial::WorldGrid::removeEntity(const entt::entity& entity)
 
 	entt::entity result = entt::null;
 
-	sf::Vector2i worldPosition;
-	worldPosition.x = _entityPositions[entity].x;
-	worldPosition.y = _entityPositions[entity].y;
-	int layer = _entityPositions[entity].z;
+	sf::Vector2i worldPosition = getPosition(entity);
+	int layer = static_cast<int>(getLayer(entity));
 
 	auto chunkCoordinate = toChunkCoordinate(worldPosition);
 	auto localPosition = toLocalChunkSpace(worldPosition);
