@@ -96,6 +96,9 @@
     <ClCompile Include="src\Components\Meta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Events\Events.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\EnTT\entt.h">
@@ -659,6 +662,9 @@
     <ClInclude Include="deps\Cereal\version.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Events\Events.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Utility\ResourceHolder.inl">
@@ -669,6 +675,7 @@
     </None>
     <None Include="data\static\prototypes.json" />
     <None Include="deps\Cereal\external\rapidxml\manual.html" />
+    <None Include="data\static\player.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\Textures\simpleTileset.png">

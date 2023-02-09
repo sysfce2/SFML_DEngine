@@ -4,6 +4,8 @@
 
 namespace component
 {
+	struct Prototype {};
+
 	struct Info
 	{
 		std::string name = "";

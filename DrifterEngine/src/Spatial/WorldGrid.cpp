@@ -14,18 +14,31 @@ void drft::spatial::WorldGrid::placeEntity(const entt::entity& entity, const sf:
 		_activeChunks.push_back(chunkCoordinate);
 	}
 	_chunks[keyablePair]->placeEntity(entity, localPosition, (int)layer);
+	_entityPositions[entity] = { worldPosition.x, worldPosition.y, (int)layer };
 }
 
-entt::entity drft::spatial::WorldGrid::removeEntity(const entt::entity& entity, const sf::Vector2i worldPosition, Layer layer)
+entt::entity drft::spatial::WorldGrid::removeEntity(const entt::entity& entity)
 {
+	if (entity == entt::null) return entity;
+
 	entt::entity result = entt::null;
+
+	sf::Vector2i worldPosition;
+	worldPosition.x = _entityPositions[entity].x;
+	worldPosition.y = _entityPositions[entity].y;
+	int layer = _entityPositions[entity].z;
 
 	auto chunkCoordinate = toChunkCoordinate(worldPosition);
 	auto localPosition = toLocalChunkSpace(worldPosition);
 	auto keyablePair = std::make_pair(chunkCoordinate.x, chunkCoordinate.y);
 
-	if (!_chunks.contains(keyablePair)) return result;
-	result = _chunks.at(keyablePair)->removeEntity(entity, localPosition, (int)layer);
+	if (!_chunks.contains(keyablePair))
+	{
+		assert(false);
+		return result;
+	}
+	result = _chunks.at(keyablePair)->removeEntity(entity, localPosition, layer);
+	_entityPositions.erase(entity);
 	if (_chunks.at(keyablePair)->empty())
 	{
 		auto it = std::find(_activeChunks.begin(), _activeChunks.end(), chunkCoordinate);
@@ -40,18 +53,24 @@ entt::entity drft::spatial::WorldGrid::removeEntity(const entt::entity& entity, 
 	return result;
 }
 
-bool drft::spatial::WorldGrid::moveEntity(const entt::entity entity, const sf::Vector2i fromWorldPosition, const sf::Vector2i toWorldPosition, Layer layer)
+bool drft::spatial::WorldGrid::moveEntity(const entt::entity entity, const sf::Vector2i toWorldPosition, Layer layer)
 {
-	auto chunkCoordinate = toChunkCoordinate(fromWorldPosition);
-	auto localPosition = toLocalChunkSpace(fromWorldPosition);
-	auto keyablePair = std::make_pair(chunkCoordinate.x, chunkCoordinate.y);
-
-	if (!_chunks.contains(keyablePair)) return false;
-
-	_chunks[keyablePair]->removeEntity(entity, localPosition, (int)layer);
+	this->removeEntity(entity);
 	this->placeEntity(entity, toWorldPosition, layer);
 
 	return true;
+}
+
+const sf::Vector2i drft::spatial::WorldGrid::getPosition(const entt::entity entity) const
+{
+	auto vec3 = _entityPositions.at(entity);
+	return { vec3.x, vec3.y };
+}
+
+const drft::spatial::Layer drft::spatial::WorldGrid::getLayer(const entt::entity entity) const
+{
+	auto vec3 = _entityPositions.at(entity);
+	return (Layer)vec3.z;
 }
 
 std::vector<entt::entity> drft::spatial::WorldGrid::entitiesAt(const sf::Vector2i worldPosition, const Layer layer)

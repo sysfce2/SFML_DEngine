@@ -16,8 +16,6 @@ std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, co
 
 	if (spatial::toLayer(pos.depth) == spatial::Layer::Item)
 	{
-		grid.moveEntity(actor, spatial::toTileSpace(pos.position), spatial::toTileSpace(targetPosition), spatial::Layer::Item);
-
 		registry.patch<component::Position>(actor,
 			[&](auto& p)
 			{
@@ -33,8 +31,6 @@ std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, co
 		auto potentialBlockers = grid.entitiesAt(spatial::toTileSpace(targetPosition), spatial::toLayer(pos.depth));
 		if (potentialBlockers.empty())
 		{
-			grid.moveEntity(actor, spatial::toTileSpace(pos.position), spatial::toTileSpace(targetPosition), spatial::toLayer(pos.depth));
-
 			registry.patch<component::Position>(actor,
 				[&](auto& p)
 				{

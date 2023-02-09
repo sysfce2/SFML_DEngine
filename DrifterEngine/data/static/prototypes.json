@@ -1,38 +1,38 @@
 {
   "Prototypes": [
     {
-      "Name": "TesterBase",
+      "Name": "TesterBase1",
       "Components": [
         {
           "Name": "Info",
           "Data": {
             "name": "Test",
             "extendedName": "Tester",
-            "description": "An entity used for testing purposes."
-          }
-        },
-        {
-          "Name": "Position",
-          "Data": {
-            "position": [ -0.0, 0.0 ],
-            "depth": 2
+            "description": "An entity used for unit testing purposes."
           }
         }
       ]
     },
     {
+      "Name": "TesterBase2",
+      "Components": [
+      {
+        "Name": "Position",
+        "Data": {
+          "position": [ -30.0, 90.0 ],
+          "depth": 2
+        }
+      }
+      ]
+    },
+    {
       "Name": "TesterObject",
       "Inherits": [
-        "TesterBase"
+        "TesterBase1",
+        "TesterBase2",
+        "MISTAKE"
       ],
       "Components": [
-        {
-          "Name": "Position",
-          "Data": {
-            "position": [ -30.0, 90.0 ],
-            "depth": 2
-          }
-        },
         {
           "Name": "Render",
           "Data": {
@@ -71,7 +71,7 @@
           "Name": "Position",
           "Data": {
             "position": [ 10.0, 10.0 ],
-            "depth": 2
+            "depth": 3
           }
         }
       ]

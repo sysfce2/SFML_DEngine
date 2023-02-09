@@ -10,7 +10,7 @@ void drft::system::Camera::init()
 
 void drft::system::Camera::update(const float dt)
 {
-	auto&& cameraView = registry->view<component::Camera, component::Position>();
+	auto&& cameraView = registry->view<component::Camera, component::Position>(entt::exclude<component::Prototype>);
 
 	for (auto [entity, camera, pos] : cameraView.each())
 	{

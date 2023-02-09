@@ -7,7 +7,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-
+// ToString() definitions
 namespace Microsoft
 {
 	namespace VisualStudio

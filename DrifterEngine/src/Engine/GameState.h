@@ -3,6 +3,8 @@
 
 namespace drft
 {
+	class EntityFactory;
+
 	namespace system
 	{
 		class SystemScheduler;
@@ -32,6 +34,8 @@ namespace drft
 		entt::registry _registry;
 		std::unique_ptr<system::SystemScheduler> _systems;
 		std::unique_ptr<spatial::WorldGrid> _world;
+		std::unique_ptr<EntityFactory> _factory;
+		std::unique_ptr<entt::dispatcher> _dispatcher;
 	};
 
 } // namespace drft

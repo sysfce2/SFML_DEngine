@@ -44,26 +44,33 @@ void drft::GameState::init()
 {
 	std::cout << "Initializing GameState..." << std::endl;
 
+
+
 	_systems = std::make_unique<system::SystemScheduler>(_registry);
 	_world = std::make_unique<spatial::WorldGrid>();
+	_factory = std::make_unique<EntityFactory>();
+	_dispatcher = std::make_unique<entt::dispatcher>();
 
 	_registry.ctx().emplace<spatial::WorldGrid&>(*_world);
 	_registry.ctx().emplace<util::DebugInfo&>(getContext().debugInfo);
 	_registry.ctx().emplace<sf::Texture&>(getContext().textures.get("Sprites"));
+	_registry.ctx().emplace<EntityFactory&>(*_factory);
+	_registry.ctx().emplace<entt::dispatcher&>(*_dispatcher);
 	
 	importSystems();
 	_systems->initAll();
 
-	// ADD PLAYER ENTITY // ** temporary just for testing **
-	//
-	auto player = _registry.create();
-	auto startingPosition = spatial::toWorldSpace({ 10, 10 });
-	_registry.emplace<component::Info>(player, "Player", "", "");
-	_registry.emplace<component::Position>(player, startingPosition, (int)spatial::Layer::Actor);
-	_registry.emplace<component::Render>(player, 1u, sf::Color::White);
-	_registry.emplace<component::Player>(player);
-	//
-	////////////////////////////////////////////////////////////////
+	_factory->loadPrototypes("prototypes.json", _registry);
+	_factory->loadPrototypes("player.json", _registry);
+
+	sf::Vector2f startingPosition = spatial::toWorldSpace({ 32,32 });
+
+	auto player = _factory->build("Player", _registry);
+	player.patch<component::Position>([&](auto& pos)
+		{
+			pos.position = startingPosition;
+		});
+	
 
 	// ADD CAMERA ENTITY // ** temporary just for testing **
 	//

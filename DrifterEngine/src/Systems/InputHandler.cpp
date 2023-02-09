@@ -22,7 +22,7 @@ void drft::system::InputHandler::init()
 
 void drft::system::InputHandler::update(const float dt)
 {
-	auto view = registry->view<component::Player>();
+	auto view = registry->view<component::Player>(entt::exclude<component::Prototype>);
 
 	for (auto entity : view)
 	{

@@ -17,6 +17,7 @@ namespace drft::system
 
 	private:
 		void OnPositionAdd(entt::registry& registry, entt::entity);
+		void OnPositionUpdate(entt::registry& registry, entt::entity);
 		void OnPositionRemove(entt::registry& registry, entt::entity);
 	};
 

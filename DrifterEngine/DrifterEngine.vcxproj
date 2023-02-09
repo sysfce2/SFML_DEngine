@@ -168,6 +168,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\Meta.cpp" />
+    <ClCompile Include="src\Events\Events.cpp" />
     <ClCompile Include="src\Factory\EntityFactory.cpp" />
     <ClCompile Include="src\Actions\Attack.cpp" />
     <ClCompile Include="src\Actions\Move.cpp" />
@@ -388,6 +389,7 @@
     <ClInclude Include="deps\EnTT\signal\fwd.hpp" />
     <ClInclude Include="deps\EnTT\signal\sigh.hpp" />
     <ClInclude Include="src\Components\Meta.h" />
+    <ClInclude Include="src\Events\Events.h" />
     <ClInclude Include="src\Factory\EntityFactory.h" />
     <ClInclude Include="src\Actions\Attack.h" />
     <ClInclude Include="src\Actions\Move.h" />
@@ -418,6 +420,7 @@
     <ClInclude Include="src\Systems\TileRenderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\static\player.json" />
     <None Include="data\static\prototypes.json" />
     <None Include="deps\Cereal\external\rapidxml\manual.html" />
     <None Include="src\Spatial\Grid.inl" />

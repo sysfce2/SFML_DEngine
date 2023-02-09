@@ -2,10 +2,13 @@
 #include "TestEntities.h"
 #include "Components/Components.h"
 #include "Spatial/WorldGrid.h"
+#include "Factory/EntityFactory.h"
 
 void drft::util::buildTestTrees(entt::registry& registry, int numberOfTrees, sf::IntRect inArea)
 {
 	std::srand((unsigned int)&numberOfTrees);
+
+	auto& factory = registry.ctx().get<EntityFactory&>();
 
 	for (int i = 0; i < numberOfTrees; ++i)
 	{
@@ -18,10 +21,13 @@ void drft::util::buildTestTrees(entt::registry& registry, int numberOfTrees, sf:
 
 		auto e = registry.create();
 
-		auto tilePos = spatial::toWorldSpace({ x,y });
+		auto position = spatial::toWorldSpace({ x,y });
 
-		registry.emplace<component::Info>(e, "tree", "", "");
-		registry.emplace<component::Position>(e, tilePos, (int)spatial::Layer::Actor);
-		registry.emplace<component::Render>(e, (unsigned int)sprite, sf::Color(r, g, b, 255));
+		auto tree = factory.build("Tree", registry);
+		tree.patch<component::Position>([&](auto& pos)
+			{
+				pos.position = position;
+			});
+
 	}
 }

@@ -1,22 +1,27 @@
 #pragma once
-#include "../deps/Cereal/external/rapidjson/rapidjson.h"
 
 namespace drft
 {
+	/// <summary>
+	/// Class that initializes and builds entities from prototypes.
+	/// Prototypes are loaded from a JSON file located in the data/static folder.
+	/// </summary>
 	class EntityFactory
 	{
 	public:
 		EntityFactory();
 
-		// Load entity prototypes from the given file into the given registry.
-		bool loadPrototypes(std::string filename, entt::registry& registry);
+		// Load entity prototypes from the given JSON file into the given registry.
+		bool loadPrototypes(std::string JSONfilename, entt::registry& registry);
 
 		// Build a new entity and place into the given registry.
-		entt::entity build(std::string name, entt::registry& registry);
+		entt::handle build(const std::string& name, entt::registry& registry);
+
+		// Check if the factory has a prototype with the given name.
+		bool has(const std::string& name) const;
 
 	private:
-		void			copyEntity(entt::entity to, entt::entity from, entt::registry& registry);
-		entt::entity	copyEntity(entt::entity from, entt::registry& registry);
+		void copyEntity(entt::entity to, entt::entity from, entt::registry& registry);
 
 	private:
 		std::unordered_map<std::string, entt::entity> _prototypes;

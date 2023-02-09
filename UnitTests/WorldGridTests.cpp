@@ -77,7 +77,7 @@ namespace UnitTests
 		{
 			spatial::WorldGrid world;
 
-			auto e = world.removeEntity(entt::null, { 100, 99 }, spatial::Layer::Actor);
+			auto e = world.removeEntity(entt::null);
 
 			Assert::IsTrue(e == entt::null);
 		}
@@ -108,9 +108,9 @@ namespace UnitTests
 			world.placeEntity(entity2, { -1000, -1000 }, spatial::Layer::Item);
 			world.placeEntity(entity3, { 0, 0 }, spatial::Layer::Prop);
 
-			auto foundEntity1 = world.removeEntity(entity1, { 1000, 1000 }, spatial::Layer::Actor);
-			auto foundEntity2 = world.removeEntity(entity2, { -1000, -1000 }, spatial::Layer::Item);
-			auto foundEntity3 = world.removeEntity(entity3, { 0, 0 }, spatial::Layer::Prop);
+			auto foundEntity1 = world.removeEntity(entity1);
+			auto foundEntity2 = world.removeEntity(entity2);
+			auto foundEntity3 = world.removeEntity(entity3);
 
 			Assert::AreEqual(entity1, foundEntity1);
 			Assert::AreEqual(entity2, foundEntity2);
@@ -126,7 +126,7 @@ namespace UnitTests
 			sf::Vector2i position2 = { 25, -125 };
 
 			world.placeEntity(entity, position1, spatial::Layer::Actor);
-			world.moveEntity(entity, position1, position2, spatial::Layer::Actor);
+			world.moveEntity(entity, position2, spatial::Layer::Actor);
 
 			auto elist1 = world.entitiesAt(position1, spatial::Layer::Actor);
 			auto elist2 = world.entitiesAt(position2, spatial::Layer::Actor);

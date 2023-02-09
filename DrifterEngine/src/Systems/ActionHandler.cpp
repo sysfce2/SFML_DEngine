@@ -10,7 +10,7 @@ void drft::system::ActionHandler::init()
 
 void drft::system::ActionHandler::update(const float dt)
 {
-	auto view = registry->view<component::Input>();
+	auto view = registry->view<component::Input>(entt::exclude<component::Prototype>);
 
 	for (auto [entity, input] : view.each())
 	{
