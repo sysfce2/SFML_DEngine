@@ -133,7 +133,7 @@ void drft::system::ChunkManager::setState(sf::Vector2i coordinate, ChunkState st
 
 void drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate)
 {
-	std::cout << "Building chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
+	//std::cout << "Building chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
 	auto origin = spatial::toTileSpace(chunkCoordinate);
 	util::buildTestTrees(*registry, 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT });
 	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Built;
@@ -141,12 +141,12 @@ void drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate)
 
 void drft::system::ChunkManager::load(sf::Vector2i chunkCoordinate)
 {
-	std::cout << "Loading chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
+	//std::cout << "Loading chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
 	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Loaded;
 }
 
 void drft::system::ChunkManager::save(sf::Vector2i chunkCoordinate)
 {
-	std::cout << "Saving chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
+	//std::cout << "Saving chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
 	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Saved;
 }

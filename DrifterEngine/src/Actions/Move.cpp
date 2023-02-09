@@ -14,7 +14,11 @@ std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, co
 	sf::Vector2f targetPosition = pos.position;
 	targetPosition += spatial::toWorldSpace(direction);
 
-	if (spatial::toLayer(pos.depth) == spatial::Layer::Item)
+	// TODO: add more robust collision checking to account for objects on different layers
+
+	auto potentialBlockers = grid.entitiesAt(spatial::toTileSpace(targetPosition), spatial::toLayer(pos.depth));
+
+	if (potentialBlockers.empty() || spatial::toLayer(pos.depth) == spatial::Layer::Item)
 	{
 		registry.patch<component::Position>(actor,
 			[&](auto& p)
@@ -28,26 +32,9 @@ std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, co
 	}
 	else
 	{
-		auto potentialBlockers = grid.entitiesAt(spatial::toTileSpace(targetPosition), spatial::toLayer(pos.depth));
-		if (potentialBlockers.empty())
-		{
-			registry.patch<component::Position>(actor,
-				[&](auto& p)
-				{
-					p.position = targetPosition;
-					p.depth = pos.depth;
-				}
-			);
-
-			return nullptr;
-		}
-		else
-		{
-			return std::make_unique<Attack>(potentialBlockers);
-		}
+		return std::make_unique<Attack>(potentialBlockers);
 	}
-
-
+	
 	return nullptr;
 }
 

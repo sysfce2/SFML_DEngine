@@ -113,5 +113,3 @@ std::vector<entt::entity> drft::spatial::WorldGrid::getAllEntities(const sf::Vec
 	}
 	return std::vector<entt::entity>();
 }
-
-

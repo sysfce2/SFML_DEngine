@@ -18,6 +18,9 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 	std::string filepath = ".\\data\\static\\" + filename;
 
 	std::ifstream ifs{ filepath };
+
+	std::cout << "Loading " << filename << "..." << std::endl;
+
 	if (!ifs.is_open())
 	{
 		std::cerr << "Could not open file " << filepath << std::endl;
@@ -32,6 +35,8 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 		std::cout << filename << " could not be parsed." << std::endl;
 		return false;
 	}
+
+	std::cout << "Parsing " << filename << "..." << std::endl;
 
 	// Iterate each prototype
 	for (auto& prototype : doc["Prototypes"].GetArray())
