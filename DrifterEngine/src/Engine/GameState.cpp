@@ -44,8 +44,6 @@ void drft::GameState::init()
 {
 	std::cout << "Initializing GameState..." << std::endl;
 
-
-
 	_systems = std::make_unique<system::SystemScheduler>(_registry);
 	_world = std::make_unique<spatial::WorldGrid>();
 	_factory = std::make_unique<EntityFactory>();
@@ -58,7 +56,6 @@ void drft::GameState::init()
 	_registry.ctx().emplace<entt::dispatcher&>(*_dispatcher);
 	
 	importSystems();
-	_systems->initAll();
 
 	_factory->loadPrototypes("prototypes.json", _registry);
 	_factory->loadPrototypes("player.json", _registry);
@@ -71,7 +68,6 @@ void drft::GameState::init()
 			pos.position = startingPosition;
 		});
 	
-
 	// ADD CAMERA ENTITY // ** temporary just for testing **
 	//
 	auto camera = _registry.create();
@@ -95,4 +91,6 @@ void drft::GameState::importSystems()
 	_systems->add(system::InputHandler());
 	_systems->add(system::ActionHandler());
 	_systems->add(system::ChunkManager());
+
+	_systems->initAll();
 }

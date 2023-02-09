@@ -24,10 +24,12 @@ void drft::util::buildTestTrees(entt::registry& registry, int numberOfTrees, sf:
 		auto position = spatial::toWorldSpace({ x,y });
 
 		auto tree = factory.build("Tree", registry);
-		tree.patch<component::Position>([&](auto& pos)
+		tree.patch<component::Position>(
+			[&](auto& pos)
 			{
 				pos.position = position;
-			});
+			}
+		);
 
 	}
 }

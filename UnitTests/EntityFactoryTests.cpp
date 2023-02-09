@@ -99,10 +99,8 @@ namespace UnitTests
 			Assert::AreEqual(sf::Vector2f(-30.f, 90.f), pos.position);
 			Assert::AreEqual(2, pos.depth);
 			Assert::AreEqual(std::string("Test"), info.name);
-			Assert::AreEqual(0u, ren.sprite1);
-			Assert::AreEqual(sf::Color(11, 12, 13), ren.color1);
-			Assert::AreEqual(0u, ren.sprite2);
-			Assert::AreEqual(sf::Color(114, 115, 255), ren.color2);
+			Assert::AreEqual(0u, ren.sprite);
+			Assert::AreEqual(sf::Color(11, 12, 13), ren.color);
 		}
 	};
 
