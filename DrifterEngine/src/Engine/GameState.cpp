@@ -5,10 +5,12 @@
 #include "Systems/TileRenderer.h"
 #include "Systems/EntityRenderer.h"
 #include "Systems/WorldGridResolver.h"
-#include "Systems/InputHandler.h"
+#include "Systems/PlayerInput.h"
+#include "Systems/ArtificialInput.h"
 #include "Systems/ActionHandler.h"
 #include "Systems/Camera.h"
 #include "Systems/ChunkManager.h"
+#include "Systems/TurnManager.h"
 #include "Components/Components.h"
 #include "Components/Meta.h"
 #include "Utility/TestEntities.h"
@@ -67,7 +69,13 @@ void drft::GameState::init()
 		{
 			pos.position = startingPosition;
 		});
-	
+
+	auto test = _factory->build("NPC", _registry);
+	test.patch<component::Position>([&](auto& pos)
+		{
+			pos.position = spatial::toWorldSpace({ 20,20 });
+		});
+
 	// ADD CAMERA ENTITY // ** temporary just for testing **
 	//
 	auto camera = _registry.create();
@@ -88,7 +96,9 @@ void drft::GameState::importSystems()
 	_systems->add(system::EntityRenderer());
 	_systems->add(system::Camera());
 	_systems->add(system::WorldGridResolver());
-	_systems->add(system::InputHandler());
+	_systems->add(system::TurnManager());
+	_systems->add(system::PlayerInput());
+	_systems->add(system::ArtificialInput());
 	_systems->add(system::ActionHandler());
 	_systems->add(system::ChunkManager());
 

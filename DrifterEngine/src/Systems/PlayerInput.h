@@ -25,10 +25,10 @@ namespace drft::system
 		std::unordered_map<sf::Keyboard::Key, std::unique_ptr<action::Action>> _map;
 	};
 
-	class InputHandler : public System
+	class PlayerInput : public System
 	{
 	public:
-		InputHandler()
+		PlayerInput()
 		{
 			phase = Phase::OnProcessInput;
 		}

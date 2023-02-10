@@ -27,6 +27,14 @@
         },
         {
           "Name": "Player"
+        },
+        {
+          "Name": "Actor",
+          "Data": {
+            "ap": 0,
+            "moveSpeed": 100,
+            "actSpeed": 100
+          }
         }
       ]
     }

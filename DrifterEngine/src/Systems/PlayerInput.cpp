@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "InputHandler.h"
+#include "PlayerInput.h"
 #include "Components/Components.h"
 #include "Actions/Action.h"
 #include "Actions/Move.h"
 
-void drft::system::InputHandler::init()
+void drft::system::PlayerInput::init()
 {
 	using Key = sf::Keyboard;
 
@@ -20,7 +20,7 @@ void drft::system::InputHandler::init()
 	
 }
 
-void drft::system::InputHandler::update(const float dt)
+void drft::system::PlayerInput::update(const float dt)
 {
 	auto view = registry->view<component::Player>(entt::exclude<component::Prototype>);
 

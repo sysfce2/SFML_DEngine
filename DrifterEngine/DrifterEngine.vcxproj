@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\ArtificialInput.cpp" />
     <ClCompile Include="src\Components\Meta.cpp" />
     <ClCompile Include="src\Events\Events.cpp" />
     <ClCompile Include="src\Factory\EntityFactory.cpp" />
@@ -176,7 +177,7 @@
     <ClCompile Include="src\Systems\ChunkManager.cpp" />
     <ClCompile Include="src\Utility\DebugInfo.cpp" />
     <ClCompile Include="src\Systems\ActionHandler.cpp" />
-    <ClCompile Include="src\Systems\InputHandler.cpp" />
+    <ClCompile Include="src\Systems\PlayerInput.cpp" />
     <ClCompile Include="src\Spatial\Cell.cpp" />
     <ClCompile Include="src\Components\Components.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp">
@@ -228,8 +229,10 @@
     <ClCompile Include="src\Systems\WorldGridResolver.cpp" />
     <ClCompile Include="src\Systems\Camera.cpp" />
     <ClCompile Include="src\Systems\TileRenderer.cpp" />
+    <ClCompile Include="src\Systems\TurnManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\ArtificialInput.h" />
     <ClInclude Include="deps\Cereal\access.hpp" />
     <ClInclude Include="deps\Cereal\archives\adapters.hpp" />
     <ClInclude Include="deps\Cereal\archives\binary.hpp" />
@@ -397,7 +400,7 @@
     <ClInclude Include="src\Systems\ChunkManager.h" />
     <ClInclude Include="src\Utility\DebugInfo.h" />
     <ClInclude Include="src\Systems\ActionHandler.h" />
-    <ClInclude Include="src\Systems\InputHandler.h" />
+    <ClInclude Include="src\Systems\PlayerInput.h" />
     <ClInclude Include="src\Spatial\Cell.h" />
     <ClInclude Include="deps\EnTT\entt.h" />
     <ClInclude Include="src\Spatial\Grid.h" />
@@ -418,6 +421,7 @@
     <ClInclude Include="src\Systems\WorldGridResolver.h" />
     <ClInclude Include="src\Systems\Camera.h" />
     <ClInclude Include="src\Systems\TileRenderer.h" />
+    <ClInclude Include="src\Systems\TurnManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\static\player.json" />

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ActionHandler.h"
 #include "Components/Components.h"
+#include "Events/Events.h"
 
 
 void drft::system::ActionHandler::init()
@@ -10,23 +11,19 @@ void drft::system::ActionHandler::init()
 
 void drft::system::ActionHandler::update(const float dt)
 {
-	auto view = registry->view<component::Input>(entt::exclude<component::Prototype>);
+	auto view = registry->view<component::Input, component::MyTurn>(entt::exclude<component::Prototype>);
 
 	for (auto [entity, input] : view.each())
 	{
-		_actionQueue.push({ entity, std::move(input.desiredAction) });
-		registry->remove<component::Input>(entity);
-	}
-
-	while (!_actionQueue.empty())
-	{
-		entt::entity entity = _actionQueue.front().entity;
-		auto nextAction = _actionQueue.front().action->execute(*registry, entity);
-		_actionQueue.pop();
-		if (nextAction)
+		auto& nextAction = input.desiredAction;
+		
+		while (nextAction != nullptr)
 		{
-			_actionQueue.push({ entity, std::move(nextAction) });
+			nextAction = nextAction->execute(*registry, entity);
 		}
+
+		registry->remove<component::Input>(entity);
+		registry->ctx().get<entt::dispatcher&>().trigger(events::SpendActionPoints{ 100 });
 	}
 }
 

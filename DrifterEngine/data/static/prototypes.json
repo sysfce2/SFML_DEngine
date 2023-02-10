@@ -75,6 +75,47 @@
           }
         }
       ]
+    },
+    {
+      "Name": "NPC",
+      "Inherits": [
+        ""
+      ],
+      "Components": [
+        {
+          "Name": "Info",
+          "Data": {
+            "name": "NPC",
+            "extendedName": "",
+            "description": "Just a regular NPC."
+          }
+        },
+        {
+          "Name": "Render",
+          "Data": {
+            "sprite": 1,
+            "color": [ 225, 50, 50 ]
+          }
+        },
+        {
+          "Name": "Position",
+          "Data": {
+            "position": [ 0.0, 0.0 ],
+            "depth": 3
+          }
+        },
+        {
+          "Name": "Actor",
+          "Data": {
+            "ap": 0,
+            "moveSpeed": 100,
+            "actSpeed": 100
+          }
+        },
+        {
+          "Name": "AI"
+        }
+      ]
     }
   ]
 }

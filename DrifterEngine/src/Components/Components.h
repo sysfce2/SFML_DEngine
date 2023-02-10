@@ -33,6 +33,16 @@ namespace component
 		entt::entity target = entt::null;
 	};
 
+	struct Actor
+	{
+		int ap = 0;
+		int moveSpeed = 100;
+		int actSpeed = 100;
+	};
+
+	struct MyTurn
+	{};
+
 	// Represents a player
 	struct Player
 	{};
