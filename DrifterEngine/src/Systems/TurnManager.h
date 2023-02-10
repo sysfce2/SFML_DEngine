@@ -26,6 +26,7 @@ namespace drft::system
 		void onActorAdd(entt::registry& registry, entt::entity entity);
 		void onActorRemove(entt::registry& registry, entt::entity entity);
 		void onSpendActionPoints(events::SpendActionPoints& ev);
+		void popFrontPushBack();
 		void sortQueue();
 		void printQueue();
 		void tick();

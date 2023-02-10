@@ -36,8 +36,8 @@ namespace component
 	struct Actor
 	{
 		int ap = 0;
-		int moveSpeed = 100;
-		int actSpeed = 100;
+		float moveSpeed = 1.0f;
+		float actSpeed = 1.0f;
 	};
 
 	struct MyTurn

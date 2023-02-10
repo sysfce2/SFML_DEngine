@@ -32,8 +32,8 @@
           "Name": "Actor",
           "Data": {
             "ap": 0,
-            "moveSpeed": 100,
-            "actSpeed": 100
+            "moveSpeed": 1.05,
+            "actSpeed": 1.0
           }
         }
       ]

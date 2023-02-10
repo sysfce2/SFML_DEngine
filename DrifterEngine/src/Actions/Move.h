@@ -9,6 +9,14 @@ namespace drft::action
 			: direction(direction) {}
 
 		std::unique_ptr<Action> execute(entt::registry& registry, const entt::entity actor) override;
+		virtual float getCost() override
+		{
+			return 100.0f;
+		}
+		virtual Type getType() override
+		{
+			return Type::MOVE;
+		}
 		std::unique_ptr<Action> clone() const override;
 
 	private:

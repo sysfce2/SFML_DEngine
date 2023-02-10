@@ -9,7 +9,7 @@ void drft::system::TurnManager::init()
 	registry->ctx().get<entt::dispatcher&>().sink<events::SpendActionPoints>().connect<&TurnManager::onSpendActionPoints>(this);
 
 	_timeKeeper = registry->create();
-	registry->emplace<component::Actor>(_timeKeeper, 100, 100, 100);
+	registry->emplace<component::Actor>(_timeKeeper, 100, 1.0f, 1.0f);
 
 }
 
@@ -52,9 +52,17 @@ void drft::system::TurnManager::onSpendActionPoints(events::SpendActionPoints& e
 {
 	auto& actor = registry->get<component::Actor>(_currentActor);
 	actor.ap -= ev.amount;
+	popFrontPushBack();
 	sortQueue();
 	printQueue();
 	registry->remove<component::MyTurn>(_currentActor);
+}
+
+void drft::system::TurnManager::popFrontPushBack()
+{
+	auto front = _queue.front();
+	_queue.erase(_queue.begin());
+	_queue.push_back(front);
 }
 
 void drft::system::TurnManager::sortQueue()
@@ -92,13 +100,14 @@ void drft::system::TurnManager::printQueue()
 
 void drft::system::TurnManager::tick()
 {
-	printQueue();
+	std::cout << "Tick!" << std::endl;
 	for (auto e : _queue)
 	{
 		if (e == _timeKeeper) continue;
 		auto& actor = registry->get<component::Actor>(e);
 		actor.ap += AP_PER_TICK;
 	}
+	popFrontPushBack();
 	sortQueue();
 	_currentActor = _queue.front();
 	printQueue();
