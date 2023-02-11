@@ -3,14 +3,14 @@
 
 namespace drft::system
 {
-	const int REALITY_RADIUS = 1; // in chunks
+	const int REALITY_RADIUS = 64; // in tiles
 
 	class RealityBubble : public System
 	{
 	public:
 		RealityBubble()
 		{
-			phase = Phase::OnPreUpdate;
+			phase = Phase::OnValidation;
 		}
 		virtual void init() override;
 		virtual void update(const float) override;

@@ -11,7 +11,7 @@ void drft::system::TurnManager::init()
 
 	_timeKeeper = registry->create();
 	registry->emplace<component::Actor>(_timeKeeper, 100, 1.0f, 1.0f);
-
+	registry->emplace<component::Active>(_timeKeeper);
 }
 
 void drft::system::TurnManager::update(const float)
@@ -36,14 +36,14 @@ void drft::system::TurnManager::update(const float)
 void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::entity entity)
 {
 	if (registry.any_of<component::Prototype>(entity)) return;
-	if (!_managedEntities.contains(entity)) return;
-
-	_managedEntities.erase(entity);
+	if (_managedEntities.contains(entity))
+	{
+		_managedEntities.erase(entity);
+	}
 	auto toRemove = std::find(_queue.begin(), _queue.end(), entity);
 	if (toRemove != _queue.end())
 	{
 		_queue.erase(toRemove);
-		sortQueue();
 	}
 }
 
@@ -52,7 +52,6 @@ void drft::system::TurnManager::onSpendActionPoints(events::SpendActionPoints& e
 	auto& actor = registry->get<component::Actor>(_currentActor);
 	actor.ap -= ev.amount;
 	popFrontPushBack();
-	sortQueue();
 	registry->remove<component::MyTurn>(_currentActor);
 }
 
@@ -66,8 +65,6 @@ void drft::system::TurnManager::updateActorQueue()
 		_queue.push_back(entity);
 		_managedEntities.insert(entity);
 	}
-
-	sortQueue();
 }
 
 void drft::system::TurnManager::popFrontPushBack()
@@ -75,20 +72,6 @@ void drft::system::TurnManager::popFrontPushBack()
 	auto front = _queue.front();
 	_queue.erase(_queue.begin());
 	_queue.push_back(front);
-}
-
-void drft::system::TurnManager::sortQueue()
-{
-	const auto& tmp = registry;
-	std::stable_sort(_queue.begin(), _queue.end(),
-		[tmp](const entt::entity& l, const entt::entity& r) -> bool
-		{
-			auto& lActor = tmp->get<component::Actor>(l);
-			auto& rActor = tmp->get<component::Actor>(r);
-
-			return lActor.ap > rActor.ap;
-		}
-	);
 }
 
 void drft::system::TurnManager::printQueue()
@@ -120,8 +103,14 @@ void drft::system::TurnManager::tick()
 		auto& actor = registry->get<component::Actor>(e);
 		actor.ap += AP_PER_TICK;
 	}
-	popFrontPushBack();
-	sortQueue();
+	component::Actor actor;
+	do
+	{
+		popFrontPushBack();
+		entt::entity tempActor = _queue.front();
+		actor = registry->get<component::Actor>(_currentActor);
+	} while (actor.ap < 0);
+	
 	_currentActor = _queue.front();
 }
 

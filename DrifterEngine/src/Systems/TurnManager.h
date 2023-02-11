@@ -27,7 +27,6 @@ namespace drft::system
 		void onSpendActionPoints(events::SpendActionPoints& ev);
 		void updateActorQueue();
 		void popFrontPushBack();
-		void sortQueue();
 		void printQueue();
 		void tick();
 

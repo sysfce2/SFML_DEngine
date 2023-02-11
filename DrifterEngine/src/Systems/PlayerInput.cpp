@@ -58,9 +58,7 @@ void drft::system::PlayerInput::update(const float dt)
 
 			if (_keyState[key].active)
 			{
-				if (registry->any_of<component::Input>(entity)) return;
-
-				registry->emplace<component::Input>(entity, _actionMap[key]);
+				registry->emplace_or_replace<component::Input>(entity, _actionMap[key]);
 			}
 		}
 	}

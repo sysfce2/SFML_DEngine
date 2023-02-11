@@ -28,19 +28,19 @@ void drft::system::ChunkManager::update(const float dt)
 
 	if (!_toSave.empty())
 	{
-		auto& coord = _toSave.front();
+		auto coord = _toSave.front();
 		save(coord);
 		_toSave.pop();
 	}
 	if (!_toBuild.empty())
 	{
-		auto& coord = _toBuild.front();
+		auto coord = _toBuild.front();
 		build(coord);
 		_toBuild.pop();
 	}
 	if (!_toLoad.empty())
 	{
-		auto& coord = _toLoad.front();
+		auto coord = _toLoad.front();
 		load(coord);
 		_toLoad.pop();
 	}
@@ -119,7 +119,7 @@ void drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate)
 	//std::cout << "Building chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
 	auto origin = spatial::toTileSpace(chunkCoordinate);
 	util::buildMany("Tree", 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
-	util::buildMany("NPC", 1, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
+	util::buildMany("NPC", 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
 	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Built;
 }
 

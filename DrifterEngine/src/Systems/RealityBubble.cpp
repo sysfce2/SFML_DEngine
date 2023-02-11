@@ -21,18 +21,18 @@ void drft::system::RealityBubble::update(const float)
 	auto cameraView = registry->view<component::Camera, component::Position>(entt::exclude<component::Prototype>);
 	for (auto&& [entity, camera, position] : cameraView.each())
 	{
-		_cameraPosition = spatial::toChunkCoordinate(position.position);
+		_cameraPosition = spatial::toTileSpace(position.position);
 	}
 
 	auto actorView = registry->view<component::Actor, component::Position>(entt::exclude<component::Prototype>);
 	for (auto&& [entity, actor, pos] : actorView.each())
 	{
-		auto actorPosition = spatial::toChunkCoordinate(pos.position);
+		auto actorPosition = spatial::toTileSpace(pos.position);
 		auto distance = spatial::distance(_cameraPosition, actorPosition);
 
 		if (distance > REALITY_RADIUS)
 		{
-			int removed = registry->remove<component::Active>(entity);
+			registry->remove<component::Active>(entity);
 		}
 		else
 		{

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "EntityFactory.h"
 #include "Components/Meta.h"
+#include "Utility/DebugInfo.h"
 #include "../deps/Cereal/external/rapidjson/istreamwrapper.h"
 #include "../deps/Cereal/external/rapidjson/document.h"
 #include "../deps/Cereal/external/rapidjson/stringbuffer.h"
@@ -134,6 +135,11 @@ entt::handle drft::EntityFactory::build(const std::string& name, entt::registry&
 	entt::entity newEntity = registry.create();
 
 	copyEntity(newEntity, _prototypes[name], registry);
+	++_totalEntities;
+
+	auto& debug = registry.ctx().get<util::DebugInfo>();
+	std::string dataStr = std::to_string(_totalEntities);
+	debug.addString("Total Entities", dataStr);
 
 	return entt::handle(registry, newEntity);
 }

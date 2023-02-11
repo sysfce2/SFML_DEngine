@@ -13,6 +13,7 @@ void drft::system::ActionHandler::update(const float dt)
 {
 	auto view = registry->view<component::Input, component::Actor, component::MyTurn>(entt::exclude<component::Prototype>);
 	action::Type actionType = action::Type::ACT;
+	std::vector<entt::entity> inputsToDelete;
 
 	for (auto [entity, input, actor] : view.each())
 	{
@@ -38,8 +39,12 @@ void drft::system::ActionHandler::update(const float dt)
 			actionCost *= (1.f / actor.actSpeed);
 			break;
 		}
-		registry->remove<component::Input>(entity);
+		inputsToDelete.push_back(entity);
 		registry->ctx().get<entt::dispatcher&>().trigger(events::SpendActionPoints{ (int)(actionCost) });
+	}
+	for (auto input : inputsToDelete)
+	{
+		registry->remove<component::Input>(input);
 	}
 }
 

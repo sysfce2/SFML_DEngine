@@ -25,6 +25,7 @@ namespace drft
 
 	private:
 		std::unordered_map<std::string, entt::entity> _prototypes;
+		int _totalEntities = 0;
 	};
 }
 
