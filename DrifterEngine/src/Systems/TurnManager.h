@@ -23,9 +23,9 @@ namespace drft::system
 		virtual void update(const float dt) override;
 
 	private:
-		void onActorAdd(entt::registry& registry, entt::entity entity);
 		void onActorRemove(entt::registry& registry, entt::entity entity);
 		void onSpendActionPoints(events::SpendActionPoints& ev);
+		void updateActorQueue();
 		void popFrontPushBack();
 		void sortQueue();
 		void printQueue();
@@ -33,6 +33,7 @@ namespace drft::system
 
 	private:
 		std::vector<entt::entity> _queue;
+		std::set<entt::entity> _managedEntities;
 		entt::entity _timeKeeper;
 		entt::entity _currentActor;
 		entt::entity _player;

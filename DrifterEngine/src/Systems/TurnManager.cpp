@@ -4,8 +4,8 @@
 
 void drft::system::TurnManager::init()
 {
-	registry->on_construct<component::Actor>().connect<&TurnManager::onActorAdd>(this);
 	registry->on_destroy<component::Actor>().connect<&TurnManager::onActorRemove>(this);
+	registry->on_destroy<component::Active>().connect<&TurnManager::onActorRemove>(this);
 
 	registry->ctx().get<entt::dispatcher&>().sink<events::SpendActionPoints>().connect<&TurnManager::onSpendActionPoints>(this);
 
@@ -16,6 +16,8 @@ void drft::system::TurnManager::init()
 
 void drft::system::TurnManager::update(const float)
 {
+	updateActorQueue();
+
 	auto playerView = registry->view<component::Player, component::Actor>();
 	for (auto e : playerView)
 	{
@@ -31,16 +33,12 @@ void drft::system::TurnManager::update(const float)
 
 }
 
-void drft::system::TurnManager::onActorAdd(entt::registry& registry, entt::entity entity)
-{
-	if (registry.any_of<component::Prototype>(entity)) return;
-	_queue.push_back(entity);
-	sortQueue();
-}
-
 void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::entity entity)
 {
 	if (registry.any_of<component::Prototype>(entity)) return;
+	if (!_managedEntities.contains(entity)) return;
+
+	_managedEntities.erase(entity);
 	auto toRemove = std::find(_queue.begin(), _queue.end(), entity);
 	if (toRemove != _queue.end())
 	{
@@ -56,6 +54,20 @@ void drft::system::TurnManager::onSpendActionPoints(events::SpendActionPoints& e
 	popFrontPushBack();
 	sortQueue();
 	registry->remove<component::MyTurn>(_currentActor);
+}
+
+void drft::system::TurnManager::updateActorQueue()
+{
+	auto actorView = registry->view<component::Actor, component::Active>(entt::exclude<component::Prototype>);
+	for (auto entity : actorView)
+	{
+		if (_managedEntities.contains(entity)) continue;
+
+		_queue.push_back(entity);
+		_managedEntities.insert(entity);
+	}
+
+	sortQueue();
 }
 
 void drft::system::TurnManager::popFrontPushBack()
