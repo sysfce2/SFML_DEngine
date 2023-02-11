@@ -40,6 +40,9 @@ namespace component
 		float actSpeed = 1.0f;
 	};
 
+	struct Active
+	{};
+
 	struct MyTurn
 	{};
 

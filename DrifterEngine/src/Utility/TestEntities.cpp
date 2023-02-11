@@ -1,35 +1,27 @@
 #include "pch.h"
 #include "TestEntities.h"
 #include "Components/Components.h"
-#include "Spatial/WorldGrid.h"
+#include "Spatial/Conversions.h"
 #include "Factory/EntityFactory.h"
 
-void drft::util::buildTestTrees(entt::registry& registry, int numberOfTrees, sf::IntRect inArea)
+void drft::util::buildMany(std::string entity, int number, sf::IntRect inArea, entt::registry& registry)
 {
-	std::srand((unsigned int)&numberOfTrees);
+	std::srand((unsigned int)&number);
 
 	auto& factory = registry.ctx().get<EntityFactory&>();
 
-	for (int i = 0; i < numberOfTrees; ++i)
+	for (int i = 0; i < number; ++i)
 	{
 		int x = (std::rand() % inArea.width) + inArea.left;
 		int y = (std::rand() % inArea.height) + inArea.top;
-		int sprite = 5;
-		char r = (std::rand() % 55) + 20;
-		char g = (std::rand() % 25) + 100;
-		char b = (std::rand() % 55) + 20;
-
-		auto e = registry.create();
-
 		auto position = spatial::toWorldSpace({ x,y });
 
-		auto tree = factory.build("Tree", registry);
+		auto tree = factory.build(entity, registry);
 		tree.patch<component::Position>(
 			[&](auto& pos)
 			{
 				pos.position = position;
 			}
 		);
-
 	}
 }

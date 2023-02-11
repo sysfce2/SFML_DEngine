@@ -16,9 +16,9 @@ namespace drft::system
 		virtual void init() override;
 
 	private:
-		void OnPositionAdd(entt::registry& registry, entt::entity);
-		void OnPositionUpdate(entt::registry& registry, entt::entity);
-		void OnPositionRemove(entt::registry& registry, entt::entity);
+		void onPositionAdd(entt::registry& registry, entt::entity);
+		void onPositionUpdate(entt::registry& registry, entt::entity);
+		void onPositionRemove(entt::registry& registry, entt::entity);
 	};
 
 } // namespace dft::system

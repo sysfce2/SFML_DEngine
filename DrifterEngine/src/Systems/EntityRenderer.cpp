@@ -2,7 +2,7 @@
 #include "EntityRenderer.h"
 #include "Components/Components.h"
 #include "Utility/SpriteBatch.h"
-#include "Spatial/WorldGrid.h"
+#include "Spatial/Conversions.h"
 
 
 void drft::system::EntityRenderer::init()

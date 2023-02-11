@@ -6,6 +6,7 @@ void drft::system::TurnManager::init()
 {
 	registry->on_construct<component::Actor>().connect<&TurnManager::onActorAdd>(this);
 	registry->on_destroy<component::Actor>().connect<&TurnManager::onActorRemove>(this);
+
 	registry->ctx().get<entt::dispatcher&>().sink<events::SpendActionPoints>().connect<&TurnManager::onSpendActionPoints>(this);
 
 	_timeKeeper = registry->create();
@@ -54,7 +55,6 @@ void drft::system::TurnManager::onSpendActionPoints(events::SpendActionPoints& e
 	actor.ap -= ev.amount;
 	popFrontPushBack();
 	sortQueue();
-	printQueue();
 	registry->remove<component::MyTurn>(_currentActor);
 }
 
@@ -67,13 +67,14 @@ void drft::system::TurnManager::popFrontPushBack()
 
 void drft::system::TurnManager::sortQueue()
 {
+	const auto& tmp = registry;
 	std::stable_sort(_queue.begin(), _queue.end(),
-		[&](const entt::entity& l, const entt::entity& r) -> bool
+		[tmp](const entt::entity& l, const entt::entity& r) -> bool
 		{
-			auto& lA = registry->get<component::Actor>(l);
-			auto& rA = registry->get<component::Actor>(r);
+			auto& lActor = tmp->get<component::Actor>(l);
+			auto& rActor = tmp->get<component::Actor>(r);
 
-			return lA.ap > rA.ap;
+			return lActor.ap > rActor.ap;
 		}
 	);
 }
@@ -110,6 +111,5 @@ void drft::system::TurnManager::tick()
 	popFrontPushBack();
 	sortQueue();
 	_currentActor = _queue.front();
-	printQueue();
 }
 

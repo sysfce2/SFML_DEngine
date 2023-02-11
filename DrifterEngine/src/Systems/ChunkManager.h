@@ -40,7 +40,7 @@ namespace drft::system
 
 	private:
 		void updateChunks(sf::Vector2i newPosition);
-		std::vector<sf::Vector2i> getCoordinatesInRadius(const sf::Vector2i centerPosition, const float radius);
+
 
 		void setState(sf::Vector2i coordinate, ChunkState state);
 
@@ -52,8 +52,8 @@ namespace drft::system
 		bool _isFirstPass = true;
 		std::map<std::pair<int, int>, VirtualChunk> _chunks;
 
-		const float _activeChunkRadius = 2;
-		const float _toSaveRadius = _activeChunkRadius + 1;
+		const int _activeChunkRadius = 2;
+		const int _toSaveRadius = _activeChunkRadius + 1;
 		sf::Vector2i _currentPosition = { 0, 0 };
 
 		std::queue<sf::Vector2i> _toBuild;

@@ -167,6 +167,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Spatial\Helpers.cpp" />
+    <ClCompile Include="src\Systems\RealityBubble.cpp" />
     <ClCompile Include="src\Systems\ArtificialInput.cpp" />
     <ClCompile Include="src\Components\Meta.cpp" />
     <ClCompile Include="src\Events\Events.cpp" />
@@ -230,8 +232,11 @@
     <ClCompile Include="src\Systems\Camera.cpp" />
     <ClCompile Include="src\Systems\TileRenderer.cpp" />
     <ClCompile Include="src\Systems\TurnManager.cpp" />
+    <ClCompile Include="src\Spatial\Conversions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Spatial\Helpers.h" />
+    <ClInclude Include="src\Systems\RealityBubble.h" />
     <ClInclude Include="src\Systems\ArtificialInput.h" />
     <ClInclude Include="deps\Cereal\access.hpp" />
     <ClInclude Include="deps\Cereal\archives\adapters.hpp" />
@@ -422,6 +427,7 @@
     <ClInclude Include="src\Systems\Camera.h" />
     <ClInclude Include="src\Systems\TileRenderer.h" />
     <ClInclude Include="src\Systems\TurnManager.h" />
+    <ClInclude Include="src\Spatial\Conversions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\static\player.json" />

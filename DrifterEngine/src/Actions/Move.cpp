@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Move.h"
 #include "Spatial/WorldGrid.h"
+#include "Spatial/Conversions.h"
 #include "Components/Components.h"
 #include "Actions/Attack.h"
 
@@ -16,7 +17,7 @@ std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, co
 
 	// TODO: add more robust collision checking to account for objects on different layers
 
-	auto potentialBlockers = grid.entitiesAt(spatial::toTileSpace(targetPosition), spatial::toLayer(pos.depth));
+	auto potentialBlockers = grid.entitiesAt(spatial::toTileSpace(targetPosition), pos.depth);
 
 	if (potentialBlockers.empty() || spatial::toLayer(pos.depth) == spatial::Layer::Item)
 	{

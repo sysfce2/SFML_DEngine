@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ChunkManager.h"
 #include "Spatial/WorldGrid.h"
+#include "Spatial/Conversions.h"
+#include "Spatial/Helpers.h"
 #include "Components/Components.h"
 #include "Utility/TestEntities.h"
 #include "Utility/DebugInfo.h"
@@ -39,14 +41,14 @@ void drft::system::ChunkManager::update(const float dt)
 	if (!_toLoad.empty())
 	{
 		auto& coord = _toLoad.front();
-		build(coord);
+		load(coord);
 		_toLoad.pop();
 	}
 }
 
 void drft::system::ChunkManager::updateChunks(sf::Vector2i newPosition)
 {
-	auto activeCoords = getCoordinatesInRadius(newPosition, _activeChunkRadius);
+	auto activeCoords = spatial::getIntPointsInRadius(newPosition, _activeChunkRadius);
 
 	// Ensure active chunks are active or will be built
 	for (auto& coord : activeCoords)
@@ -107,25 +109,6 @@ void drft::system::ChunkManager::updateChunks(sf::Vector2i newPosition)
 	_currentPosition = newPosition;
 }
 
-std::vector<sf::Vector2i> drft::system::ChunkManager::getCoordinatesInRadius(const sf::Vector2i centerPosition, const float radius)
-{
-	std::vector<sf::Vector2i> result;
-	for (int y = centerPosition.y - radius; y <= centerPosition.y + radius; ++y)
-	{
-		for (int x = centerPosition.x - radius; x <= centerPosition.x + radius; ++x)
-		{
-			float distance = std::hypotf((centerPosition.x - x), (centerPosition.y - y));
-
-			if (distance < radius)
-			{
-				result.push_back({ x,y });
-			}
-		}
-	}
-
-	return result;
-}
-
 void drft::system::ChunkManager::setState(sf::Vector2i coordinate, ChunkState state)
 {
 	_chunks.at({ coordinate.x, coordinate.y }).state = state;
@@ -135,7 +118,8 @@ void drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate)
 {
 	//std::cout << "Building chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
 	auto origin = spatial::toTileSpace(chunkCoordinate);
-	util::buildTestTrees(*registry, 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT });
+	util::buildMany("Tree", 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
+	util::buildMany("NPC", 1, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
 	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Built;
 }
 
