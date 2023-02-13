@@ -167,6 +167,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\PresetViews\PresetViews.cpp" />
+    <ClCompile Include="src\Utility\EntityHelpers.cpp" />
     <ClCompile Include="src\Spatial\Helpers.cpp" />
     <ClCompile Include="src\Systems\RealityBubble.cpp" />
     <ClCompile Include="src\Systems\ArtificialInput.cpp" />
@@ -235,6 +237,8 @@
     <ClCompile Include="src\Spatial\Conversions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\PresetViews\PresetViews.h" />
+    <ClInclude Include="src\Utility\EntityHelpers.h" />
     <ClInclude Include="src\Spatial\Helpers.h" />
     <ClInclude Include="src\Systems\RealityBubble.h" />
     <ClInclude Include="src\Systems\ArtificialInput.h" />

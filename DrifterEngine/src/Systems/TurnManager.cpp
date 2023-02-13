@@ -7,7 +7,7 @@ void drft::system::TurnManager::init()
 	registry->on_destroy<component::Actor>().connect<&TurnManager::onActorRemove>(this);
 	registry->on_destroy<component::Active>().connect<&TurnManager::onActorRemove>(this);
 
-	registry->ctx().get<entt::dispatcher&>().sink<events::SpendActionPoints>().connect<&TurnManager::onSpendActionPoints>(this);
+	registry->ctx().get<entt::dispatcher&>().sink<events::ActionPerformed>().connect<&TurnManager::onActionPerformed>(this);
 
 	_timeKeeper = registry->create();
 	registry->emplace<component::Actor>(_timeKeeper, 100, 1.0f, 1.0f);
@@ -16,9 +16,11 @@ void drft::system::TurnManager::init()
 
 void drft::system::TurnManager::update(const float)
 {
-	updateActorQueue();
+	fillActorQueue();
 
-	auto playerView = registry->view<component::Player, component::Actor>();
+	auto playerView = registry->view<component::Player, component::Actor>
+		(entt::exclude<component::Prototype>);
+
 	for (auto e : playerView)
 	{
 		_player = e;
@@ -28,7 +30,17 @@ void drft::system::TurnManager::update(const float)
 	if (_currentActor == _timeKeeper)
 	{
 		tick();
+		_currentActor = _queue.front();
 	}
+	auto actor = registry->get<component::Actor>(_currentActor);
+
+	while (actor.ap < 0)
+	{
+		popFrontPushBack();
+		_currentActor = _queue.front();
+		actor = registry->get<component::Actor>(_currentActor);
+	}
+
 	registry->emplace_or_replace<component::MyTurn>(_currentActor);
 
 }
@@ -47,15 +59,14 @@ void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::en
 	}
 }
 
-void drft::system::TurnManager::onSpendActionPoints(events::SpendActionPoints& ev)
+void drft::system::TurnManager::onActionPerformed(events::ActionPerformed& ev)
 {
 	auto& actor = registry->get<component::Actor>(_currentActor);
 	actor.ap -= ev.amount;
-	popFrontPushBack();
-	registry->remove<component::MyTurn>(_currentActor);
+	_animationRequired = ev.hasAnimation;
 }
 
-void drft::system::TurnManager::updateActorQueue()
+void drft::system::TurnManager::fillActorQueue()
 {
 	auto actorView = registry->view<component::Actor, component::Active>(entt::exclude<component::Prototype>);
 	for (auto entity : actorView)
@@ -103,14 +114,6 @@ void drft::system::TurnManager::tick()
 		auto& actor = registry->get<component::Actor>(e);
 		actor.ap += AP_PER_TICK;
 	}
-	component::Actor actor;
-	do
-	{
-		popFrontPushBack();
-		entt::entity tempActor = _queue.front();
-		actor = registry->get<component::Actor>(_currentActor);
-	} while (actor.ap < 0);
-	
-	_currentActor = _queue.front();
+	popFrontPushBack();
 }
 

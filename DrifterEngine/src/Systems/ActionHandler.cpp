@@ -3,6 +3,7 @@
 #include "Components/Components.h"
 #include "Events/Events.h"
 #include "Actions/Move.h"
+#include "PresetViews/PresetViews.h"
 
 void drft::system::ActionHandler::init()
 {
@@ -11,12 +12,13 @@ void drft::system::ActionHandler::init()
 
 void drft::system::ActionHandler::update(const float dt)
 {
-	auto view = registry->view<component::Input, component::Actor, component::MyTurn>(entt::exclude<component::Prototype>);
-	action::Type actionType = action::Type::ACT;
-	std::vector<entt::entity> inputsToDelete;
+	auto view = registry->view<component::Input, component::Actor, component::MyTurn>()
+		| views::Active(*registry);
+	std::vector<entt::entity> entitiesToAlter;
 
 	for (auto [entity, input, actor] : view.each())
 	{
+		action::Type actionType = action::Type::ACT;
 		auto& nextAction = input.desiredAction;
 		
 		float actionCost = 100.f;
@@ -39,12 +41,13 @@ void drft::system::ActionHandler::update(const float dt)
 			actionCost *= (1.f / actor.actSpeed);
 			break;
 		}
-		inputsToDelete.push_back(entity);
-		registry->ctx().get<entt::dispatcher&>().trigger(events::SpendActionPoints{ (int)(actionCost) });
+		entitiesToAlter.push_back(entity);
+		registry->ctx().get<entt::dispatcher&>().trigger(events::ActionPerformed{ (int)(actionCost), false });
 	}
-	for (auto input : inputsToDelete)
+	for (auto entity : entitiesToAlter)
 	{
-		registry->remove<component::Input>(input);
+		registry->remove<component::Input>(entity);
+		registry->remove<component::MyTurn>(entity);
 	}
 }
 

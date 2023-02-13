@@ -2,8 +2,9 @@
 
 namespace drft::events
 {
-	struct SpendActionPoints
+	struct ActionPerformed
 	{
 		int amount = 0;
+		bool hasAnimation = false;
 	};
 }

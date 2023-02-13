@@ -4,7 +4,7 @@
 
 namespace drft::events
 {
-	struct SpendActionPoints;
+	struct ActionPerformed;
 }
 
 namespace drft::system
@@ -24,8 +24,8 @@ namespace drft::system
 
 	private:
 		void onActorRemove(entt::registry& registry, entt::entity entity);
-		void onSpendActionPoints(events::SpendActionPoints& ev);
-		void updateActorQueue();
+		void onActionPerformed(events::ActionPerformed& ev);
+		void fillActorQueue();
 		void popFrontPushBack();
 		void printQueue();
 		void tick();
@@ -36,6 +36,7 @@ namespace drft::system
 		entt::entity _timeKeeper;
 		entt::entity _currentActor;
 		entt::entity _player;
+		bool _animationRequired = false;
 	};
 }
 

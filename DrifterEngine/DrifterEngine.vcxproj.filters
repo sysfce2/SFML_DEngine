@@ -114,6 +114,12 @@
     <ClCompile Include="src\Spatial\Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utility\EntityHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\PresetViews\PresetViews.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\EnTT\entt.h">
@@ -693,6 +699,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Spatial\Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility\EntityHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\PresetViews\PresetViews.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

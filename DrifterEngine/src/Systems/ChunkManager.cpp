@@ -119,7 +119,7 @@ void drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate)
 	//std::cout << "Building chunk (" << chunkCoordinate.x << ", " << chunkCoordinate.y << ") ... \n" << std::endl;
 	auto origin = spatial::toTileSpace(chunkCoordinate);
 	util::buildMany("Tree", 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
-	util::buildMany("NPC", 100, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
+	util::buildMany("NPC", 2, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
 	_chunks.at({ chunkCoordinate.x, chunkCoordinate.y }).state = ChunkState::Built;
 }
 
