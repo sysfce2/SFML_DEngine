@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "PlayerInput.h"
 #include "Components/Components.h"
-#include "Actions/Action.h"
+#include "Actions/Move.h"
+#include "Input/InputBuffer.h"
 #include "Actions/Move.h"
 
 void drft::system::PlayerInput::init()
@@ -58,7 +59,7 @@ void drft::system::PlayerInput::update(const float dt)
 
 			if (_keyState[key].active)
 			{
-				registry->emplace_or_replace<component::Input>(entity, _actionMap[key]);
+				system::input::InputBuffer::getInstance().push(_actionMap[key]);
 			}
 		}
 	}
@@ -78,3 +79,4 @@ std::unordered_map<sf::Keyboard::Key, std::unique_ptr<drft::action::Action>>& dr
 {
 	return _map;
 }
+

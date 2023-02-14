@@ -167,11 +167,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\Input\Input.cpp" />
+    <ClCompile Include="src\Systems\Input\InputBuffer.cpp" />
     <ClCompile Include="src\Systems\PresetViews\PresetViews.cpp" />
     <ClCompile Include="src\Utility\EntityHelpers.cpp" />
     <ClCompile Include="src\Spatial\Helpers.cpp" />
     <ClCompile Include="src\Systems\RealityBubble.cpp" />
-    <ClCompile Include="src\Systems\ArtificialInput.cpp" />
     <ClCompile Include="src\Components\Meta.cpp" />
     <ClCompile Include="src\Events\Events.cpp" />
     <ClCompile Include="src\Factory\EntityFactory.cpp" />
@@ -180,7 +181,6 @@
     <ClCompile Include="src\Actions\Action.cpp" />
     <ClCompile Include="src\Systems\ChunkManager.cpp" />
     <ClCompile Include="src\Utility\DebugInfo.cpp" />
-    <ClCompile Include="src\Systems\ActionHandler.cpp" />
     <ClCompile Include="src\Systems\PlayerInput.cpp" />
     <ClCompile Include="src\Spatial\Cell.cpp" />
     <ClCompile Include="src\Components\Components.cpp" />
@@ -237,11 +237,12 @@
     <ClCompile Include="src\Spatial\Conversions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\Input\Input.h" />
+    <ClInclude Include="src\Systems\Input\InputBuffer.h" />
     <ClInclude Include="src\Systems\PresetViews\PresetViews.h" />
     <ClInclude Include="src\Utility\EntityHelpers.h" />
     <ClInclude Include="src\Spatial\Helpers.h" />
     <ClInclude Include="src\Systems\RealityBubble.h" />
-    <ClInclude Include="src\Systems\ArtificialInput.h" />
     <ClInclude Include="deps\Cereal\access.hpp" />
     <ClInclude Include="deps\Cereal\archives\adapters.hpp" />
     <ClInclude Include="deps\Cereal\archives\binary.hpp" />
@@ -408,7 +409,6 @@
     <ClInclude Include="src\Actions\Action.h" />
     <ClInclude Include="src\Systems\ChunkManager.h" />
     <ClInclude Include="src\Utility\DebugInfo.h" />
-    <ClInclude Include="src\Systems\ActionHandler.h" />
     <ClInclude Include="src\Systems\PlayerInput.h" />
     <ClInclude Include="src\Spatial\Cell.h" />
     <ClInclude Include="deps\EnTT\entt.h" />

@@ -34,5 +34,6 @@ void component::Meta::initialize()
 		.func<&entt::registry::emplace_or_replace<Player>>("tag"_hs);
 
 	entt::meta<AI>().type("AI"_hs)
-		.func<&entt::registry::emplace_or_replace<AI>>("tag"_hs);
+		.ctor<&entt::registry::emplace_or_replace<AI>, entt::as_ref_t>()
+		.data<&AI::protocol>("protocol"_hs);
 }

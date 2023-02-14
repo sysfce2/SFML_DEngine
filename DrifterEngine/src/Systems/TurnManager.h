@@ -2,11 +2,6 @@
 #include "System.h"
 #include "Components/Components.h"
 
-namespace drft::events
-{
-	struct ActionPerformed;
-}
-
 namespace drft::system
 {
 	const int AP_PER_TICK = 100;
@@ -24,8 +19,8 @@ namespace drft::system
 
 	private:
 		void onActorRemove(entt::registry& registry, entt::entity entity);
-		void onActionPerformed(events::ActionPerformed& ev);
 		void fillActorQueue();
+		void setPlayerActor();
 		void popFrontPushBack();
 		void printQueue();
 		void tick();
@@ -36,7 +31,6 @@ namespace drft::system
 		entt::entity _timeKeeper;
 		entt::entity _currentActor;
 		entt::entity _player;
-		bool _animationRequired = false;
 	};
 }
 

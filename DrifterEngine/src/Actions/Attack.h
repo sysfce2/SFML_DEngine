@@ -8,19 +8,15 @@ namespace drft::action
 		Attack(std::vector<entt::entity> targets)
 			: potentialTargets(targets) {}
 
-		std::unique_ptr<Action> execute(entt::registry& registry, const entt::entity actor) override;
+		std::unique_ptr<Action> execute(entt::handle& entity) override;
 		virtual float getCost() override
 		{
 			return 100.0f;
 		}
-		virtual Type getType() override
-		{
-			return Type::ACT;
-		}
 		std::unique_ptr<Action> clone() const override;
 
 	private:
-		std::vector<entt::entity> potentialTargets;;
+		std::vector<entt::entity> potentialTargets;
 	};
 }
 

@@ -7,10 +7,10 @@
 
 using namespace drft::action;
 
-std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, const entt::entity actor)
+std::unique_ptr<Action> drft::action::Move::execute(entt::handle& entity)
 {
-	auto& pos = registry.get<component::Position>(actor);
-	auto& grid = registry.ctx().get<spatial::WorldGrid&>();
+	auto& pos = entity.get<component::Position>();
+	auto& grid = entity.registry()->ctx().get<spatial::WorldGrid&>();
 
 	sf::Vector2f targetPosition = pos.position;
 	targetPosition += spatial::toWorldSpace(direction);
@@ -21,7 +21,7 @@ std::unique_ptr<Action> drft::action::Move::execute(entt::registry& registry, co
 
 	if (potentialBlockers.empty() || spatial::toLayer(pos.depth) == spatial::Layer::Item)
 	{
-		registry.patch<component::Position>(actor,
+		entity.patch<component::Position>(
 			[&](auto& p)
 			{
 				p.position = targetPosition;

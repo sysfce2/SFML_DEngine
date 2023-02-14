@@ -8,36 +8,36 @@ namespace component
 
 	struct Info
 	{
-		std::string name = "";
-		std::string extendedName = "";
-		std::string description = "";
+		std::string name = { "" };
+		std::string extendedName = { "" };
+		std::string description = { "" };
 	};
 
 	// Position in world space.
 	struct Position
 	{
 		sf::Vector2f position = { 0,0 };
-		int depth = 0;
+		int depth = { 0 };
 	};
 
 	// Sprite and color.
 	struct Render
 	{
-		unsigned int sprite = 0;
-		sf::Color color = sf::Color::Magenta;
+		unsigned int sprite = { 0 };
+		sf::Color color = { sf::Color::Magenta };
 	};
 
 	struct Camera
 	{
 		sf::FloatRect viewport = { 0,0,0,0 };
-		entt::entity target = entt::null;
+		entt::entity target = { entt::null };
 	};
 
 	struct Actor
 	{
-		int ap = 0;
-		float moveSpeed = 1.0f;
-		float actSpeed = 1.0f;
+		int ap = { 0 };
+		float moveSpeed = { 1.0f };
+		float actSpeed = { 1.0f };
 	};
 
 	struct Active
@@ -52,7 +52,9 @@ namespace component
 
 	// Represents an AI
 	struct AI
-	{};
+	{
+		std::string protocol = { "random" };
+	};
 
 	// Desired input for the turn
 	struct Input

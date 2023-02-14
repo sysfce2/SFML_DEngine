@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "TurnManager.h"
 #include "Events/Events.h"
+#include "Input/Input.h"
+#include "Actions/Action.h"
 
 void drft::system::TurnManager::init()
 {
 	registry->on_destroy<component::Actor>().connect<&TurnManager::onActorRemove>(this);
 	registry->on_destroy<component::Active>().connect<&TurnManager::onActorRemove>(this);
-
-	registry->ctx().get<entt::dispatcher&>().sink<events::ActionPerformed>().connect<&TurnManager::onActionPerformed>(this);
 
 	_timeKeeper = registry->create();
 	registry->emplace<component::Actor>(_timeKeeper, 100, 1.0f, 1.0f);
@@ -17,14 +17,7 @@ void drft::system::TurnManager::init()
 void drft::system::TurnManager::update(const float)
 {
 	fillActorQueue();
-
-	auto playerView = registry->view<component::Player, component::Actor>
-		(entt::exclude<component::Prototype>);
-
-	for (auto e : playerView)
-	{
-		_player = e;
-	}
+	setPlayerActor();
 
 	_currentActor = _queue.front();
 	if (_currentActor == _timeKeeper)
@@ -41,8 +34,10 @@ void drft::system::TurnManager::update(const float)
 		actor = registry->get<component::Actor>(_currentActor);
 	}
 
-	registry->emplace_or_replace<component::MyTurn>(_currentActor);
-
+	entt::handle currentActorHandle = entt::handle(*registry, _currentActor);
+	auto input = input::getInput(currentActorHandle);
+	float pointsSpent = action::attempt(currentActorHandle, std::move(input));
+	actor.ap -= pointsSpent;
 }
 
 void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::entity entity)
@@ -59,13 +54,6 @@ void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::en
 	}
 }
 
-void drft::system::TurnManager::onActionPerformed(events::ActionPerformed& ev)
-{
-	auto& actor = registry->get<component::Actor>(_currentActor);
-	actor.ap -= ev.amount;
-	_animationRequired = ev.hasAnimation;
-}
-
 void drft::system::TurnManager::fillActorQueue()
 {
 	auto actorView = registry->view<component::Actor, component::Active>(entt::exclude<component::Prototype>);
@@ -75,6 +63,17 @@ void drft::system::TurnManager::fillActorQueue()
 
 		_queue.push_back(entity);
 		_managedEntities.insert(entity);
+	}
+}
+
+void drft::system::TurnManager::setPlayerActor()
+{
+	auto playerView = registry->view<component::Player, component::Actor>
+		(entt::exclude<component::Prototype>);
+
+	for (auto e : playerView)
+	{
+		_player = e;
 	}
 }
 

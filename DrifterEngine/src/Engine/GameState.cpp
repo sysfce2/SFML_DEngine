@@ -8,8 +8,6 @@
 #include "Systems/WorldGridResolver.h"
 #include "Systems/RealityBubble.h"
 #include "Systems/PlayerInput.h"
-#include "Systems/ArtificialInput.h"
-#include "Systems/ActionHandler.h"
 #include "Systems/Camera.h"
 #include "Systems/ChunkManager.h"
 #include "Systems/TurnManager.h"
@@ -17,6 +15,7 @@
 #include "Components/Meta.h"
 #include "Utility/TestEntities.h"
 #include "Factory/EntityFactory.h"
+
 
 
 drft::GameState::GameState(State::Context context) : State(context)
@@ -64,9 +63,9 @@ void drft::GameState::init()
 	_factory->loadPrototypes("prototypes.json", _registry);
 	_factory->loadPrototypes("player.json", _registry);
 
-	sf::Vector2f startingPosition = spatial::toWorldSpace({ 32,32 });
-
+	// Add Player
 	auto player = _factory->build("Player", _registry);
+	sf::Vector2f startingPosition = spatial::toWorldSpace({ 32,32 });
 	player.patch<component::Position>([&](auto& pos)
 		{
 			pos.position = startingPosition;
@@ -95,8 +94,6 @@ void drft::GameState::importSystems()
 	_systems->add(system::RealityBubble());
 	_systems->add(system::TurnManager());
 	_systems->add(system::PlayerInput());
-	_systems->add(system::ArtificialInput());
-	_systems->add(system::ActionHandler());
 	_systems->add(system::ChunkManager());
 
 	_systems->initAll();

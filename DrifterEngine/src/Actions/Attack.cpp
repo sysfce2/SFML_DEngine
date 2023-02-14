@@ -5,7 +5,7 @@
 
 using namespace drft::action;
 
-std::unique_ptr<Action> drft::action::Attack::execute(entt::registry& registry, const entt::entity actor)
+std::unique_ptr<Action> drft::action::Attack::execute(entt::handle& entity)
 {
 	
 

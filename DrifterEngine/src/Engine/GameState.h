@@ -10,6 +10,11 @@ namespace drft
 		class SystemScheduler;
 	}
 
+	namespace system::input
+	{
+		class InputBuffer;
+	}
+
 	namespace spatial
 	{
 		class WorldGrid;
