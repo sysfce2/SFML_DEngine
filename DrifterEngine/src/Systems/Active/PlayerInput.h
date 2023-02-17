@@ -1,5 +1,5 @@
 #pragma once
-#include "System.h"
+#include "Systems/System.h"
 
 namespace drft::action
 {
@@ -17,7 +17,7 @@ namespace drft::system
 	class ActionMap
 	{
 	public:
-		// Adss an action to the map. new in a ptr, don't be scared.
+		// Adds an action to the map. new in a ptr, don't be scared.
 		void addAction(sf::Keyboard::Key key, action::Action* action);
 		std::unique_ptr<action::Action> operator[](sf::Keyboard::Key key);
 		std::unordered_map<sf::Keyboard::Key, std::unique_ptr<action::Action>>& iterate();

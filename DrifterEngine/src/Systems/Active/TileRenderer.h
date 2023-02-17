@@ -1,14 +1,13 @@
 #pragma once
-#include "System.h"
-#include "Utility/ResourceHolder.h"
+#include "Systems/System.h"
 #include "Utility/SpriteBatch.h"
 
 namespace drft::system
 {
-    class EntityRenderer : public System
-    {
+	class TileRenderer : public System
+	{
     public:
-        EntityRenderer()
+        TileRenderer()
         {
             phase = Phase::OnRender;
         }
@@ -17,10 +16,9 @@ namespace drft::system
         virtual void render(sf::RenderTarget& target) override;
 
     private:
-        sf::Texture _sprites;
-        std::map<int, SpriteBatch> _spriteLayers;
-    };
-
-} // namespace system
+        SpriteBatch _spriteBatch;
+        sf::Vector2f _prevPosition = { 0,0 };
+	};
+}
 
 

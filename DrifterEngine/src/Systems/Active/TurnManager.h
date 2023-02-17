@@ -1,5 +1,5 @@
 #pragma once
-#include "System.h"
+#include "Systems/System.h"
 #include "Components/Components.h"
 
 namespace drft::system
@@ -10,6 +10,8 @@ namespace drft::system
 	{
 	public:
 		TurnManager()
+			: _timeKeeper(entt::null)
+			, _player(entt::null)
 		{
 			phase = Phase::OnUpdate;
 		}
@@ -29,7 +31,6 @@ namespace drft::system
 		std::vector<entt::entity> _queue;
 		std::set<entt::entity> _managedEntities;
 		entt::entity _timeKeeper;
-		entt::entity _currentActor;
 		entt::entity _player;
 	};
 }

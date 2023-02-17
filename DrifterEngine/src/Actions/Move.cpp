@@ -4,11 +4,16 @@
 #include "Spatial/Conversions.h"
 #include "Components/Components.h"
 #include "Actions/Attack.h"
+#include "Actions/Wait.h"
 
 using namespace drft::action;
 
 std::unique_ptr<Action> drft::action::Move::execute(entt::handle& entity)
 {
+	if (direction == sf::Vector2i(0, 0))
+	{
+		return std::make_unique<Wait>();
+	}
 	auto& pos = entity.get<component::Position>();
 	auto& grid = entity.registry()->ctx().get<spatial::WorldGrid&>();
 

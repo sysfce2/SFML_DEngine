@@ -28,7 +28,7 @@ namespace drft::system::input
 		std::unique_ptr<action::Action> pop();
 
 	private:
-		const int MAX_SIZE = 4;
+		const int MAX_SIZE = 1;
 		std::queue< std::unique_ptr<action::Action> > _buffer;
 	};
 }

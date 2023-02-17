@@ -172,16 +172,16 @@
     <ClCompile Include="src\Systems\PresetViews\PresetViews.cpp" />
     <ClCompile Include="src\Utility\EntityHelpers.cpp" />
     <ClCompile Include="src\Spatial\Helpers.cpp" />
-    <ClCompile Include="src\Systems\RealityBubble.cpp" />
+    <ClCompile Include="src\Systems\Active\RealityBubble.cpp" />
     <ClCompile Include="src\Components\Meta.cpp" />
     <ClCompile Include="src\Events\Events.cpp" />
     <ClCompile Include="src\Factory\EntityFactory.cpp" />
     <ClCompile Include="src\Actions\Attack.cpp" />
     <ClCompile Include="src\Actions\Move.cpp" />
     <ClCompile Include="src\Actions\Action.cpp" />
-    <ClCompile Include="src\Systems\ChunkManager.cpp" />
+    <ClCompile Include="src\Systems\Active\ChunkManager.cpp" />
     <ClCompile Include="src\Utility\DebugInfo.cpp" />
-    <ClCompile Include="src\Systems\PlayerInput.cpp" />
+    <ClCompile Include="src\Systems\Active\PlayerInput.cpp" />
     <ClCompile Include="src\Spatial\Cell.cpp" />
     <ClCompile Include="src\Components\Components.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp">
@@ -222,7 +222,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\Systems\EntityRenderer.cpp" />
+    <ClCompile Include="src\Systems\Active\EntityRenderer.cpp" />
     <ClCompile Include="src\Systems\System.cpp" />
     <ClCompile Include="src\Systems\SystemScheduler.cpp" />
     <ClCompile Include="src\Utility\SpriteBatch.cpp" />
@@ -230,11 +230,12 @@
     <ClCompile Include="src\Utility\TestEntities.cpp" />
     <ClCompile Include="src\Spatial\WorldGrid.cpp" />
     <ClCompile Include="src\Spatial\WorldChunk.cpp" />
-    <ClCompile Include="src\Systems\WorldGridResolver.cpp" />
-    <ClCompile Include="src\Systems\Camera.cpp" />
-    <ClCompile Include="src\Systems\TileRenderer.cpp" />
-    <ClCompile Include="src\Systems\TurnManager.cpp" />
+    <ClCompile Include="src\Systems\Reactive\WorldGridResolver.cpp" />
+    <ClCompile Include="src\Systems\Active\Camera.cpp" />
+    <ClCompile Include="src\Systems\Active\TileRenderer.cpp" />
+    <ClCompile Include="src\Systems\Active\TurnManager.cpp" />
     <ClCompile Include="src\Spatial\Conversions.cpp" />
+    <ClCompile Include="src\Actions\Wait.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Systems\Input\Input.h" />
@@ -242,7 +243,7 @@
     <ClInclude Include="src\Systems\PresetViews\PresetViews.h" />
     <ClInclude Include="src\Utility\EntityHelpers.h" />
     <ClInclude Include="src\Spatial\Helpers.h" />
-    <ClInclude Include="src\Systems\RealityBubble.h" />
+    <ClInclude Include="src\Systems\Active\RealityBubble.h" />
     <ClInclude Include="deps\Cereal\access.hpp" />
     <ClInclude Include="deps\Cereal\archives\adapters.hpp" />
     <ClInclude Include="deps\Cereal\archives\binary.hpp" />
@@ -407,9 +408,9 @@
     <ClInclude Include="src\Actions\Attack.h" />
     <ClInclude Include="src\Actions\Move.h" />
     <ClInclude Include="src\Actions\Action.h" />
-    <ClInclude Include="src\Systems\ChunkManager.h" />
+    <ClInclude Include="src\Systems\Active\ChunkManager.h" />
     <ClInclude Include="src\Utility\DebugInfo.h" />
-    <ClInclude Include="src\Systems\PlayerInput.h" />
+    <ClInclude Include="src\Systems\Active\PlayerInput.h" />
     <ClInclude Include="src\Spatial\Cell.h" />
     <ClInclude Include="deps\EnTT\entt.h" />
     <ClInclude Include="src\Spatial\Grid.h" />
@@ -418,7 +419,7 @@
     <ClInclude Include="src\Engine\GameState.h" />
     <ClInclude Include="src\Engine\State.h" />
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Systems\EntityRenderer.h" />
+    <ClInclude Include="src\Systems\Active\EntityRenderer.h" />
     <ClInclude Include="src\Systems\System.h" />
     <ClInclude Include="src\Systems\SystemScheduler.h" />
     <ClInclude Include="src\Utility\ResourceHolder.h" />
@@ -427,11 +428,12 @@
     <ClInclude Include="src\Utility\TestEntities.h" />
     <ClInclude Include="src\Spatial\WorldGrid.h" />
     <ClInclude Include="src\Spatial\WorldChunk.h" />
-    <ClInclude Include="src\Systems\WorldGridResolver.h" />
-    <ClInclude Include="src\Systems\Camera.h" />
-    <ClInclude Include="src\Systems\TileRenderer.h" />
-    <ClInclude Include="src\Systems\TurnManager.h" />
+    <ClInclude Include="src\Systems\Reactive\WorldGridResolver.h" />
+    <ClInclude Include="src\Systems\Active\Camera.h" />
+    <ClInclude Include="src\Systems\Active\TileRenderer.h" />
+    <ClInclude Include="src\Systems\Active\TurnManager.h" />
     <ClInclude Include="src\Spatial\Conversions.h" />
+    <ClInclude Include="src\Actions\Wait.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\static\player.json" />

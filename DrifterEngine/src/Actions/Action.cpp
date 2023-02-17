@@ -5,7 +5,7 @@ float drft::action::attempt(entt::handle entity, std::unique_ptr<drft::action::A
 {
 	auto nextAction = std::move(action);
 
-	float actionCost = 100.f;
+	float actionCost = 0.0f;
 	while (nextAction != nullptr)
 	{
 		actionCost = nextAction->getCost();

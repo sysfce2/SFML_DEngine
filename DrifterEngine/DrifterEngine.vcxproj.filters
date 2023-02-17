@@ -36,7 +36,7 @@
     <ClCompile Include="src\Utility\SpriteIndexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\EntityRenderer.cpp">
+    <ClCompile Include="src\Systems\Active\EntityRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Systems\System.cpp">
@@ -60,22 +60,22 @@
     <ClCompile Include="src\Spatial\Cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\WorldGridResolver.cpp">
+    <ClCompile Include="src\Systems\Reactive\WorldGridResolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\PlayerInput.cpp">
+    <ClCompile Include="src\Systems\Active\PlayerInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Camera.cpp">
+    <ClCompile Include="src\Systems\Active\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\DebugInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\ChunkManager.cpp">
+    <ClCompile Include="src\Systems\Active\ChunkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\TileRenderer.cpp">
+    <ClCompile Include="src\Systems\Active\TileRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Actions\Action.cpp">
@@ -96,10 +96,10 @@
     <ClCompile Include="src\Events\Events.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\TurnManager.cpp">
+    <ClCompile Include="src\Systems\Active\TurnManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\RealityBubble.cpp">
+    <ClCompile Include="src\Systems\Active\RealityBubble.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Spatial\Conversions.cpp">
@@ -118,6 +118,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Systems\Input\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\Wait.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -146,7 +149,7 @@
     <ClInclude Include="src\Utility\SpriteIndexer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\EntityRenderer.h">
+    <ClInclude Include="src\Systems\Active\EntityRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\System.h">
@@ -173,22 +176,22 @@
     <ClInclude Include="src\Spatial\Cell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\WorldGridResolver.h">
+    <ClInclude Include="src\Systems\Reactive\WorldGridResolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\PlayerInput.h">
+    <ClInclude Include="src\Systems\Active\PlayerInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Camera.h">
+    <ClInclude Include="src\Systems\Active\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility\DebugInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\ChunkManager.h">
+    <ClInclude Include="src\Systems\Active\ChunkManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\TileRenderer.h">
+    <ClInclude Include="src\Systems\Active\TileRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Actions\Action.h">
@@ -683,10 +686,10 @@
     <ClInclude Include="src\Events\Events.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\TurnManager.h">
+    <ClInclude Include="src\Systems\Active\TurnManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\RealityBubble.h">
+    <ClInclude Include="src\Systems\Active\RealityBubble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Spatial\Conversions.h">
@@ -705,6 +708,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\Input\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\Wait.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

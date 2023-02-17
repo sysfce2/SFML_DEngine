@@ -41,7 +41,11 @@
           }
         },
         {
-          "Name": "AI"
+          "Name": "AI",
+          "Data": {
+            "protocol": "random"
+          }
+            
         }
       ]
     },

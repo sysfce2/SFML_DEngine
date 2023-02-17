@@ -1,5 +1,5 @@
 #pragma once
-#include "System.h"
+#include "Systems/System.h"
 
 namespace drft::spatial
 {
@@ -39,7 +39,7 @@ namespace drft::system
 		virtual void update(const float dt) override;
 
 	private:
-		void updateChunks(sf::Vector2i newPosition);
+		void updateChunks(sf::Vector2i aroundNewPosition);
 
 
 		void setState(sf::Vector2i coordinate, ChunkState state);

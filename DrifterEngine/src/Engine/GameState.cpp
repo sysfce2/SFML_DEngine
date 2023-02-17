@@ -1,18 +1,22 @@
 #include "pch.h"
 #include "GameState.h"
+
 #include "Spatial/WorldGrid.h"
 #include "Spatial/Conversions.h"
+
 #include "Systems/SystemScheduler.h"
-#include "Systems/TileRenderer.h"
-#include "Systems/EntityRenderer.h"
-#include "Systems/WorldGridResolver.h"
-#include "Systems/RealityBubble.h"
-#include "Systems/PlayerInput.h"
-#include "Systems/Camera.h"
-#include "Systems/ChunkManager.h"
-#include "Systems/TurnManager.h"
+#include "Systems/Active/TileRenderer.h"
+#include "Systems/Active/EntityRenderer.h"
+#include "Systems/Active/RealityBubble.h"
+#include "Systems/Active/PlayerInput.h"
+#include "Systems/Active/Camera.h"
+#include "Systems/Active/ChunkManager.h"
+#include "Systems/Active/TurnManager.h"
+#include "Systems/Reactive/WorldGridResolver.h"
+
 #include "Components/Components.h"
 #include "Components/Meta.h"
+
 #include "Utility/TestEntities.h"
 #include "Factory/EntityFactory.h"
 
@@ -71,7 +75,7 @@ void drft::GameState::init()
 			pos.position = startingPosition;
 		});
 
-	// ADD CAMERA ENTITY // ** temporary just for testing **
+	// ADD CAMERA ENTITY // 
 	//
 	auto camera = _registry.create();
 	int viewportWidth = getContext().window.width;

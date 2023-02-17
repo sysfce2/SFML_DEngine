@@ -2,7 +2,7 @@
 #include "PlayerInput.h"
 #include "Components/Components.h"
 #include "Actions/Move.h"
-#include "Input/InputBuffer.h"
+#include "Systems/Input/InputBuffer.h"
 #include "Actions/Move.h"
 
 void drft::system::PlayerInput::init()

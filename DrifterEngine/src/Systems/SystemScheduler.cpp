@@ -15,7 +15,7 @@ void drft::system::SystemScheduler::initAll()
 
 void drft::system::SystemScheduler::update(const float dt)
 {
-	for (int i = 0; i < (int)Phase::AllUpdate; ++i)
+	for (unsigned int i = (int)Phase::OnProcessInput; i < (int)Phase::AllUpdate; ++i)
 	{
 		for (auto& sys : _systems[(Phase)i])
 		{

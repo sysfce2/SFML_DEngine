@@ -1,6 +1,5 @@
 #pragma once
-#include "System.h"
-#include "Spatial/WorldGrid.h"
+#include "Systems/System.h"
 
 namespace drft::system
 {

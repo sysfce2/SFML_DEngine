@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "TurnManager.h"
 #include "Events/Events.h"
-#include "Input/Input.h"
+#include "Systems/Input/Input.h"
 #include "Actions/Action.h"
 
 void drft::system::TurnManager::init()
@@ -18,26 +18,29 @@ void drft::system::TurnManager::update(const float)
 {
 	fillActorQueue();
 	setPlayerActor();
-
-	_currentActor = _queue.front();
-	if (_currentActor == _timeKeeper)
-	{
-		tick();
-		_currentActor = _queue.front();
-	}
-	auto actor = registry->get<component::Actor>(_currentActor);
-
+	
+	auto& currentActor = _queue.front();
+	auto& actor = registry->get<component::Actor>(currentActor);
 	while (actor.ap < 0)
 	{
 		popFrontPushBack();
-		_currentActor = _queue.front();
-		actor = registry->get<component::Actor>(_currentActor);
+		currentActor = _queue.front();
+		actor = registry->get<component::Actor>(currentActor);
+	}
+	if (currentActor == _timeKeeper)
+	{
+		tick();
+		return;
 	}
 
-	entt::handle currentActorHandle = entt::handle(*registry, _currentActor);
+	entt::handle currentActorHandle = entt::handle(*registry, currentActor);
 	auto input = input::getInput(currentActorHandle);
 	float pointsSpent = action::attempt(currentActorHandle, std::move(input));
 	actor.ap -= pointsSpent;
+	if (pointsSpent > 25.0f)
+	{
+		popFrontPushBack();
+	}
 }
 
 void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::entity entity)
@@ -51,6 +54,8 @@ void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::en
 	if (toRemove != _queue.end())
 	{
 		_queue.erase(toRemove);
+		auto& actor = registry.get<component::Actor>(entity);
+		actor.ap = 0;
 	}
 }
 
@@ -107,7 +112,7 @@ void drft::system::TurnManager::printQueue()
 void drft::system::TurnManager::tick()
 {
 	std::cout << "Tick!" << std::endl;
-	for (auto e : _queue)
+	for (auto &e : _queue)
 	{
 		if (e == _timeKeeper) continue;
 		auto& actor = registry->get<component::Actor>(e);
