@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "Spatial/WorldGrid.h"
+#include "Spatial/Conversions.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

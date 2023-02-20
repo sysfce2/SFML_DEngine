@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "PlayerInput.h"
 #include "Components/Components.h"
+#include "Components/Tags.h"
 #include "Actions/Move.h"
-#include "Systems/Input/InputBuffer.h"
-#include "Actions/Move.h"
+#include "Actions/ActionBuffer.h"
 
 void drft::system::PlayerInput::init()
 {
@@ -25,7 +25,7 @@ void drft::system::PlayerInput::update(const float dt)
 {
 	auto view = registry->view<component::Player>(entt::exclude<component::Prototype>);
 
-	for (auto entity : view)
+	for (auto [entity, player] : view.each())
 	{
 		for (auto&& [key, action] : _actionMap.iterate())
 		{
@@ -59,7 +59,7 @@ void drft::system::PlayerInput::update(const float dt)
 
 			if (_keyState[key].active)
 			{
-				system::input::InputBuffer::getInstance().push(_actionMap[key]);
+				player.actionBuffer.push(_actionMap[key]);
 			}
 		}
 	}

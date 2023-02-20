@@ -29,6 +29,8 @@
 #include <bitset>
 #include <thread>
 #include <mutex>
+#include <shared_mutex>
+#include <future>
 #include <cassert>
 
 // SFML

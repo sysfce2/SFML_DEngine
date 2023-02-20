@@ -1,45 +1,53 @@
 #include "pch.h"
 #include "TurnManager.h"
 #include "Events/Events.h"
+#include "Components/Components.h"
+#include "Components/Tags.h"
 #include "Systems/Input/Input.h"
 #include "Actions/Action.h"
 
 void drft::system::TurnManager::init()
 {
 	registry->on_destroy<component::Actor>().connect<&TurnManager::onActorRemove>(this);
-	registry->on_destroy<component::Active>().connect<&TurnManager::onActorRemove>(this);
+	registry->on_destroy<component::tag::Active>().connect<&TurnManager::onActorRemove>(this);
+
+	_actorQueue = std::make_unique<ActorQueue>(*registry);
 
 	_timeKeeper = registry->create();
 	registry->emplace<component::Actor>(_timeKeeper, 100, 1.0f, 1.0f);
-	registry->emplace<component::Active>(_timeKeeper);
+	registry->emplace<component::tag::Active>(_timeKeeper);
+
+	_actorQueue->setSentinel(_timeKeeper);
 }
 
 void drft::system::TurnManager::update(const float)
 {
-	fillActorQueue();
-	setPlayerActor();
+	_actorQueue->refresh(_managedEntities);
 	
-	auto& currentActor = _queue.front();
-	auto& actor = registry->get<component::Actor>(currentActor);
-	while (actor.ap < 0)
+	auto& currentActor = _actorQueue->getCurrentActor();
+	auto currentEntity = entt::to_entity(*registry, currentActor);
+
+	while (currentActor.ap < 0)
 	{
-		popFrontPushBack();
-		currentActor = _queue.front();
-		actor = registry->get<component::Actor>(currentActor);
+		_actorQueue->rotate();
+		currentActor = _actorQueue->getCurrentActor();
 	}
-	if (currentActor == _timeKeeper)
+
+	if (currentEntity == _timeKeeper)
 	{
-		tick();
+		_actorQueue->tick();
 		return;
 	}
 
-	entt::handle currentActorHandle = entt::handle(*registry, currentActor);
-	auto input = input::getInput(currentActorHandle);
-	float pointsSpent = action::attempt(currentActorHandle, std::move(input));
-	actor.ap -= pointsSpent;
-	if (pointsSpent > 25.0f)
+	// Get current actor input and perform action, if any.
+	entt::handle currentActorHandle = entt::handle(*registry, currentEntity);
+	auto desiredAction = input::getInput(currentActorHandle);
+	float pointsSpent = action::attempt(currentActorHandle, std::move(desiredAction));
+	currentActor.ap -= pointsSpent;
+
+	if (pointsSpent > 0.0f)
 	{
-		popFrontPushBack();
+		_actorQueue->rotate();
 	}
 }
 
@@ -50,74 +58,69 @@ void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::en
 	{
 		_managedEntities.erase(entity);
 	}
-	auto toRemove = std::find(_queue.begin(), _queue.end(), entity);
-	if (toRemove != _queue.end())
-	{
-		_queue.erase(toRemove);
-		auto& actor = registry.get<component::Actor>(entity);
-		actor.ap = 0;
-	}
+	_actorQueue->remove(entity);
 }
 
-void drft::system::TurnManager::fillActorQueue()
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Actor Queue
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+drft::system::ActorQueue::ActorQueue(entt::registry& registry)
+	: registry(registry)
+	, _sentinel(entt::null)
+{}
+
+void drft::system::ActorQueue::refresh(std::set<entt::entity>& currentEntities)
 {
-	auto actorView = registry->view<component::Actor, component::Active>(entt::exclude<component::Prototype>);
+	auto actorView = registry.view<component::Actor, component::tag::Active>(entt::exclude<component::Prototype>);
 	for (auto entity : actorView)
 	{
-		if (_managedEntities.contains(entity)) continue;
+		if (currentEntities.contains(entity)) continue;
+
+		// TODO: find out way to insert above timeKeeper (cache position?)
+		auto& actor = actorView.get<component::Actor>(entity);
+		actor.ap = 0;
 
 		_queue.push_back(entity);
-		_managedEntities.insert(entity);
+		currentEntities.insert(entity);
 	}
 }
 
-void drft::system::TurnManager::setPlayerActor()
-{
-	auto playerView = registry->view<component::Player, component::Actor>
-		(entt::exclude<component::Prototype>);
-
-	for (auto e : playerView)
-	{
-		_player = e;
-	}
-}
-
-void drft::system::TurnManager::popFrontPushBack()
+void drft::system::ActorQueue::rotate()
 {
 	auto front = _queue.front();
 	_queue.erase(_queue.begin());
 	_queue.push_back(front);
 }
 
-void drft::system::TurnManager::printQueue()
-{
-	std::cout << "Turn Queue:" << std::endl;
-	int count = 1;
-	for (auto e : _queue)
-	{
-		if (e == _timeKeeper)
-		{
-			auto& tk = registry->get<component::Actor>(_timeKeeper);
-			std::cout << count++ << ". " << "Time Keeper" << ": " << tk.ap << " pts" << std::endl;
-			continue;
-		}
-		auto& info = registry->get<component::Info>(e);
-		auto& actor = registry->get<component::Actor>(e);
-		std::cout << count << ". " << info.name << ": " << actor.ap << " pts" << std::endl;
-		++count;
-	}
-	std::cout << std::endl;
-}
-
-void drft::system::TurnManager::tick()
+void drft::system::ActorQueue::tick()
 {
 	std::cout << "Tick!" << std::endl;
-	for (auto &e : _queue)
+	for (auto& e : _queue)
 	{
-		if (e == _timeKeeper) continue;
-		auto& actor = registry->get<component::Actor>(e);
+		if (e == _sentinel) continue;
+		auto& actor = registry.get<component::Actor>(e);
 		actor.ap += AP_PER_TICK;
 	}
-	popFrontPushBack();
+	rotate();
 }
 
+void drft::system::ActorQueue::setSentinel(entt::entity sentinel)
+{
+	_sentinel = sentinel;
+}
+
+component::Actor& drft::system::ActorQueue::getCurrentActor() const
+{
+	auto& actor = registry.get<component::Actor>(_queue.front());
+	return actor;
+}
+
+void drft::system::ActorQueue::remove(entt::entity entity)
+{
+	auto toRemove = std::find(_queue.begin(), _queue.end(), entity);
+	if (toRemove != _queue.end())
+	{
+		_queue.erase(toRemove);
+	}
+}

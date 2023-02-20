@@ -1,6 +1,6 @@
 #pragma once
 #include "Actions/Action.h"
-
+#include "Actions/ActionBuffer.h"
 
 namespace component
 {
@@ -40,26 +40,22 @@ namespace component
 		float actSpeed = { 1.0f };
 	};
 
-	struct Active
-	{};
-
-	struct MyTurn
-	{};
+	struct Health
+	{
+		int max = 10;
+		int current = 10;
+	};
 
 	// Represents a player
 	struct Player
-	{};
+	{
+		drft::action::ActionBuffer actionBuffer;
+	};
 
 	// Represents an AI
 	struct AI
 	{
 		std::string protocol = { "random" };
-	};
-
-	// Desired input for the turn
-	struct Input
-	{
-		std::unique_ptr<drft::action::Action> desiredAction;
 	};
 
 } // namespace component

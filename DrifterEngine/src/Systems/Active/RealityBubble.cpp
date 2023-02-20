@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "RealityBubble.h"
 #include "Components/Components.h"
+#include "Components/Tags.h"
 #include "Spatial/Conversions.h"
-#include "Spatial/WorldGrid.h"
 #include "Spatial/Helpers.h"
 #include "Utility/DebugInfo.h"
 
@@ -12,8 +12,8 @@ void drft::system::RealityBubble::init()
 	registry->on_update<component::Actor>().connect<&RealityBubble::onActorAddOrUpdate>(this);
 	registry->on_destroy<component::Actor>().connect<&RealityBubble::onActorRemove>(this);
 
-	registry->on_construct<component::Active>().connect<&RealityBubble::onActiveAdd>(this);
-	registry->on_destroy<component::Active>().connect<&RealityBubble::onActiveRemove>(this);
+	registry->on_construct<component::tag::Active>().connect<&RealityBubble::onActiveAdd>(this);
+	registry->on_destroy<component::tag::Active>().connect<&RealityBubble::onActiveRemove>(this);
 }
 
 void drft::system::RealityBubble::update(const float)
@@ -32,12 +32,12 @@ void drft::system::RealityBubble::update(const float)
 
 		if (distance > REALITY_RADIUS)
 		{
-			registry->remove<component::Active>(entity);
+			registry->remove<component::tag::Active>(entity);
 		}
 		else
 		{
-			if (registry->any_of<component::Active>(entity)) continue;
-			registry->emplace<component::Active>(entity);
+			if (registry->any_of<component::tag::Active>(entity)) continue;
+			registry->emplace<component::tag::Active>(entity);
 		}
 	}
 
@@ -57,12 +57,12 @@ void drft::system::RealityBubble::onActorAddOrUpdate(entt::registry& registry, e
 
 	if (distance > REALITY_RADIUS)
 	{
-		registry.remove<component::Active>(entity);
+		registry.remove<component::tag::Active>(entity);
 	}
 	else
 	{
-		if (registry.any_of<component::Active>(entity)) return;
-		registry.emplace<component::Active>(entity);
+		if (registry.any_of<component::tag::Active>(entity)) return;
+		registry.emplace<component::tag::Active>(entity);
 	}
 
 }
@@ -70,9 +70,9 @@ void drft::system::RealityBubble::onActorAddOrUpdate(entt::registry& registry, e
 void drft::system::RealityBubble::onActorRemove(entt::registry& registry, entt::entity entity)
 {
 	if (registry.any_of<component::Prototype>(entity)) return;
-	if (!registry.any_of<component::Position, component::Active>(entity)) return;
+	if (!registry.any_of<component::Position, component::tag::Active>(entity)) return;
 
-	registry.remove<component::Active>(entity);
+	registry.remove<component::tag::Active>(entity);
 }
 
 void drft::system::RealityBubble::onActiveAdd(entt::registry& registry, entt::entity entity)

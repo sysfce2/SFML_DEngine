@@ -114,13 +114,16 @@
     <ClCompile Include="src\Systems\PresetViews\PresetViews.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Input\InputBuffer.cpp">
+    <ClCompile Include="src\Actions\ActionBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Systems\Input\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Actions\Wait.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\Tags.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -704,13 +707,16 @@
     <ClInclude Include="src\Systems\PresetViews\PresetViews.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Input\InputBuffer.h">
+    <ClInclude Include="src\Actions\ActionBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\Input\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Actions\Wait.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Tags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

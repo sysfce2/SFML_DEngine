@@ -30,6 +30,11 @@ void component::Meta::initialize()
 		.data<&Actor::moveSpeed>("moveSpeed"_hs)
 		.data<&Actor::actSpeed>("actSpeed"_hs);
 
+	entt::meta<Health>().type("Health"_hs)
+		.ctor<&entt::registry::emplace_or_replace<Health>, entt::as_ref_t>()
+		.data<&Health::max>("max"_hs)
+		.data<&Health::current>("current"_hs);
+
 	entt::meta<Player>().type("Player"_hs)
 		.func<&entt::registry::emplace_or_replace<Player>>("tag"_hs);
 

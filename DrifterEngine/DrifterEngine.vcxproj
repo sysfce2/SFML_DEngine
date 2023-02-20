@@ -168,7 +168,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Systems\Input\Input.cpp" />
-    <ClCompile Include="src\Systems\Input\InputBuffer.cpp" />
+    <ClCompile Include="src\Actions\ActionBuffer.cpp" />
     <ClCompile Include="src\Systems\PresetViews\PresetViews.cpp" />
     <ClCompile Include="src\Utility\EntityHelpers.cpp" />
     <ClCompile Include="src\Spatial\Helpers.cpp" />
@@ -236,10 +236,11 @@
     <ClCompile Include="src\Systems\Active\TurnManager.cpp" />
     <ClCompile Include="src\Spatial\Conversions.cpp" />
     <ClCompile Include="src\Actions\Wait.cpp" />
+    <ClCompile Include="src\Components\Tags.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Systems\Input\Input.h" />
-    <ClInclude Include="src\Systems\Input\InputBuffer.h" />
+    <ClInclude Include="src\Actions\ActionBuffer.h" />
     <ClInclude Include="src\Systems\PresetViews\PresetViews.h" />
     <ClInclude Include="src\Utility\EntityHelpers.h" />
     <ClInclude Include="src\Spatial\Helpers.h" />
@@ -434,6 +435,7 @@
     <ClInclude Include="src\Systems\Active\TurnManager.h" />
     <ClInclude Include="src\Spatial\Conversions.h" />
     <ClInclude Include="src\Actions\Wait.h" />
+    <ClInclude Include="src\Components\Tags.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\static\player.json" />

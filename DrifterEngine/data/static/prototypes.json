@@ -45,11 +45,9 @@
           "Data": {
             "protocol": "random"
           }
-            
         }
       ]
     },
-
     {
       "Name": "Tree",
       "Inherits": [
@@ -76,6 +74,13 @@
           "Data": {
             "position": [ 10.0, 10.0 ],
             "depth": 3
+          }
+        },
+        {
+          "Name": "Health",
+          "Data": {
+            "max": 50,
+            "current": 50
           }
         }
       ]
@@ -120,6 +125,13 @@
           "Name": "AI",
           "Data": {
             "protocol": "random"
+          }
+        },
+        {
+          "Name": "Health",
+          "Data": {
+            "max": 10,
+            "current": 10
           }
         }
       ]

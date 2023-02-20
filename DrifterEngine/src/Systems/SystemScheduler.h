@@ -12,6 +12,7 @@ namespace drft::system
 		SystemScheduler(entt::registry& registry) : _registry(registry) {}
 
 		void initAll();
+
 		template <typename T>
 		void add(T&& system)
 		{
@@ -22,6 +23,7 @@ namespace drft::system
 			_systems[phase].push_back(std::make_unique<T>());
 			_systems[phase].back()->setRegistry(_registry);
 		}
+
 		void update(const float dt);
 		void render(sf::RenderTarget& target);
 

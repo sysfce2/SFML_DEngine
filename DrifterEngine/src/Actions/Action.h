@@ -10,9 +10,10 @@ namespace drft::action
 		virtual std::unique_ptr<Action> clone() const = 0;
 	};
 
-
 	// Free functions
-
+	
+	// Attempt to perform an action, returning the cost of the action.
+	// Will perform fall back action(s) if the given action cannot be performed.
 	float attempt(entt::handle entity, std::unique_ptr<Action> action);
 }
 

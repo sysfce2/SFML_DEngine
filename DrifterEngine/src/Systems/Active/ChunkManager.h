@@ -14,10 +14,13 @@ namespace drft::system
 		None,
 		Active,
 		Built,
+		ToBuild,
 		Building,
 		Saved,
+		ToSave,
 		Saving,
 		Loaded,
+		ToLoad,
 		Loading
 	};
 
@@ -44,21 +47,24 @@ namespace drft::system
 
 		void setState(sf::Vector2i coordinate, ChunkState state);
 
-		void build(sf::Vector2i chunkCoordinate);
-		void load(sf::Vector2i chunkCoordinate);
-		void save(sf::Vector2i chunkCoordinate);
+		bool build(sf::Vector2i chunkCoordinate);
+		bool load(sf::Vector2i chunkCoordinate);
+		bool save(sf::Vector2i chunkCoordinate);
+
+		
+
+		void process(std::set<std::pair<int, int>>& chunkSet, bool (ChunkManager::*func)(sf::Vector2i));
 
 	private:
-		bool _isFirstPass = true;
 		std::map<std::pair<int, int>, VirtualChunk> _chunks;
 
 		const int _activeChunkRadius = 2;
 		const int _toSaveRadius = _activeChunkRadius + 1;
 		sf::Vector2i _currentPosition = { 0, 0 };
 
-		std::queue<sf::Vector2i> _toBuild;
-		std::queue<sf::Vector2i> _toLoad;
-		std::queue<sf::Vector2i> _toSave;
+		std::set<std::pair<int, int>> _toBuild;
+		std::set<std::pair<int, int>> _toLoad;
+		std::set<std::pair<int, int>> _toSave;
 	};
 }
 

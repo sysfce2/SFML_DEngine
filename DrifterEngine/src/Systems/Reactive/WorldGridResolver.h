@@ -9,7 +9,7 @@ namespace drft::system
 	public:
 		WorldGridResolver()
 		{
-			phase = Phase::OnValidation;
+			phase = Phase::Reactive;
 		}
 
 		virtual void init() override;

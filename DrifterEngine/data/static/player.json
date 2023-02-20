@@ -2,6 +2,9 @@
   "Prototypes": [
     {
       "Name": "Player",
+      "Inherits": [
+        ""
+      ],
       "Components": [
         {
           "Name": "Info",
@@ -34,6 +37,13 @@
             "ap": 0,
             "moveSpeed": 1.05,
             "actSpeed": 1.0
+          }
+        },
+        {
+          "Name": "Health",
+          "Data": {
+            "max": 10,
+            "current": 10
           }
         }
       ]
