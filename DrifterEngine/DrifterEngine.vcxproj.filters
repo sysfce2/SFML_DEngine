@@ -126,6 +126,15 @@
     <ClCompile Include="src\Components\Tags.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utility\CopyEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\Serialize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\SerializeEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\EnTT\entt.h">
@@ -431,259 +440,259 @@
     <ClInclude Include="src\Components\Meta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\archives\adapters.hpp">
+    <ClInclude Include="deps\cereal\archives\adapters.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\archives\binary.hpp">
+    <ClInclude Include="deps\cereal\archives\binary.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\archives\json.hpp">
+    <ClInclude Include="deps\cereal\archives\json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\archives\portable_binary.hpp">
+    <ClInclude Include="deps\cereal\archives\portable_binary.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\archives\xml.hpp">
+    <ClInclude Include="deps\cereal\archives\xml.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\details\helpers.hpp">
+    <ClInclude Include="deps\cereal\details\helpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\details\polymorphic_impl.hpp">
+    <ClInclude Include="deps\cereal\details\polymorphic_impl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\details\polymorphic_impl_fwd.hpp">
+    <ClInclude Include="deps\cereal\details\polymorphic_impl_fwd.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\details\static_object.hpp">
+    <ClInclude Include="deps\cereal\details\static_object.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\details\traits.hpp">
+    <ClInclude Include="deps\cereal\details\traits.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\details\util.hpp">
+    <ClInclude Include="deps\cereal\details\util.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\error\en.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\error\en.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\error\error.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\error\error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\biginteger.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\biginteger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\diyfp.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\diyfp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\dtoa.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\dtoa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\ieee754.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\ieee754.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\itoa.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\itoa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\meta.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\meta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\pow10.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\pow10.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\regex.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\regex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\stack.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\stack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\strfunc.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\strfunc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\strtod.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\strtod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\internal\swap.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\internal\swap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\msinttypes\inttypes.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\msinttypes\inttypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\msinttypes\stdint.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\msinttypes\stdint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\allocators.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\allocators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\cursorstreamwrapper.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\cursorstreamwrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\document.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\document.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\encodedstream.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\encodedstream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\encodings.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\encodings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\filereadstream.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\filereadstream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\filewritestream.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\filewritestream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\fwd.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\fwd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\istreamwrapper.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\istreamwrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\memorybuffer.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\memorybuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\memorystream.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\memorystream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\ostreamwrapper.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\ostreamwrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\pointer.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\pointer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\prettywriter.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\prettywriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\rapidjson.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\rapidjson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\reader.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\reader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\schema.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\schema.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\stream.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\stream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\stringbuffer.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\stringbuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidjson\writer.h">
+    <ClInclude Include="deps\cereal\external\rapidjson\writer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidxml\rapidxml.hpp">
+    <ClInclude Include="deps\cereal\external\rapidxml\rapidxml.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidxml\rapidxml_iterators.hpp">
+    <ClInclude Include="deps\cereal\external\rapidxml\rapidxml_iterators.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidxml\rapidxml_print.hpp">
+    <ClInclude Include="deps\cereal\external\rapidxml\rapidxml_print.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\rapidxml\rapidxml_utils.hpp">
+    <ClInclude Include="deps\cereal\external\rapidxml\rapidxml_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\external\base64.hpp">
+    <ClInclude Include="deps\cereal\external\base64.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\concepts\pair_associative_container.hpp">
+    <ClInclude Include="deps\cereal\types\concepts\pair_associative_container.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\array.hpp">
+    <ClInclude Include="deps\cereal\types\array.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\atomic.hpp">
+    <ClInclude Include="deps\cereal\types\atomic.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\base_class.hpp">
+    <ClInclude Include="deps\cereal\types\base_class.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\bitset.hpp">
+    <ClInclude Include="deps\cereal\types\bitset.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\boost_variant.hpp">
+    <ClInclude Include="deps\cereal\types\boost_variant.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\chrono.hpp">
+    <ClInclude Include="deps\cereal\types\chrono.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\common.hpp">
+    <ClInclude Include="deps\cereal\types\common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\complex.hpp">
+    <ClInclude Include="deps\cereal\types\complex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\deque.hpp">
+    <ClInclude Include="deps\cereal\types\deque.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\forward_list.hpp">
+    <ClInclude Include="deps\cereal\types\forward_list.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\functional.hpp">
+    <ClInclude Include="deps\cereal\types\functional.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\list.hpp">
+    <ClInclude Include="deps\cereal\types\list.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\map.hpp">
+    <ClInclude Include="deps\cereal\types\map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\memory.hpp">
+    <ClInclude Include="deps\cereal\types\memory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\optional.hpp">
+    <ClInclude Include="deps\cereal\types\optional.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\polymorphic.hpp">
+    <ClInclude Include="deps\cereal\types\polymorphic.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\queue.hpp">
+    <ClInclude Include="deps\cereal\types\queue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\set.hpp">
+    <ClInclude Include="deps\cereal\types\set.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\stack.hpp">
+    <ClInclude Include="deps\cereal\types\stack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\string.hpp">
+    <ClInclude Include="deps\cereal\types\string.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\tuple.hpp">
+    <ClInclude Include="deps\cereal\types\tuple.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\unordered_map.hpp">
+    <ClInclude Include="deps\cereal\types\unordered_map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\unordered_set.hpp">
+    <ClInclude Include="deps\cereal\types\unordered_set.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\utility.hpp">
+    <ClInclude Include="deps\cereal\types\utility.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\valarray.hpp">
+    <ClInclude Include="deps\cereal\types\valarray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\variant.hpp">
+    <ClInclude Include="deps\cereal\types\variant.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\types\vector.hpp">
+    <ClInclude Include="deps\cereal\types\vector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\access.hpp">
+    <ClInclude Include="deps\cereal\access.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\cereal.hpp">
+    <ClInclude Include="deps\cereal\cereal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\macros.hpp">
+    <ClInclude Include="deps\cereal\macros.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\specialize.hpp">
+    <ClInclude Include="deps\cereal\specialize.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="deps\Cereal\version.hpp">
+    <ClInclude Include="deps\cereal\version.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Events\Events.h">
@@ -719,6 +728,15 @@
     <ClInclude Include="src\Components\Tags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utility\CopyEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Serialize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility\SerializeEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Utility\ResourceHolder.inl">
@@ -728,7 +746,7 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="data\static\prototypes.json" />
-    <None Include="deps\Cereal\external\rapidxml\manual.html" />
+    <None Include="deps\cereal\external\rapidxml\manual.html" />
     <None Include="data\static\player.json" />
   </ItemGroup>
   <ItemGroup>

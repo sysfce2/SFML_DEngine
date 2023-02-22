@@ -15,6 +15,7 @@
 #include "Systems/Reactive/WorldGridResolver.h"
 
 #include "Components/Components.h"
+#include "Components/Tags.h"
 #include "Components/Meta.h"
 
 #include "Utility/TestEntities.h"
@@ -69,6 +70,7 @@ void drft::GameState::init()
 
 	// Add Player
 	auto player = _factory->build("Player", _registry);
+	player.emplace<component::Player>();
 	sf::Vector2f startingPosition = spatial::toWorldSpace({ 32,32 });
 	player.patch<component::Position>([&](auto& pos)
 		{

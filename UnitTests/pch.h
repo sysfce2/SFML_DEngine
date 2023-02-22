@@ -48,4 +48,9 @@
 // EnTT
 #include "../deps/EnTT/entt.h"
 
+#include <cereal/cereal.hpp>
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/types/string.hpp>
+
 #endif //PCH_H

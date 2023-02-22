@@ -2,10 +2,12 @@
 #include "EntityFactory.h"
 #include "Components/Meta.h"
 #include "Utility/DebugInfo.h"
+#include "Utility/CopyEntity.h"
 #include "../deps/Cereal/external/rapidjson/istreamwrapper.h"
 #include "../deps/Cereal/external/rapidjson/document.h"
 #include "../deps/Cereal/external/rapidjson/stringbuffer.h"
 
+using namespace entt::literals;
 
 drft::EntityFactory::EntityFactory()
 {
@@ -55,7 +57,7 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 			{
 				auto baseName = std::string(base.GetString());
 				if (!_prototypes.contains(baseName)) continue;
-				copyEntity(entity, _prototypes[baseName], registry);
+				util::copyEntity(entity, _prototypes[baseName], registry);
 			}
 			
 		}
@@ -67,57 +69,49 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 				auto componentName = component["Name"].GetString();
 
 				auto meta = entt::resolve(entt::hashed_string(componentName));
-
-				if (!component.HasMember("Data"))
+				auto any = meta.func("emplace"_hs).invoke(meta, entt::forward_as_meta(registry), entity);
+				
+				if (!component.HasMember("Data")) continue;
+					
+				// Iterate component data
+				for (auto&& data : component["Data"].GetObject())
 				{
-					// No data, must be a 'tag' component
-					meta.func(entt::hashed_string("tag")).invoke(meta, entt::forward_as_meta(registry), entity);
-				}
-				else
-				{
-					auto any = meta.construct(entt::forward_as_meta(registry), entity);
-					// Iterate component data
-					for (auto&& data : component["Data"].GetObject())
+					auto memberName = data.name.GetString();
+					if (data.value.IsArray())
 					{
-						auto memberName = data.name.GetString();
-						if (data.value.IsArray())
+						// HACKZZ: Assumes only Vector2f or Color data types represented by array
+						auto arr = data.value.GetArray();
+						int size = arr.Size();
+						if (size == 2)
 						{
-							// HACKZZ: Assumes only Vector2f or Color data types represented by array
-							auto arr = data.value.GetArray();
-							int size = arr.Size();
-							if (size == 2)
-							{
-								sf::Vector2f vec2 = { arr[0].GetFloat(), arr[1].GetFloat() };
-								meta.data(entt::hashed_string(memberName)).set(any, vec2);
-							}
-							else if (size == 3)
-							{
-								sf::Color col = {
-									static_cast<sf::Uint8>(arr[0].GetInt()),
-									static_cast<sf::Uint8>(arr[1].GetInt()),
-									static_cast<sf::Uint8>(arr[2].GetInt())
-								};
-								meta.data(entt::hashed_string(memberName)).set(any, col);
+							sf::Vector2f vec2 = { arr[0].GetFloat(), arr[1].GetFloat() };
+							meta.data(entt::hashed_string(memberName)).set(any, vec2);
+						}
+						else if (size == 3)
+						{
+							sf::Color col = {
+								static_cast<sf::Uint8>(arr[0].GetInt()),
+								static_cast<sf::Uint8>(arr[1].GetInt()),
+								static_cast<sf::Uint8>(arr[2].GetInt())
+							};
+							meta.data(entt::hashed_string(memberName)).set(any, col);
 
-							}
-						}
-						else if (data.value.IsString())
-						{
-							std::string val(data.value.GetString());
-							meta.data(entt::hashed_string(memberName)).set(any, val);
-						}
-						else if (data.value.IsInt())
-						{
-							meta.data(entt::hashed_string(memberName)).set(any, data.value.GetInt());
-						}
-						else if (data.value.IsFloat())
-						{
-							meta.data(entt::hashed_string(memberName)).set(any, data.value.GetFloat());
 						}
 					}
+					else if (data.value.IsString())
+					{
+						std::string val(data.value.GetString());
+						meta.data(entt::hashed_string(memberName)).set(any, val);
+					}
+					else if (data.value.IsInt())
+					{
+						meta.data(entt::hashed_string(memberName)).set(any, data.value.GetInt());
+					}
+					else if (data.value.IsFloat())
+					{
+						meta.data(entt::hashed_string(memberName)).set(any, data.value.GetFloat());
+					}
 				}
-
-
 			}
 		}
 	}
@@ -133,13 +127,12 @@ entt::handle drft::EntityFactory::build(const std::string& name, entt::registry&
 		return entt::handle();
 	}
 	entt::entity newEntity = registry.create();
-
-	copyEntity(newEntity, _prototypes[name], registry);
-	++_totalEntities;
-
-	auto& debug = registry.ctx().get<util::DebugInfo>();
-	std::string dataStr = std::to_string(_totalEntities);
-	debug.addString("Total Entities", dataStr);
+	auto info = registry.try_get<component::Info>(newEntity);
+	if (info)
+	{
+		info->prototype = name;
+	}
+	util::copyEntity(newEntity, _prototypes[name], registry);
 
 	return entt::handle(registry, newEntity);
 }
@@ -147,24 +140,6 @@ entt::handle drft::EntityFactory::build(const std::string& name, entt::registry&
 bool drft::EntityFactory::has(const std::string& name) const
 {
 	return _prototypes.contains(name);
-}
-
-// Copies the components from 'from' into 'to'.
-void drft::EntityFactory::copyEntity(entt::entity to, entt::entity from, entt::registry& registry)
-{
-	auto &prototypeStorage = registry.view<component::Prototype>().storage();
-
-	for (auto [id, storage] : registry.storage())
-	{
-		if (storage.contains(from) && !(storage.type() == prototypeStorage.type()))
-		{
-			if (storage.contains(to))
-			{
-				storage.erase(to);
-			}
-			storage.emplace(to, storage.get(from));
-		}
-	}
 }
 
 

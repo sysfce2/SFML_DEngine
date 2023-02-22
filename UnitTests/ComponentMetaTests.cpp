@@ -54,7 +54,7 @@ namespace UnitTests
 			auto entity = registry.create();
 
 			auto metaPos = entt::resolve("Position"_hs);
-			auto pos = metaPos.construct(entt::forward_as_meta(registry), entity);
+			auto pos = metaPos.func("emplace"_hs).invoke(metaPos, entt::forward_as_meta(registry), entity);
 			pos.type().data("position"_hs).set(pos, sf::Vector2f(10.f, 10.f));
 			pos.type().data("depth"_hs).set(pos, 11);
 

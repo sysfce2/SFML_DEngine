@@ -4,10 +4,12 @@
 
 namespace component
 {
-	struct Prototype {};
+	struct Prototype 
+	{};
 
 	struct Info
 	{
+		std::string prototype = { "" };
 		std::string name = { "" };
 		std::string extendedName = { "" };
 		std::string description = { "" };

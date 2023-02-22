@@ -31,6 +31,7 @@
 #include <mutex>
 #include <shared_mutex>
 #include <future>
+#include <chrono>
 #include <cassert>
 
 // SFML
@@ -40,3 +41,9 @@
 
 // EnTT
 #include "../deps/EnTT/entt.h"
+
+// Cereal
+#include <cereal/cereal.hpp>
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/types/string.hpp>

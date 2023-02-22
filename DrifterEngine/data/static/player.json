@@ -29,9 +29,6 @@
           }
         },
         {
-          "Name": "Player"
-        },
-        {
           "Name": "Actor",
           "Data": {
             "ap": 0,

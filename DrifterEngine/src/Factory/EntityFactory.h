@@ -21,11 +21,7 @@ namespace drft
 		bool has(const std::string& name) const;
 
 	private:
-		void copyEntity(entt::entity to, entt::entity from, entt::registry& registry);
-
-	private:
 		std::unordered_map<std::string, entt::entity> _prototypes;
-		int _totalEntities = 0;
 	};
 }
 

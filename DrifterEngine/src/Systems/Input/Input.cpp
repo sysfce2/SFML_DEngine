@@ -18,7 +18,7 @@ std::unique_ptr<drft::action::Action> drft::system::input::getInput(entt::handle
 	{
 		auto& ai = entity.get<component::AI>();
 		//result = ArtificialInput::runProtocol(ai.protocol);
-		std::cout << "AI protocol: " << ai.protocol << std::endl;
+		//std::cout << "AI protocol: " << ai.protocol << std::endl;
 		result = std::make_unique<action::Wait>();
 	}
 

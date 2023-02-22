@@ -24,11 +24,25 @@ namespace drft::system
 		Loading
 	};
 
-	struct VirtualChunk
+
+	namespace
 	{
-		VirtualChunk(ChunkState state = ChunkState::None) : state(state) {}
-		ChunkState state = ChunkState::None;
-	};
+		struct VirtualChunk
+		{
+			VirtualChunk(ChunkState state = ChunkState::None)
+				: state(state) {}
+
+			void setState(ChunkState state);
+			ChunkState getState() const;
+			void setFuture(std::shared_future<bool> future);
+			const std::shared_future<bool>& getFuture() const;
+
+		private:
+			ChunkState state = ChunkState::None;
+			std::shared_future<bool> future;
+		};
+	}
+	
 
 	class ChunkManager : public System
 	{
@@ -44,16 +58,16 @@ namespace drft::system
 	private:
 		void updateChunks(sf::Vector2i aroundNewPosition);
 
+		bool build(sf::Vector2i chunkCoordinate, const float dt);
+		bool load(sf::Vector2i chunkCoordinate, const float dt);
+		bool save(sf::Vector2i chunkCoordinate, const float dt);
 
-		void setState(sf::Vector2i coordinate, ChunkState state);
+		bool asyncBuild(sf::Vector2i chunkCoordinate);
+		bool asyncLoad(sf::Vector2i chunkCoordinate);
+		bool asyncSave(sf::Vector2i chunkCoordinate);
 
-		bool build(sf::Vector2i chunkCoordinate);
-		bool load(sf::Vector2i chunkCoordinate);
-		bool save(sf::Vector2i chunkCoordinate);
-
-		
-
-		void process(std::set<std::pair<int, int>>& chunkSet, bool (ChunkManager::*func)(sf::Vector2i));
+		void process(std::set<std::pair<int, int>>& chunkSet,
+			bool(ChunkManager::*func)(sf::Vector2i, const float), const float dt);
 
 	private:
 		std::map<std::pair<int, int>, VirtualChunk> _chunks;

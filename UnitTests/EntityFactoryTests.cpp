@@ -100,7 +100,7 @@ namespace UnitTests
 			Assert::AreEqual(2, pos.depth);
 			Assert::AreEqual(std::string("Test"), info.name);
 			Assert::AreEqual(0u, ren.sprite);
-			Assert::AreEqual(sf::Color(11, 12, 13), ren.color);
+			Assert::AreEqual(sf::Color(200, 150, 100), ren.color);
 		}
 	};
 

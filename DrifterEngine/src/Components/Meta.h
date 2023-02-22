@@ -4,7 +4,6 @@
 
 namespace component
 {
-
 	class Meta
 	{
 	public:
