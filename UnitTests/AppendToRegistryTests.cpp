@@ -51,9 +51,9 @@ namespace UnitTests
 			entt::registry reg2;
 			factory.loadPrototypes("prototypes.json", reg1);
 			
-			for (int i = 0; i < 20; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
-				factory.build("tree", reg1);
+				factory.build("Tree", reg1);
 				factory.build("NPC", reg1);
 			}
 
@@ -63,7 +63,7 @@ namespace UnitTests
 			for (auto [entity, info] : infoView.each())
 			{
 				auto name = info.name;
-				auto desp = info.description;
+				auto desc = info.description;
 			}
 
 			Assert::AreEqual(reg1.size(), reg2.size());

@@ -6,6 +6,7 @@
         {
           "Name": "Info",
           "Data": {
+            "prototype": "PROTOTYPE",
             "name": "Test",
             "extendedName": "Tester",
             "description": "An entity used for unit testing purposes."
@@ -57,6 +58,7 @@
         {
           "Name": "Info",
           "Data": {
+            "prototype": "PROTOTYPE",
             "name": "Tree",
             "extendedName": "",
             "description": "A wooden trunk with many leaves."
@@ -94,6 +96,7 @@
         {
           "Name": "Info",
           "Data": {
+            "prototype": "PROTOTYPE",
             "name": "NPC",
             "extendedName": "",
             "description": "Just a regular NPC."

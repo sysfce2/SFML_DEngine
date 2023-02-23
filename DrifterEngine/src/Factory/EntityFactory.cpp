@@ -123,8 +123,8 @@ entt::handle drft::EntityFactory::build(const std::string& name, entt::registry&
 {
 	if (!_prototypes.contains(name))
 	{
-		std::cout << "Prototypes does not contain an entity named " << name << std::endl;
-		return entt::handle();
+		std::string message = "Entity " + name + " does not exist";
+		throw std::invalid_argument(message);
 	}
 	entt::entity newEntity = registry.create();
 	auto info = registry.try_get<component::Info>(newEntity);
