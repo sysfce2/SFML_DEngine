@@ -10,6 +10,17 @@ namespace snapshot {
 		saveHandle(archive, h);
 	}
 
+	void Snapshot::save(OutputArchive archive, std::vector<entt::entity>& entities, entt::registry const& reg)
+	{
+		auto sz = entities.size();
+		archive(cereal::make_nvp("e_count", sz));
+		for (auto& e : entities)
+		{
+			auto h = entt::const_handle{ reg, e };
+			saveHandle(archive, h);
+		}
+	}
+
 	void Snapshot::save(OutputArchive archive, entt::registry const& reg)
 	{
 		auto sz = reg.size();
@@ -28,14 +39,13 @@ namespace snapshot {
 
 		auto e_serial = detail::SerializeHandleEntity{ .e = e, .components = std::vector<Handle>{} };
 
-		for (auto [id, storage] : h.registry()->storage())
+		for (auto [id, storage] : h.storage())
 		{
 			auto refl_comp = ComponentReflection{ storage.type() };
 			
 			if (refl_comp)
 			{
 				e_serial.components.push_back(Handle{ refl_comp.get(h) });
-
 			}
 		}
 

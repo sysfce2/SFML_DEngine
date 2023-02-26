@@ -34,6 +34,7 @@ namespace drft::system
 
 			void setState(ChunkState state);
 			ChunkState getState() const;
+
 			void setFuture(std::shared_future<bool> future);
 			const std::shared_future<bool>& getFuture() const;
 

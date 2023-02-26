@@ -70,6 +70,7 @@ namespace snapshot {
     {
     public:
         static void save(OutputArchive, entt::const_handle);
+        static void save(OutputArchive, std::vector<entt::entity>&, entt::registry const&);
         static void save(OutputArchive, entt::registry const&);
 
     private:

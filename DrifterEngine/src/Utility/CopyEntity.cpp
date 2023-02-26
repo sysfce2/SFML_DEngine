@@ -35,10 +35,11 @@ void drft::util::copyEntity(entt::entity to, entt::entity from, entt::registry& 
 			{
 				// Some jank to add this type to the registry if it didn't exist
 				auto meta = entt::resolve(storage.type());
-				meta.func("emplace"_hs).invoke(entt::forward_as_meta(toRegistry), to);
-				toStorage->remove(to);
-				assert(toStorage != nullptr);
+				meta.func("emplace"_hs).invoke({}, entt::forward_as_meta(toRegistry), to);
+				toStorage = toRegistry.storage(id);
+				toStorage->remove(to);	
 			}
+			assert(toStorage != nullptr);
 			toStorage->emplace(to, storage.get(from));
 		}
 	}

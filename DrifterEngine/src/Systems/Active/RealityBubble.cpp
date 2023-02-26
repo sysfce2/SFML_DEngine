@@ -64,7 +64,6 @@ void drft::system::RealityBubble::onActorAddOrUpdate(entt::registry& registry, e
 		if (registry.any_of<component::tag::Active>(entity)) return;
 		registry.emplace<component::tag::Active>(entity);
 	}
-
 }
 
 void drft::system::RealityBubble::onActorRemove(entt::registry& registry, entt::entity entity)

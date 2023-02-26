@@ -6,7 +6,7 @@ namespace snapshot {
     std::string_view Reflection::name() const
     {
         using namespace entt::literals;
-        return _type.data("name"_hs)
+        return _type.data("meta_name"_hs)
             .get(entt::meta_handle{})
             .cast<std::string_view>();
     }
@@ -33,8 +33,8 @@ namespace snapshot {
     entt::meta_any ComponentReflection::get(entt::const_handle h) const
     {
         try {
-            auto res = _reflection.type().invoke(
-                GET_CONST_COMPONENT_FN_NAME, entt::meta_handle{}, h);
+            auto func = _reflection.type().func(GET_CONST_COMPONENT_FN_NAME);
+            auto res = func.invoke({}, h);
 
             if (!res || !std::as_const(res).data()) {
                 throw std::runtime_error("Failed to get instance of reflected component");
@@ -110,7 +110,11 @@ namespace snapshot {
         if (data == nullptr) {
             throw std::runtime_error("Trying to save nullptr any");
         }
-        if (!any->invoke(SAVE_FN_NAME, data, archive)) {
+        auto type = any->type();
+        auto func = type.func(SAVE_FN_NAME);
+        auto res = func.invoke({}, data, archive);
+
+        if (!res) {
             throw std::runtime_error("Failed to save any");
         }
     }

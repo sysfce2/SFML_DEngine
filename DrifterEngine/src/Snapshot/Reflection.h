@@ -13,7 +13,8 @@ namespace snapshot {
     constexpr auto REMOVE_COMPONENT_FN_NAME = entt::hashed_string{ "remove" };
     constexpr auto GET_CONST_COMPONENT_FN_NAME = entt::hashed_string{ "get_const" };
     constexpr auto GET_COMPONENT_FN_NAME = entt::hashed_string{ "get" };
-    constexpr auto EMPLACE_COMPONENT_FN_NAME = entt::hashed_string{ "emplace" };
+    constexpr auto EMPLACE_COMPONENT_FN_NAME = entt::hashed_string{ "do_emplace" };
+    constexpr auto EMPLACE_INTO_REG_FN_NAME = entt::hashed_string{ "emplace" };
 
     class Reflection
     {
@@ -240,8 +241,7 @@ namespace snapshot {
         }
 
         template<typename T>
-        entt::id_type
-            doGetType()
+        entt::id_type doGetType()
         {
             return entt::type_hash<T>().value();
         }
@@ -249,22 +249,22 @@ namespace snapshot {
         template<typename T>
         void reflectComponentFunctions()
         {
-            entt::meta<T>().template func<&doEmplace<T>>(EMPLACE_COMPONENT_FN_NAME);
-            entt::meta<T>().template func<&doRemove<T>>(REMOVE_COMPONENT_FN_NAME);
-            entt::meta<T>().template func<&doLoad<T>>(LOAD_FN_NAME);
-            entt::meta<T>().template func<&doSave<T>>(SAVE_FN_NAME);
-            entt::meta<T>().template func<&doContains<T>>(CONTAINS_COMPONENT_FN_NAME);
-            entt::meta<T>().template func<&doGetComponent<T>, entt::as_ref_t>(GET_COMPONENT_FN_NAME);
-            entt::meta<T>().template func<&doGetConstComponent<T>, entt::as_cref_t>(GET_CONST_COMPONENT_FN_NAME);
-            entt::meta<T>().template func<&doGetType<T>>(TYPE_FN_NAME);
+            entt::meta<T>().template func< &doEmplace<T> >(EMPLACE_COMPONENT_FN_NAME);
+            entt::meta<T>().template func< &doRemove<T> >(REMOVE_COMPONENT_FN_NAME);
+            entt::meta<T>().template func< &doLoad<T> >(LOAD_FN_NAME);
+            entt::meta<T>().template func< &doSave<T> >(SAVE_FN_NAME);
+            entt::meta<T>().template func< &doContains<T> >(CONTAINS_COMPONENT_FN_NAME);
+            entt::meta<T>().template func< &doGetComponent<T>, entt::as_ref_t >(GET_COMPONENT_FN_NAME);
+            entt::meta<T>().template func< &doGetConstComponent<T>, entt::as_cref_t >(GET_CONST_COMPONENT_FN_NAME);
+            entt::meta<T>().template func< &doGetType<T> >(TYPE_FN_NAME);
+            entt::meta<T>().template func< &entt::registry::emplace_or_replace<T>, entt::as_ref_t >(EMPLACE_INTO_REG_FN_NAME);
         }
 
         template<typename T, std::string_view const& Str>
         void assignName()
         {
             using namespace entt::literals;
-
-            entt::meta<T>().template data<&Str>("name"_hs);
+            entt::meta<T>().template data<&Str>("meta_name"_hs);
         }
 
         template<typename T, std::string_view const& Str>
@@ -281,11 +281,13 @@ namespace snapshot {
      * component type.
      * */
     template<typename T, std::string_view const& Str>
-    void reflectComponent()
+    entt::meta_factory<T> reflectComponent()
     {
         using namespace ReflectionFunctions;
         reflectWithName<T, Str>();
         reflectComponentFunctions<T>();
+
+        return entt::meta<T>();
     }
 
 } // namespace snapshot
