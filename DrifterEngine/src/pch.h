@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <utility>
 #include <string>
+#include <string_view>
 #include <array>
 #include <vector>
 #include <deque>
@@ -47,3 +48,4 @@
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/types/string.hpp>
+#include <cereal/types/vector.hpp>

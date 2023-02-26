@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "Utility/SerializeEntity.h"
+#include "Snapshot/EnTTSnapshot.h"
 #include "Utility/TestEntities.h"
 #include "Factory/EntityFactory.h"
 #include "Components/Components.h"
@@ -35,11 +35,9 @@ namespace Microsoft
 	}
 }
 
-
-
 namespace UnitTests
 {
-	TEST_CLASS(AppendToRegistryTests)
+	TEST_CLASS(SerializationTests)
 	{
 
 	public:
@@ -51,22 +49,48 @@ namespace UnitTests
 			entt::registry reg2;
 			factory.loadPrototypes("prototypes.json", reg1);
 			
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 1000; ++i)
 			{
 				factory.build("Tree", reg1);
 				factory.build("NPC", reg1);
 			}
 
-			util::transfer(reg1, reg2);
+			
+
+		}
+
+		TEST_METHOD(NonEmptyRegistry_SerializeToCerealBinary_CanBeDeserialized)
+		{
+			using namespace snapshot;
+
+			EntityFactory factory;
+			entt::registry reg1;
+			entt::registry reg2;
+			std::stringstream ss;
+			cereal::BinaryOutputArchive output(ss);
+			factory.loadPrototypes("prototypes.json", reg1);
+
+			for (int i = 0; i < 1000; ++i)
+			{
+				factory.build("Tree", reg1);
+				factory.build("NPC", reg1);
+			}
+
+			Snapshot::save({ output }, reg1);
+			cereal::BinaryInputArchive input(ss);
+			SnapshotLoader::load({ input }, reg2);
 
 			auto infoView = reg2.view<component::Info>();
+
 			for (auto [entity, info] : infoView.each())
 			{
 				auto name = info.name;
-				auto desc = info.description;
+				auto desciption = info.description;
+				auto prototype = info.prototype;
 			}
-
+			
 			Assert::AreEqual(reg1.size(), reg2.size());
+
 		}
 	};
 }

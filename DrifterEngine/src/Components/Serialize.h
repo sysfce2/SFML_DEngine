@@ -1,8 +1,10 @@
 #pragma once
 #include "Components.h"
 
-namespace component
+namespace cereal
 {
+	using namespace component;
+
 	template<class Archive>
 	void serialize(Archive& archive, Info& info)
 	{

@@ -167,8 +167,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Utility\SerializeEntity.cpp" />
     <ClCompile Include="src\Components\Serialize.cpp" />
+    <ClCompile Include="src\Snapshot\Archive.cpp" />
+    <ClCompile Include="src\Snapshot\Reflection.cpp" />
+    <ClCompile Include="src\Snapshot\Snapshot.cpp" />
     <ClCompile Include="src\Utility\CopyEntity.cpp" />
     <ClCompile Include="src\Systems\Input\Input.cpp" />
     <ClCompile Include="src\Actions\ActionBuffer.cpp" />
@@ -242,8 +244,11 @@
     <ClCompile Include="src\Components\Tags.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Utility\SerializeEntity.h" />
     <ClInclude Include="src\Components\Serialize.h" />
+    <ClInclude Include="src\Snapshot\Archive.h" />
+    <ClInclude Include="src\Snapshot\EnTTSnapshot.h" />
+    <ClInclude Include="src\Snapshot\Reflection.h" />
+    <ClInclude Include="src\Snapshot\Snapshot.h" />
     <ClInclude Include="src\Utility\CopyEntity.h" />
     <ClInclude Include="src\Systems\Input\Input.h" />
     <ClInclude Include="src\Actions\ActionBuffer.h" />

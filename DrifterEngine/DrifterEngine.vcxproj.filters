@@ -132,7 +132,13 @@
     <ClCompile Include="src\Components\Serialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\SerializeEntity.cpp">
+    <ClCompile Include="src\Snapshot\Archive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Snapshot\Reflection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Snapshot\Snapshot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -734,7 +740,16 @@
     <ClInclude Include="src\Components\Serialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\SerializeEntity.h">
+    <ClInclude Include="src\Snapshot\Archive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Snapshot\Reflection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Snapshot\Snapshot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Snapshot\EnTTSnapshot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

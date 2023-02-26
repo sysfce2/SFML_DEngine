@@ -24,15 +24,21 @@ void drft::util::copyEntity(entt::entity to, entt::entity from, entt::registry& 
 
 void drft::util::copyEntity(entt::entity to, entt::entity from, entt::registry& toRegistry, entt::registry& fromRegistry)
 {
+	auto& prototypeStorage = fromRegistry.view<component::Prototype>().storage();
+
 	for (auto [id, storage] : fromRegistry.storage())
 	{
-		if (storage.contains(from))
+		if (storage.contains(from) && storage.type() != prototypeStorage.type())
 		{
-			auto meta = entt::resolve(storage.type());
-			if (!meta) continue;
-			meta.func("emplace"_hs).invoke(meta, entt::forward_as_meta(toRegistry), to);
 			auto toStorage = toRegistry.storage(id);
-			toStorage->remove(to);
+			if (!toStorage)
+			{
+				// Some jank to add this type to the registry if it didn't exist
+				auto meta = entt::resolve(storage.type());
+				meta.func("emplace"_hs).invoke(entt::forward_as_meta(toRegistry), to);
+				toStorage->remove(to);
+				assert(toStorage != nullptr);
+			}
 			toStorage->emplace(to, storage.get(from));
 		}
 	}
