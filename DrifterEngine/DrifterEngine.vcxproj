@@ -242,6 +242,7 @@
     <ClCompile Include="src\Spatial\Conversions.cpp" />
     <ClCompile Include="src\Actions\Wait.cpp" />
     <ClCompile Include="src\Components\Tags.cpp" />
+    <ClCompile Include="src\Spatial\VirtualChunk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Components\Serialize.h" />
@@ -447,6 +448,7 @@
     <ClInclude Include="src\Spatial\Conversions.h" />
     <ClInclude Include="src\Actions\Wait.h" />
     <ClInclude Include="src\Components\Tags.h" />
+    <ClInclude Include="src\Spatial\VirtualChunk.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\static\player.json" />

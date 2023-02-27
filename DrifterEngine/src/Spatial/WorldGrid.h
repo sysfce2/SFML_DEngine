@@ -37,9 +37,6 @@ namespace drft::spatial
 
 		// Chunks //
 
-		// Get the chunk coordinates that contain at least one entity.
-		const std::vector<sf::Vector2i>& getActiveChunks();
-
 		// Clears the chunk of all entities and removes the chunk.
 		void removeChunk(const sf::Vector2i coordinate);
 
@@ -48,7 +45,6 @@ namespace drft::spatial
 
 	private:
 		std::map<std::pair<int, int>, std::unique_ptr<WorldChunk>> _chunks;
-		std::vector<sf::Vector2i> _activeChunks;
 		std::unordered_map<entt::entity, sf::Vector3i> _entityPositions;
 	};
 

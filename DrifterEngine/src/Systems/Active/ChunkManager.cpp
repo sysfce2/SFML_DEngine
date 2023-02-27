@@ -1,16 +1,11 @@
 #include "pch.h"
 #include "ChunkManager.h"
-#include "Spatial/WorldGrid.h"
 #include "Spatial/Conversions.h"
 #include "Spatial/Helpers.h"
 #include "Components/Components.h"
-#include "Utility/TestEntities.h"
 #include "Utility/DebugInfo.h"
 
 using namespace drft::system;
-using namespace std::chrono_literals;
-
-const auto WAIT_TIME = 1s; // How long to wait for async operations 
 
 void drft::system::ChunkManager::init()
 {
@@ -27,58 +22,65 @@ void drft::system::ChunkManager::update(const float dt)
 		newPosition = spatial::toChunkCoordinate(pos.position);
 	}
 
-	updateChunks(newPosition);
+	updateChunkStates(newPosition);
 
-	process(_toBuild, &ChunkManager::build, dt);
-	process(_toLoad, &ChunkManager::load, dt);
-	process(_toSave, &ChunkManager::save, dt);
+	process(_toBuild, BUILD);
+	process(_toLoad, LOAD);
+	process(_toSave, SAVE);
 }
 
-void drft::system::ChunkManager::updateChunks(sf::Vector2i newPosition)
+void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)
 {
 	auto activeCoords = spatial::getIntPointsInRadius(newPosition, _activeChunkRadius);
 
 	// Ensure active chunks are active or will be built
-	for (auto& coord : activeCoords)
+	for (auto coord : activeCoords)
 	{
-		auto& chunk = _chunks[{ coord.x, coord.y }]; // Automatically constructs chunk with "none" state if not in map.
+		auto keyablePair = std::make_pair(coord.x, coord.y);
+		if (!_chunks.contains(keyablePair))
+		{
+			_chunks.emplace(std::make_pair(keyablePair, spatial::VirtualChunk{ coord }));
+		}
+		auto& chunk = _chunks.at(keyablePair);
+
 		switch (chunk.getState())
 		{
-		case ChunkState::None:
-			chunk.setState(ChunkState::ToBuild);
-			_toBuild.insert({ coord.x, coord.y });
+		case spatial::ChunkState::None:
+			chunk.setState(spatial::ChunkState::ToBuild);
+			_toBuild.push(coord);
 			break;
-		case ChunkState::Active:
+		case spatial::ChunkState::Active:
 			// No need to do anything, already active
 			break;
-		case ChunkState::Building:
+		case spatial::ChunkState::Building:
 
 			break;
-		case ChunkState::Loading:
+		case spatial::ChunkState::Loading:
 
 			break;
-		case ChunkState::Saving:
+		case spatial::ChunkState::Saving:
 
 			break;
-		case ChunkState::Built:
-			chunk.setState(ChunkState::Active);
+		case spatial::ChunkState::Built:
+			chunk.setState(spatial::ChunkState::Active);
 			break;
-		case ChunkState::Loaded:
-			chunk.setState(ChunkState::Active);
+		case spatial::ChunkState::Loaded:
+			chunk.setState(spatial::ChunkState::Active);
 			break;
-		case ChunkState::Saved:
-			chunk.setState(ChunkState::ToLoad);
-			_toLoad.insert({ coord.x, coord.y });
+		case spatial::ChunkState::Saved:
+			chunk.setState(spatial::ChunkState::ToLoad);
+			_toLoad.push(coord);
 			break;
 		default:
-			std::cout << "Chunk is in the middle of process " << (int)(chunk.getState()) << std::endl;
+			//std::cout << "Chunk is in the middle of process " << (int)(chunk.getState()) << std::endl;
 			break;
 		}
 	}
+
 	// Then, scan for chunks to save
 	for (auto& [coord, chunk] : _chunks)
 	{
-		if (chunk.getState() != ChunkState::Active)
+		if (chunk.getState() != spatial::ChunkState::Active)
 		{
 			continue;
 		}
@@ -86,134 +88,43 @@ void drft::system::ChunkManager::updateChunks(sf::Vector2i newPosition)
 									static_cast<float>((newPosition.y - coord.second)));
 		if (distance > _toSaveRadius)
 		{
-			_toSave.insert(coord);
-			chunk.setState(ChunkState::ToSave);
+			_toSave.push({ coord.first, coord.second });
+			chunk.setState(spatial::ChunkState::ToSave);
 		}
 	}
 
 	auto& debug = registry->ctx().get<util::DebugInfo>();
 	std::string dataStr = std::to_string(_chunks.size());
-	debug.addString("Chunks Active", dataStr);
+	debug.addString("Chunks in memory", dataStr);
 }
 
-bool drft::system::ChunkManager::build(sf::Vector2i chunkCoordinate, const float dt)
+void drft::system::ChunkManager::process(std::queue<sf::Vector2i>& chunkQueue, ProcessType type)
 {
-	auto& chunk = _chunks.at({ chunkCoordinate.x, chunkCoordinate.y });
-	chunk.setState(ChunkState::Building);
-	auto origin = spatial::toTileSpace(chunkCoordinate);
-	util::buildMany("Tree", 400, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
-	util::buildMany("NPC", 2, { origin.x, origin.y, spatial::CHUNK_WIDTH, spatial::CHUNK_HEIGHT }, *registry);
-	chunk.setState(ChunkState::Built);
-	return true;
-}
-
-bool drft::system::ChunkManager::load(sf::Vector2i chunkCoordinate, const float dt)
-{
-	auto& chunk = _chunks.at({ chunkCoordinate.x, chunkCoordinate.y });
-	if (chunk.getState() == ChunkState::ToLoad)
+	if (!chunkQueue.empty())
 	{
-		chunk.setFuture(std::async(std::launch::async, &ChunkManager::asyncLoad, this, chunkCoordinate));
-		chunk.setState(ChunkState::Loading);
-	}
+		std::vector<std::pair<int, int>> toDelete;
 
-	auto status = chunk.getFuture().wait_for(WAIT_TIME);
-	if (status != std::future_status::ready) return false;
-
-	// 4. Get registry created from async load
-	// Append to main registry
-
-	chunk.setState(ChunkState::Loaded);
-	return true;
-}
-
-bool drft::system::ChunkManager::save(sf::Vector2i chunkCoordinate, const float dt)
-{
-	auto& chunk = _chunks.at({ chunkCoordinate.x, chunkCoordinate.y });
-	if (chunk.getState() == ChunkState::ToSave)
-	{
-		chunk.setFuture(std::async(std::launch::async, &ChunkManager::asyncSave, this, chunkCoordinate));
-		chunk.setState(ChunkState::Saving);
-	}
-
-	auto status = chunk.getFuture().wait_for(WAIT_TIME);
-	if (status != std::future_status::ready) return false;
-
-	// 4. Get registry created from async load
-	// Append to main registry
-
-	chunk.setState(ChunkState::Saved);
-	
-	return true;
-}
-
-bool drft::system::ChunkManager::asyncBuild(sf::Vector2i chunkCoordinate)
-{
-	return true;
-}
-
-bool drft::system::ChunkManager::asyncLoad(sf::Vector2i chunkCoordinate)
-{
-	int count = 0;
-	for (int i = 0; i < 10000000; ++i)
-	{
-		if (i > 5)
+		auto coord = chunkQueue.front();
+		auto keyablePair = std::make_pair(coord.x, coord.y);
+		auto status = spatial::ioStatus::Busy;
+		switch (type)
 		{
-			count += (i / 2);
+		case BUILD:
+			status = _chunks.at(keyablePair).build(*registry);
+			break;
+		case SAVE:
+			status = _chunks.at(keyablePair).save(*registry);
+			break;
+		case LOAD:
+			status = _chunks.at(keyablePair).load(*registry);
+			break;
 		}
-	}
 
-	return true;
-}
-
-bool drft::system::ChunkManager::asyncSave(sf::Vector2i chunkCoordinate)
-{
-	int count = 0;
-	for (int i = 0; i < 10000000; ++i)
-	{
-		if (i > 5)
+		if (status == spatial::ioStatus::Busy)
 		{
-			count += (i / 2);
+			auto temp = chunkQueue.front();
+			chunkQueue.push(temp);
 		}
+		chunkQueue.pop();
 	}
-
-	return true;
-}
-
-void drft::system::ChunkManager::process(std::set<std::pair<int, int>>& chunkSet, bool (ChunkManager::*func)(sf::Vector2i, const float), const float dt)
-{
-	if (!chunkSet.empty())
-	{
-		std::vector<std::pair<int,int>> toDelete;
-		for (auto coord : chunkSet)
-		{
-			if ((this->*func)({coord.first, coord.second}, dt))
-			{
-				toDelete.push_back(coord);
-			}
-		}
-		for (auto coord : toDelete)
-		{
-			chunkSet.erase(coord);
-		}
-	}
-}
-
-void drft::system::VirtualChunk::setState(ChunkState state)
-{
-	this->state = state;
-}
-
-ChunkState drft::system::VirtualChunk::getState() const
-{
-	return state;
-}
-
-void drft::system::VirtualChunk::setFuture(std::shared_future<bool> future)
-{
-	this->future = future;
-}
-
-const std::shared_future<bool>& drft::system::VirtualChunk::getFuture() const
-{
-	return future;
 }

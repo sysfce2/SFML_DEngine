@@ -77,6 +77,18 @@ void drft::system::RealityBubble::onActorRemove(entt::registry& registry, entt::
 void drft::system::RealityBubble::onActiveAdd(entt::registry& registry, entt::entity entity)
 {
 	++_activeActors;
+	if (registry.any_of<component::Prototype>(entity)
+		|| !registry.all_of<component::Position, component::Actor>(entity))
+	{
+		registry.remove<component::tag::Active>(entity);
+	}
+	auto pos = spatial::toChunkCoordinate(registry.get<component::Position>(entity).position);
+	auto distance = spatial::distance(_cameraPosition, pos);
+
+	if (distance > REALITY_RADIUS)
+	{
+		registry.remove<component::tag::Active>(entity);
+	}
 }
 
 void drft::system::RealityBubble::onActiveRemove(entt::registry& registry, entt::entity entity)

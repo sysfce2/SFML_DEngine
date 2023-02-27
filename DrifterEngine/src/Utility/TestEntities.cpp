@@ -6,8 +6,6 @@
 
 void drft::util::buildMany(std::string entity, int number, sf::IntRect inArea, entt::registry& registry)
 {
-	std::srand((unsigned int)&number);
-
 	auto& factory = registry.ctx().get<EntityFactory&>();
 
 	for (int i = 0; i < number; ++i)

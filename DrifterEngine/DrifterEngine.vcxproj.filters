@@ -141,6 +141,9 @@
     <ClCompile Include="src\Snapshot\Snapshot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spatial\VirtualChunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\EnTT\entt.h">
@@ -750,6 +753,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Snapshot\EnTTSnapshot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spatial\VirtualChunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

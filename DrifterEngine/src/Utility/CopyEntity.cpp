@@ -22,7 +22,7 @@ void drft::util::copyEntity(entt::entity to, entt::entity from, entt::registry& 
 	}
 }
 
-void drft::util::copyEntity(entt::entity to, entt::entity from, entt::registry& toRegistry, entt::registry& fromRegistry)
+void drft::util::copyEntity(entt::entity to, entt::entity from, entt::registry& toRegistry, const entt::registry& fromRegistry)
 {
 	auto& prototypeStorage = fromRegistry.view<component::Prototype>().storage();
 
@@ -43,5 +43,24 @@ void drft::util::copyEntity(entt::entity to, entt::entity from, entt::registry& 
 			toStorage->emplace(to, storage.get(from));
 		}
 	}
+}
+
+void drft::util::copyEntities(std::vector<entt::entity>& entities, entt::registry& toRegistry, const entt::registry& fromRegistry)
+{
+	for (auto e : entities)
+	{
+		auto toEntity = toRegistry.create();
+		copyEntity(toEntity, e, toRegistry, fromRegistry);
+	}
+}
+
+void drft::util::copyEntities(entt::registry& toRegistry, entt::registry& fromRegistry)
+{
+	fromRegistry.each([&](auto from_e)
+		{
+			auto to_e = toRegistry.create();
+			copyEntity(to_e, from_e, toRegistry, fromRegistry);
+		}
+	);
 }
 
