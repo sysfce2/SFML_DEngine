@@ -4,6 +4,7 @@
 #include "Components/Tags.h"
 #include "Actions/ActionBuffer.h"
 #include "Actions/Wait.h"
+#include "Actions/Move.h"
 
 std::unique_ptr<drft::action::Action> drft::system::input::getInput(entt::handle& entity)
 {
@@ -17,9 +18,11 @@ std::unique_ptr<drft::action::Action> drft::system::input::getInput(entt::handle
 	else if (entity.all_of<component::AI>())
 	{
 		auto& ai = entity.get<component::AI>();
-		//result = ArtificialInput::runProtocol(ai.protocol);
-		//std::cout << "AI protocol: " << ai.protocol << std::endl;
-		result = std::make_unique<action::Wait>();
+		
+		int randx = (std::rand() % 3) - 1;
+		int randy = (std::rand() % 3) - 1;
+
+		result = std::make_unique<action::Move>(sf::Vector2i(randx, randy));
 	}
 
 	return result;

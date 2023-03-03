@@ -99,6 +99,7 @@ void drft::system::ChunkManager::process(std::queue<sf::Vector2i>& chunkQueue, P
 		auto coord = chunkQueue.front();
 		auto keyablePair = std::make_pair(coord.x, coord.y);
 		auto status = spatial::ioStatus::Busy;
+
 		switch (type)
 		{
 		case BUILD:
@@ -111,7 +112,6 @@ void drft::system::ChunkManager::process(std::queue<sf::Vector2i>& chunkQueue, P
 			status = _chunks.at(keyablePair).load(*registry, CHUNK_SAVE_PATH.data());
 			break;
 		}
-
 		if (status == spatial::ioStatus::Busy)
 		{
 			auto temp = chunkQueue.front();
