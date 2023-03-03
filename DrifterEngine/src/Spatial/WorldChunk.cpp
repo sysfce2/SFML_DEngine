@@ -39,7 +39,7 @@ bool drft::spatial::WorldChunk::moveEntity(const entt::entity entity, const sf::
 	return true;
 }
 
-std::vector<entt::entity> drft::spatial::WorldChunk::entitiesAt(sf::Vector2i chunkPosition, int layer)
+std::vector<entt::entity> drft::spatial::WorldChunk::entitiesAt(sf::Vector2i chunkPosition, int layer) const
 {
 	std::vector<entt::entity> result;
 
@@ -61,7 +61,7 @@ void drft::spatial::WorldChunk::clear()
 	_grid->clear();
 }
 
-bool drft::spatial::WorldChunk::empty()
+bool drft::spatial::WorldChunk::empty() const
 {
 	return _entities.empty();
 }

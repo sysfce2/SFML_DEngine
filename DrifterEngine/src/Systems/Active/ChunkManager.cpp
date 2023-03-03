@@ -6,6 +6,7 @@
 #include "Utility/DebugInfo.h"
 
 using namespace drft::system;
+static constexpr std::string_view CHUNK_SAVE_PATH = ".\\data\\runtime\\chunks\\";
 
 void drft::system::ChunkManager::init()
 {
@@ -46,8 +47,16 @@ void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)
 		switch (chunk.getState())
 		{
 		case spatial::ChunkState::None:
-			chunk.setState(spatial::ChunkState::ToBuild);
-			_toBuild.push(coord);
+			if (std::filesystem::exists(CHUNK_SAVE_PATH.data() + chunk.toString() + ".dat"))
+			{
+				chunk.setState(spatial::ChunkState::ToLoad);
+				_toLoad.push(coord);
+			}
+			else
+			{
+				chunk.setState(spatial::ChunkState::ToBuild);
+				_toBuild.push(coord);
+			}
 			break;
 		case spatial::ChunkState::Built:
 			chunk.setState(spatial::ChunkState::Active);
@@ -96,10 +105,10 @@ void drft::system::ChunkManager::process(std::queue<sf::Vector2i>& chunkQueue, P
 			status = _chunks.at(keyablePair).build(*registry);
 			break;
 		case SAVE:
-			status = _chunks.at(keyablePair).save(*registry);
+			status = _chunks.at(keyablePair).save(*registry, CHUNK_SAVE_PATH.data());
 			break;
 		case LOAD:
-			status = _chunks.at(keyablePair).load(*registry);
+			status = _chunks.at(keyablePair).load(*registry, CHUNK_SAVE_PATH.data());
 			break;
 		}
 

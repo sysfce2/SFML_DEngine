@@ -25,24 +25,25 @@ namespace drft::spatial
 
 	struct VirtualChunk
 	{
-		VirtualChunk(sf::Vector2i coordinate, ChunkState state = ChunkState::None)
+		VirtualChunk(sf::Vector2i coordinate)
 			: _coordinate(coordinate)
-			, _state(state) {}
+			, _state(ChunkState::None) {}
 
 		void setState(ChunkState state);
 		ChunkState getState() const;
 
 		ioStatus build(entt::registry& reg);
-		ioStatus load(entt::registry& reg);
-		ioStatus save(entt::registry& reg);
+		ioStatus load(entt::registry& reg, const char* filepath);
+		ioStatus save(entt::registry& reg, const char* filepath);
+
+		std::string toString() const;
 
 	private:
 		void setFuture(std::shared_future<void> future);
 		const std::shared_future<void>& getFuture() const;
 
-		void saveChunkToFile() const;
-		void loadChunkFromFile();
-		std::string toString() const;
+		void saveChunkToFile(const char* filepath) const;
+		void loadChunkFromFile(const char* filepath);
 
 	private:
 		sf::Vector2i _coordinate;

@@ -9,8 +9,7 @@
 using namespace drft::spatial;
 using namespace std::chrono_literals;
 
-static const auto WAIT_TIME = 3ms; // How long to wait for async operations
-static const auto CHUNK_SAVE_PATH = ".\\data\\runtime\\chunks\\";
+static constexpr auto WAIT_TIME = 3ms; // How long to wait for async operations
 
 void drft::spatial::VirtualChunk::setState(ChunkState state)
 {
@@ -39,11 +38,11 @@ ioStatus drft::spatial::VirtualChunk::build(entt::registry& reg)
 	return ioStatus::Done;
 }
 
-ioStatus drft::spatial::VirtualChunk::load(entt::registry& reg)
+ioStatus drft::spatial::VirtualChunk::load(entt::registry& reg, const char* filepath)
 {
 	if (getState() == ChunkState::ToLoad)
 	{
-		setFuture(std::async(std::launch::async, &VirtualChunk::loadChunkFromFile, this));
+		setFuture(std::async(std::launch::async, &VirtualChunk::loadChunkFromFile, this, filepath));
 		std::cout << "Loading " << toString() << std::endl;
 		setState(ChunkState::Loading);
 	}
@@ -67,7 +66,7 @@ ioStatus drft::spatial::VirtualChunk::load(entt::registry& reg)
 	return ioStatus::Done;
 }
 
-ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg)
+ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg, const char* filepath)
 {
 	if (getState() == ChunkState::ToSave)
 	{
@@ -88,7 +87,7 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg)
 		}
 		reg.compact();
 		
-		setFuture(std::async(std::launch::async, &VirtualChunk::saveChunkToFile, this));
+		setFuture(std::async(std::launch::async, &VirtualChunk::saveChunkToFile, this, filepath));
 		std::cout << "Saving " << toString() << std::endl;
 		setState(ChunkState::Saving);
 	}
@@ -121,14 +120,14 @@ const std::shared_future<void>& VirtualChunk::getFuture() const
 	return this->_future;
 }
 
-void drft::spatial::VirtualChunk::saveChunkToFile() const
+void drft::spatial::VirtualChunk::saveChunkToFile(const char* filepath) const
 {
 	if (_asyncRegistry.empty())
 	{
 		throw std::exception("Registry should not be empty");
 	}
 	using namespace snapshot;
-	std::string fullPath = CHUNK_SAVE_PATH + this->toString() + ".dat";
+	std::string fullPath = filepath + this->toString() + ".dat";
 	std::ofstream ofs(fullPath, std::ios::binary | std::ofstream::trunc);
 	cereal::BinaryOutputArchive output{ ofs };
 	Snapshot::save(output, _asyncRegistry);
@@ -136,14 +135,14 @@ void drft::spatial::VirtualChunk::saveChunkToFile() const
 	std::cout << "Chunk " << toString() << " saved to file" << std::endl;
 }
 
-void drft::spatial::VirtualChunk::loadChunkFromFile()
+void drft::spatial::VirtualChunk::loadChunkFromFile(const char* filepath)
 {
 	if (!_asyncRegistry.empty())
 	{
 		throw std::exception("Registry should be empty");
 	}
 	using namespace snapshot;
-	std::string fullPath = CHUNK_SAVE_PATH + this->toString() + ".dat";
+	std::string fullPath = filepath + this->toString() + ".dat";
 	std::ifstream ifs(fullPath, std::ios::binary);
 	if (ifs.good())
 	{
