@@ -79,10 +79,6 @@ void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)
 			chunk.setState(spatial::ChunkState::ToSave);
 		}
 	}
-
-	auto& debug = registry->ctx().get<util::DebugInfo>();
-	std::string dataStr = std::to_string(_chunks.size());
-	debug.addString("Chunks in memory", dataStr);
 }
 
 void drft::system::ChunkManager::process(std::queue<sf::Vector2i>& chunkQueue, ProcessType type)
