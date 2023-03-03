@@ -31,7 +31,7 @@ ioStatus drft::spatial::VirtualChunk::build(entt::registry& reg)
 	}
 	auto origin = toTileSpace(_coordinate);
 	auto bounds = sf::Vector2i{ CHUNK_WIDTH, CHUNK_HEIGHT };
-	util::buildMany("Tree", 100, { origin.x, origin.y, bounds.x, bounds.y }, reg);
+	util::buildMany("Tree", 200, { origin.x, origin.y, bounds.x, bounds.y }, reg);
 	util::buildMany("NPC", 10, { origin.x, origin.y, bounds.x, bounds.y }, reg);
 	
 	setState(ChunkState::Built);
@@ -73,7 +73,6 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg)
 	{
 		auto& grid = reg.ctx().get<spatial::WorldGrid&>();
 		auto entities = grid.getAllEntities(this->_coordinate);
-		//grid.removeChunk(_coordinate);
 		if (entities.empty())
 		{
 			std::cout << "No need to save " << toString() << " chunk empty" << std::endl;
@@ -87,6 +86,7 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg)
 		{
 			reg.destroy(e);
 		}
+		reg.compact();
 		
 		setFuture(std::async(std::launch::async, &VirtualChunk::saveChunkToFile, this));
 		std::cout << "Saving " << toString() << std::endl;

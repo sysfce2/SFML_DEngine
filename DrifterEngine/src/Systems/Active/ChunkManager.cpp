@@ -49,18 +49,6 @@ void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)
 			chunk.setState(spatial::ChunkState::ToBuild);
 			_toBuild.push(coord);
 			break;
-		case spatial::ChunkState::Active:
-			// No need to do anything, already active
-			break;
-		case spatial::ChunkState::Building:
-
-			break;
-		case spatial::ChunkState::Loading:
-
-			break;
-		case spatial::ChunkState::Saving:
-
-			break;
 		case spatial::ChunkState::Built:
 			chunk.setState(spatial::ChunkState::Active);
 			break;
@@ -72,7 +60,6 @@ void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)
 			_toLoad.push(coord);
 			break;
 		default:
-			//std::cout << "Chunk is in the middle of process " << (int)(chunk.getState()) << std::endl;
 			break;
 		}
 	}

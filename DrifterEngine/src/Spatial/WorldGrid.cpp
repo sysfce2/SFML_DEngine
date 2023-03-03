@@ -80,7 +80,7 @@ void drft::spatial::WorldGrid::removeChunk(const sf::Vector2i coordinate)
 {
 	if (_chunks.contains({ coordinate.x, coordinate.y }))
 	{
-		_chunks.at({ coordinate.x, coordinate.y })->clear();
+		//_chunks.at({ coordinate.x, coordinate.y })->clear();
 		_chunks.erase( {coordinate.x, coordinate.y} );
 	}
 }

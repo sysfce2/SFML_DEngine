@@ -14,7 +14,7 @@ entt::entity drft::spatial::Cell::removeEntity(entt::entity entity, int layer)
 	auto &s = _entities[layer];
 	if (!s.contains(entity)) return result;
 
-	result = *( s.find(entity) );
+	result = *(s.find(entity));
 
 	s.erase(result);
 	if (s.empty()) _entities.erase(layer);
