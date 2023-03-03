@@ -56,6 +56,7 @@ ioStatus drft::spatial::VirtualChunk::load(entt::registry& reg, const char* file
 	util::copyEntities(reg, _asyncRegistry);
 	
 	_asyncRegistry.clear();
+	_asyncRegistry.compact();
 	
 	setState(ChunkState::Loaded);
 	if (!_asyncRegistry.empty())
@@ -72,6 +73,7 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg, const char* file
 	{
 		auto& grid = reg.ctx().get<spatial::WorldGrid&>();
 		auto entities = grid.getAllEntities(this->_coordinate);
+		grid.removeChunk(this->_coordinate);
 		if (entities.empty())
 		{
 			std::cout << "No need to save " << toString() << " chunk empty" << std::endl;
@@ -99,6 +101,7 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg, const char* file
 	}
 	
 	_asyncRegistry.clear();
+	_asyncRegistry.compact();
 	
 	if (!_asyncRegistry.empty())
 	{
@@ -131,8 +134,6 @@ void drft::spatial::VirtualChunk::saveChunkToFile(const char* filepath) const
 	std::ofstream ofs(fullPath, std::ios::binary | std::ofstream::trunc);
 	cereal::BinaryOutputArchive output{ ofs };
 	Snapshot::save(output, _asyncRegistry);
-	
-	std::cout << "Chunk " << toString() << " saved to file" << std::endl;
 }
 
 void drft::spatial::VirtualChunk::loadChunkFromFile(const char* filepath)
@@ -149,8 +150,6 @@ void drft::spatial::VirtualChunk::loadChunkFromFile(const char* filepath)
 		cereal::BinaryInputArchive input{ ifs };
 
 		SnapshotLoader::load(input, _asyncRegistry);
-
-		std::cout << "Chunk " << toString() << " loaded from file" << std::endl;
 	}
 	else
 	{

@@ -28,6 +28,8 @@ void drft::system::ChunkManager::update(const float dt)
 	process(_toBuild, BUILD);
 	process(_toLoad, LOAD);
 	process(_toSave, SAVE);
+
+	cleanUpChunks(newPosition);
 }
 
 void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)
@@ -87,6 +89,28 @@ void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)
 			_toSave.push({ coord.first, coord.second });
 			chunk.setState(spatial::ChunkState::ToSave);
 		}
+	}
+}
+
+void drft::system::ChunkManager::cleanUpChunks(sf::Vector2i newPosition)
+{
+	std::vector<std::pair<int, int>> toDelete;
+	for (auto& [coord, chunk] : _chunks)
+	{
+		if (chunk.getState() != spatial::ChunkState::Saved)
+		{
+			continue;
+		}
+		float distance = std::hypotf(static_cast<float>((newPosition.x - coord.first)),
+			static_cast<float>((newPosition.y - coord.second)));
+		if (distance > _toSaveRadius)
+		{
+			toDelete.push_back(coord);
+		}
+	}
+	for (auto pair : toDelete)
+	{
+		_chunks.erase(pair);
 	}
 }
 

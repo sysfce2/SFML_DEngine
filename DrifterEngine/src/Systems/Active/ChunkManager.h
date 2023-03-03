@@ -27,7 +27,7 @@ namespace drft::system
 
 	private:
 		void updateChunkStates(sf::Vector2i aroundNewPosition);
-
+		void cleanUpChunks(sf::Vector2i newPosition);
 		void process(std::queue<sf::Vector2i>& chunkQueue, ProcessType type);
 
 	private:
