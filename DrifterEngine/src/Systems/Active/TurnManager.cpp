@@ -37,13 +37,9 @@ void drft::system::TurnManager::update(const float)
 		_actorQueue->tick();
 		return;
 	}
-
-	// Get current actor input and perform action, if any.
-	entt::handle currentActorHandle = entt::handle(*registry, currentEntity);
-	auto desiredAction = input::getInput(currentActorHandle);
-	float pointsSpent = action::attempt(currentActorHandle, std::move(desiredAction));
+	
+	auto pointsSpent = act(currentActor);
 	currentActor.ap -= pointsSpent;
-
 	if (pointsSpent > 0.0f)
 	{
 		_actorQueue->rotate();
@@ -58,6 +54,16 @@ void drft::system::TurnManager::onActorRemove(entt::registry& registry, entt::en
 		_managedEntities.erase(entity);
 	}
 	_actorQueue->remove(entity);
+}
+
+float drft::system::TurnManager::act(component::Actor& actor)
+{
+	auto currentEntity = entt::to_entity(*registry, actor);
+	entt::handle handle = entt::handle(*registry, currentEntity);
+	auto desiredAction = input::getInput(handle);
+	float pointsSpent = action::attempt(handle, std::move(desiredAction));
+	
+	return pointsSpent;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

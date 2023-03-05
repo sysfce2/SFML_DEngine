@@ -42,6 +42,7 @@ namespace drft::system
 
 	private:
 		void onActorRemove(entt::registry& registry, entt::entity entity);
+		float act(component::Actor& actor);
 
 	private:
 		std::unique_ptr<ActorQueue> _actorQueue;
