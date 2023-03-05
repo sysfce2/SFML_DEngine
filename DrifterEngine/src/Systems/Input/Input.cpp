@@ -8,7 +8,7 @@
 
 std::unique_ptr<drft::action::Action> drft::system::input::getInput(entt::handle& entity)
 {
-	std::unique_ptr<action::Action> result;
+	std::unique_ptr<action::Action> result = nullptr;
 
 	if (entity.all_of<component::Player>())
 	{
