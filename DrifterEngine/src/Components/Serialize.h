@@ -36,6 +36,12 @@ namespace cereal
 	}
 
 	template<class Archive>
+	void serialize(Archive& archive, Attacker& attacker)
+	{
+		archive(attacker.baseDamage);
+	}
+
+	template<class Archive>
 	void serialize(Archive& archive, AI& ai)
 	{
 		archive(ai.protocol);

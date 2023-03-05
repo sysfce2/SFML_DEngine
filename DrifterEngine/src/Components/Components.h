@@ -48,6 +48,11 @@ namespace component
 		int current = 10;
 	};
 
+	struct Attacker
+	{
+		int baseDamage = 1;
+	};
+
 	// Represents a player
 	struct Player
 	{
@@ -58,6 +63,11 @@ namespace component
 	struct AI
 	{
 		std::string protocol = { "random" };
+	};
+
+	struct Damage
+	{
+		int amount = 0;
 	};
 
 } // namespace component

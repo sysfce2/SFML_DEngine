@@ -35,6 +35,9 @@ void component::Meta::initialize()
 		.data<&Health::max>("max"_hs)
 		.data<&Health::current>("current"_hs);
 
+	snapshot::reflectComponent<Attacker, ATTACKER_STRING>()
+		.data<&Attacker::baseDamage>("baseDamage"_hs);
+
 	snapshot::reflectComponent<AI, AI_STRING>()
 		.data<&AI::protocol>("protocol"_hs);
 }
