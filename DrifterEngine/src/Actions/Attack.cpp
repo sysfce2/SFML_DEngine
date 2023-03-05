@@ -13,10 +13,12 @@ std::unique_ptr<Action> drft::action::Attack::execute(entt::handle& entity)
 	if (attacker)
 	{
 		std::cout << "The " << util::getEntityName(entity) << " launches an attack." << std::endl;
+		int damage = calculateDamage(entity);
+
 		for (auto target : potentialTargets)
 		{
-			
-			entity.registry()->emplace<component::Damage>(target, attacker->baseDamage);
+			// TODO: Check if not ally
+			entity.registry()->emplace<component::Damage>(target, damage);
 		}
 	}
 
@@ -26,4 +28,11 @@ std::unique_ptr<Action> drft::action::Attack::execute(entt::handle& entity)
 std::unique_ptr<Action> drft::action::Attack::clone() const 
 {
 	return std::make_unique<Attack>(potentialTargets);
+}
+
+float drft::action::Attack::calculateDamage(entt::handle& entity) const
+{
+	auto& attacker = entity.get<component::Attacker>();
+
+	return attacker.baseDamage;
 }

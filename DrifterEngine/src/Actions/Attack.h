@@ -16,6 +16,9 @@ namespace drft::action
 		std::unique_ptr<Action> clone() const override;
 
 	private:
+		float calculateDamage(entt::handle& entity) const;
+
+	private:
 		std::vector<entt::entity> potentialTargets;
 	};
 }
