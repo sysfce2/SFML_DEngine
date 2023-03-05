@@ -14,23 +14,25 @@ void drft::system::Camera::update(const float dt)
 
 	for (auto [entity, camera, pos] : cameraView.each())
 	{
-		auto const & target = registry->get<const component::Position>(camera.target);
+		auto const & target = registry->try_get<const component::Position>(camera.target);
 
-		if (std::abs(pos.position.x - target.position.x) < 0.5f)
+		if (!target) continue;
+
+		if (std::abs(pos.position.x - target->position.x) < 0.5f)
 		{
-			pos.position.x = target.position.x;
+			pos.position.x = target->position.x;
 		}
 		else
 		{
-			pos.position.x = std::lerp(pos.position.x, target.position.x, _speed * dt);
+			pos.position.x = std::lerp(pos.position.x, target->position.x, _speed * dt);
 		}
-		if (std::abs(pos.position.y - target.position.y) < 0.5f)
+		if (std::abs(pos.position.y - target->position.y) < 0.5f)
 		{
-			pos.position.y = target.position.y;
+			pos.position.y = target->position.y;
 		}
 		else
 		{
-			pos.position.y = std::lerp(pos.position.y, target.position.y, _speed * dt);
+			pos.position.y = std::lerp(pos.position.y, target->position.y, _speed * dt);
 		}
 
 		camera.viewport.left = pos.position.x - (camera.viewport.width / 2);
@@ -38,10 +40,10 @@ void drft::system::Camera::update(const float dt)
 
 		auto& debug = registry->ctx().get<util::DebugInfo>();
 
-		auto tilePos = spatial::toTileSpace(target.position);
+		auto tilePos = spatial::toTileSpace(target->position);
 		std::string dataStr = std::to_string(tilePos.x) + ", " + std::to_string(tilePos.y);
 		debug.addString("Position", dataStr);
-		auto chunkPos = spatial::toChunkCoordinate(target.position);
+		auto chunkPos = spatial::toChunkCoordinate(target->position);
 		dataStr = std::to_string(chunkPos.x) + ", " + std::to_string(chunkPos.y);
 		debug.addString("Coords", dataStr);
 	}
