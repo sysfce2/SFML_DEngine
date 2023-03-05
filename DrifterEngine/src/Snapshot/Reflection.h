@@ -15,6 +15,7 @@ namespace snapshot {
     constexpr auto GET_COMPONENT_FN_NAME = entt::hashed_string{ "get" };
     constexpr auto EMPLACE_COMPONENT_FN_NAME = entt::hashed_string{ "do_emplace" };
     constexpr auto EMPLACE_INTO_REG_FN_NAME = entt::hashed_string{ "emplace" };
+    constexpr auto SERIALIZABLE_TAG = entt::hashed_string{ "serializable" };
 
     class Reflection
     {
@@ -258,6 +259,7 @@ namespace snapshot {
             entt::meta<T>().template func< &doGetConstComponent<T>, entt::as_cref_t >(GET_CONST_COMPONENT_FN_NAME);
             entt::meta<T>().template func< &doGetType<T> >(TYPE_FN_NAME);
             entt::meta<T>().template func< &entt::registry::emplace_or_replace<T>, entt::as_ref_t >(EMPLACE_INTO_REG_FN_NAME);
+            entt::meta<T>().prop(SERIALIZABLE_TAG);
         }
 
         template<typename T, std::string_view const& Str>
