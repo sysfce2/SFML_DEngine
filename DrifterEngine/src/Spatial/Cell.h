@@ -11,7 +11,7 @@ namespace drft::spatial
 		bool empty();
 
 	private:
-		std::unordered_map<int, std::set<entt::entity> > _entities;
+		std::unordered_map<int, std::vector<entt::entity> > _entities;
 	};
 
 } // namespace drft::spatial
