@@ -42,6 +42,12 @@
             "max": 10,
             "current": 10
           }
+        },
+        {
+          "Name": "Attacker",
+          "Data": {
+            "baseDamage": 2
+          }
         }
       ]
     }

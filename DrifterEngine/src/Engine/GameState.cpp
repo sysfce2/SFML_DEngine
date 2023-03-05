@@ -12,6 +12,7 @@
 #include "Systems/Active/Camera.h"
 #include "Systems/Active/ChunkManager.h"
 #include "Systems/Active/TurnManager.h"
+#include "Systems/Active/DamageSystem.h"
 #include "Systems/Reactive/WorldGridResolver.h"
 
 #include "Components/Components.h"
@@ -101,6 +102,7 @@ void drft::GameState::importSystems()
 	_systems->add(system::TurnManager());
 	_systems->add(system::PlayerInput());
 	_systems->add(system::ChunkManager());
+	_systems->add(system::DamageSystem());
 
 	_systems->initAll();
 }

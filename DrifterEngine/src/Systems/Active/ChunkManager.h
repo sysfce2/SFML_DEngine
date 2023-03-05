@@ -34,7 +34,7 @@ namespace drft::system
 		std::map<std::pair<int, int>, spatial::VirtualChunk> _chunks;
 
 		const int _activeChunkRadius = 2;
-		const int _toSaveRadius = _activeChunkRadius + 2;
+		const int _toSaveRadius = _activeChunkRadius + 1;
 		sf::Vector2i _currentPosition = { 0, 0 };
 
 		std::queue<sf::Vector2i> _toBuild;

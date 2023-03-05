@@ -35,7 +35,7 @@ namespace drft::system
 	protected:
 		friend class SystemScheduler; // SystemScheduler needs phase
 		entt::registry* registry = nullptr;
-		Phase phase = Phase::OnUpdate;
+		Phase phase = Phase::Reactive;
 	};
 
 } // namespace drft::system

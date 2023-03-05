@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\Active\DamageSystem.cpp" />
     <ClCompile Include="src\Components\Serialize.cpp" />
     <ClCompile Include="src\Snapshot\Archive.cpp" />
     <ClCompile Include="src\Snapshot\Reflection.cpp" />
@@ -179,7 +180,6 @@
     <ClCompile Include="src\Spatial\Helpers.cpp" />
     <ClCompile Include="src\Systems\Active\RealityBubble.cpp" />
     <ClCompile Include="src\Components\Meta.cpp" />
-    <ClCompile Include="src\Events\Events.cpp" />
     <ClCompile Include="src\Factory\EntityFactory.cpp" />
     <ClCompile Include="src\Actions\Attack.cpp" />
     <ClCompile Include="src\Actions\Move.cpp" />
@@ -245,6 +245,7 @@
     <ClCompile Include="src\Spatial\VirtualChunk.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\Active\DamageSystem.h" />
     <ClInclude Include="src\Components\Serialize.h" />
     <ClInclude Include="src\Snapshot\Archive.h" />
     <ClInclude Include="src\Snapshot\EnTTSnapshot.h" />
@@ -416,7 +417,6 @@
     <ClInclude Include="deps\EnTT\signal\fwd.hpp" />
     <ClInclude Include="deps\EnTT\signal\sigh.hpp" />
     <ClInclude Include="src\Components\Meta.h" />
-    <ClInclude Include="src\Events\Events.h" />
     <ClInclude Include="src\Factory\EntityFactory.h" />
     <ClInclude Include="src\Actions\Attack.h" />
     <ClInclude Include="src\Actions\Move.h" />

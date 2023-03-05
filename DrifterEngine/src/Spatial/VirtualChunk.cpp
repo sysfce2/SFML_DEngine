@@ -31,7 +31,7 @@ ioStatus drft::spatial::VirtualChunk::build(entt::registry& reg)
 	auto origin = toTileSpace(_coordinate);
 	auto bounds = sf::Vector2i{ CHUNK_WIDTH, CHUNK_HEIGHT };
 	util::buildMany("Tree", 200, { origin.x, origin.y, bounds.x, bounds.y }, reg);
-	util::buildMany("NPC", 10, { origin.x, origin.y, bounds.x, bounds.y }, reg);
+	//util::buildMany("NPC", 10, { origin.x, origin.y, bounds.x, bounds.y }, reg);
 	
 	setState(ChunkState::Built);
 
@@ -56,13 +56,8 @@ ioStatus drft::spatial::VirtualChunk::load(entt::registry& reg, const char* file
 	util::copyEntities(reg, _asyncRegistry);
 	
 	_asyncRegistry.clear();
-	_asyncRegistry.compact();
 	
 	setState(ChunkState::Loaded);
-	if (!_asyncRegistry.empty())
-	{
-		throw std::exception("Registry should be empty");
-	}
 
 	return ioStatus::Done;
 }
@@ -101,29 +96,23 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg, const char* file
 	}
 	
 	_asyncRegistry.clear();
-	_asyncRegistry.compact();
-	
-	if (!_asyncRegistry.empty())
-	{
-		throw std::exception("Registry should be empty");
-	}
 
 	setState(ChunkState::Saved);
 
 	return ioStatus::Done;
 }
 
-void VirtualChunk::setFuture(std::shared_future<void> future)
+void VirtualChunk::setFuture(std::shared_future<bool> future)
 {
 	this->_future = future;
 }
 
-const std::shared_future<void>& VirtualChunk::getFuture() const
+const std::shared_future<bool>& VirtualChunk::getFuture() const
 {
 	return this->_future;
 }
 
-void drft::spatial::VirtualChunk::saveChunkToFile(const char* filepath) const
+bool drft::spatial::VirtualChunk::saveChunkToFile(const char* filepath) const
 {
 	if (_asyncRegistry.empty())
 	{
@@ -134,9 +123,11 @@ void drft::spatial::VirtualChunk::saveChunkToFile(const char* filepath) const
 	std::ofstream ofs(fullPath, std::ios::binary | std::ofstream::trunc);
 	cereal::BinaryOutputArchive output{ ofs };
 	Snapshot::save(output, _asyncRegistry);
+
+	return true;
 }
 
-void drft::spatial::VirtualChunk::loadChunkFromFile(const char* filepath)
+bool drft::spatial::VirtualChunk::loadChunkFromFile(const char* filepath)
 {
 	if (!_asyncRegistry.empty())
 	{
@@ -148,12 +139,13 @@ void drft::spatial::VirtualChunk::loadChunkFromFile(const char* filepath)
 	if (ifs.good())
 	{
 		cereal::BinaryInputArchive input{ ifs };
-
 		SnapshotLoader::load(input, _asyncRegistry);
+		return true;
 	}
 	else
 	{
 		std::cout << "File " << fullPath << " does not exist" << std::endl;
+		return false;
 	}
 	
 }

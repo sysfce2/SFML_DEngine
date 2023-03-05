@@ -7,7 +7,15 @@ namespace drft::spatial
 	Grid<T>::Grid(int width, int height)
 		: _width(width), _height(height)
 	{
-		_cells.resize(_width * height);
+		_cells.resize(_width * _height);
+	}
+
+	template<typename T>
+	inline void Grid<T>::resize(int width, int height)
+	{
+		_width = width;
+		_height = height;
+		_cells.resize(width * height);
 	}
 
 	template<typename T>

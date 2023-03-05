@@ -102,7 +102,7 @@ void drft::system::ChunkManager::cleanUpChunks(sf::Vector2i newPosition)
 			continue;
 		}
 		float distance = std::hypotf(static_cast<float>((newPosition.x - coord.first)),
-			static_cast<float>((newPosition.y - coord.second)));
+									static_cast<float>((newPosition.y - coord.second)));
 		if (distance > _toSaveRadius)
 		{
 			toDelete.push_back(coord);
@@ -116,31 +116,30 @@ void drft::system::ChunkManager::cleanUpChunks(sf::Vector2i newPosition)
 
 void drft::system::ChunkManager::process(std::queue<sf::Vector2i>& chunkQueue, ProcessType type)
 {
-	if (!chunkQueue.empty())
+	if (chunkQueue.empty()) return;
+	
+	std::vector<std::pair<int, int>> toDelete;
+
+	auto coord = chunkQueue.front();
+	auto keyablePair = std::make_pair(coord.x, coord.y);
+	auto status = spatial::ioStatus::Busy;
+
+	switch (type)
 	{
-		std::vector<std::pair<int, int>> toDelete;
-
-		auto coord = chunkQueue.front();
-		auto keyablePair = std::make_pair(coord.x, coord.y);
-		auto status = spatial::ioStatus::Busy;
-
-		switch (type)
-		{
-		case BUILD:
-			status = _chunks.at(keyablePair).build(*registry);
-			break;
-		case SAVE:
-			status = _chunks.at(keyablePair).save(*registry, CHUNK_SAVE_PATH.data());
-			break;
-		case LOAD:
-			status = _chunks.at(keyablePair).load(*registry, CHUNK_SAVE_PATH.data());
-			break;
-		}
-		if (status == spatial::ioStatus::Busy)
-		{
-			auto temp = chunkQueue.front();
-			chunkQueue.push(temp);
-		}
-		chunkQueue.pop();
+	case BUILD:
+		status = _chunks.at(keyablePair).build(*registry);
+		break;
+	case SAVE:
+		status = _chunks.at(keyablePair).save(*registry, CHUNK_SAVE_PATH.data());
+		break;
+	case LOAD:
+		status = _chunks.at(keyablePair).load(*registry, CHUNK_SAVE_PATH.data());
+		break;
 	}
+	if (status == spatial::ioStatus::Busy)
+	{
+		auto temp = chunkQueue.front();
+		chunkQueue.push(temp);
+	}
+	chunkQueue.pop();
 }

@@ -26,7 +26,7 @@ namespace drft::spatial
 
 	private:
 		std::set<entt::entity> _entities;
-		std::unique_ptr< Grid<Cell> > _grid = nullptr;
+		Grid<Cell> _grid = { 64, 64 };
 	};
 
 } // namespace drft::spatial

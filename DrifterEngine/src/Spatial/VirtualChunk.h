@@ -25,6 +25,7 @@ namespace drft::spatial
 
 	struct VirtualChunk
 	{
+	public:
 		VirtualChunk(sf::Vector2i coordinate)
 			: _coordinate(coordinate)
 			, _state(ChunkState::None) {}
@@ -39,16 +40,16 @@ namespace drft::spatial
 		std::string toString() const;
 
 	private:
-		void setFuture(std::shared_future<void> future);
-		const std::shared_future<void>& getFuture() const;
+		void setFuture(std::shared_future<bool> future);
+		const std::shared_future<bool>& getFuture() const;
 
-		void saveChunkToFile(const char* filepath) const;
-		void loadChunkFromFile(const char* filepath);
+		bool saveChunkToFile(const char* filepath) const;
+		bool loadChunkFromFile(const char* filepath);
 
 	private:
 		sf::Vector2i _coordinate;
 		ChunkState _state = ChunkState::None;
-		std::shared_future<void> _future;
+		std::shared_future<bool> _future;
 		entt::registry _asyncRegistry;
 	};
 

@@ -7,7 +7,10 @@ namespace drft::spatial
 	class Grid
 	{
 	public:
+		Grid() = default;
 		Grid(int width, int height);
+
+		void resize(int width, int height);
 
 		T& at(int x, int y);
 		const T& at(int x, int y) const;

@@ -3,7 +3,6 @@
 #include "Components/Components.h"
 #include "Spatial/WorldGrid.h"
 #include "Spatial/Conversions.h"
-#include "Events/Events.h"
 
 
 void drft::system::WorldGridResolver::init()
