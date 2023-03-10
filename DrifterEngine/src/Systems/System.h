@@ -13,7 +13,8 @@ namespace drft::system
 		OnValidation,
 		AllUpdate,
 		OnRender,
-		AllPhases
+		AllPhases,
+		None
 	};
 
 
@@ -35,7 +36,7 @@ namespace drft::system
 	protected:
 		friend class SystemScheduler; // SystemScheduler needs phase
 		entt::registry* registry = nullptr;
-		Phase phase = Phase::Reactive;
+		Phase phase = Phase::None;
 	};
 
 } // namespace drft::system

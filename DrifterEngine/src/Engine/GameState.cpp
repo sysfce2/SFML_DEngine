@@ -5,15 +5,16 @@
 #include "Spatial/Conversions.h"
 
 #include "Systems/SystemScheduler.h"
-#include "Systems/Active/TileRenderer.h"
-#include "Systems/Active/EntityRenderer.h"
-#include "Systems/Active/RealityBubble.h"
-#include "Systems/Active/PlayerInput.h"
-#include "Systems/Active/Camera.h"
-#include "Systems/Active/ChunkManager.h"
-#include "Systems/Active/TurnManager.h"
-#include "Systems/Active/DamageSystem.h"
-#include "Systems/Reactive/WorldGridResolver.h"
+#include "Systems/Core/TileRenderer.h"
+#include "Systems/Core/EntityRenderer.h"
+#include "Systems/Core/RealityBubble.h"
+#include "Systems/Core/PlayerInput.h"
+#include "Systems/Core/Camera.h"
+#include "Systems/Core/ChunkManager.h"
+#include "Systems/Core/TurnManager.h"
+#include "Systems/Core/WorldGridResolver.h"
+#include "Systems/Gameplay/DamageSystem.h"
+#include "Systems/Gameplay/MovementSystem.h"
 
 #include "Components/Components.h"
 #include "Components/Tags.h"
@@ -103,6 +104,7 @@ void drft::GameState::importSystems()
 	_systems->add(system::PlayerInput());
 	_systems->add(system::ChunkManager());
 	_systems->add(system::DamageSystem());
+	_systems->add(system::MovementSystem());
 
 	_systems->initAll();
 }

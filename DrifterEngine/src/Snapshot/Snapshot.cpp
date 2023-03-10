@@ -42,7 +42,7 @@ namespace snapshot {
 		for (auto [id, storage] : h.storage())
 		{
 			auto refl_comp = ComponentReflection{ storage.type() };
-			auto serializable = entt::resolve(storage.type()).prop(SERIALIZABLE_TAG);
+			auto serializable = entt::resolve(storage.type()).prop(entt::hashed_string("serialize"));
 			if (refl_comp && serializable)
 			{
 				e_serial.components.push_back(Handle{ refl_comp.get(h) });

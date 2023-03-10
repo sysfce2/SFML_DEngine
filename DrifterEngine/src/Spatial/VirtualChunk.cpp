@@ -31,7 +31,7 @@ ioStatus drft::spatial::VirtualChunk::build(entt::registry& reg)
 	auto origin = toTileSpace(_coordinate);
 	auto bounds = sf::Vector2i{ CHUNK_WIDTH, CHUNK_HEIGHT };
 	util::buildMany("Tree", 200, { origin.x, origin.y, bounds.x, bounds.y }, reg);
-	util::buildMany("NPC", 10, { origin.x, origin.y, bounds.x, bounds.y }, reg);
+	//util::buildMany("NPC", 10, { origin.x, origin.y, bounds.x, bounds.y }, reg);
 	
 	setState(ChunkState::Built);
 

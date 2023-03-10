@@ -16,11 +16,11 @@ namespace drft::system
 	public:
 		ActorQueue(entt::registry& registry);
 		void refresh(std::set<entt::entity>& currentEntities);
-		void rotate();
+		component::Actor& next();
+		entt::entity front() const;
 		void tick();
-
+		void printQueue() const;
 		void setSentinel(entt::entity sentinel);
-		component::Actor& getCurrentActor() const;
 		void remove(entt::entity);
 	private:
 		entt::registry& registry;
@@ -34,7 +34,7 @@ namespace drft::system
 		TurnManager()
 			: _timeKeeper(entt::null)
 		{
-			phase = Phase::OnUpdate;
+			phase = Phase::OnPreUpdate;
 		}
 
 		virtual void init() override;
@@ -42,7 +42,6 @@ namespace drft::system
 
 	private:
 		void onActorRemove(entt::registry& registry, entt::entity entity);
-		float act(component::Actor& actor);
 
 	private:
 		std::unique_ptr<ActorQueue> _actorQueue;

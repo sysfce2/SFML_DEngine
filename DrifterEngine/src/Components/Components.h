@@ -1,6 +1,4 @@
 #pragma once
-#include "Actions/Action.h"
-#include "Actions/ActionBuffer.h"
 
 namespace component
 {
@@ -55,9 +53,7 @@ namespace component
 
 	// Represents a player
 	struct Player
-	{
-		drft::action::ActionBuffer actionBuffer;
-	};
+	{};
 
 	// Represents an AI
 	struct AI
@@ -70,4 +66,25 @@ namespace component
 		int amount = 0;
 	};
 
-} // namespace component
+	struct SpendActionPoints
+	{
+		int amount = 0;
+	};
+
+}
+
+namespace component::action
+{
+	struct Move
+	{
+		sf::Vector2i direction = { 0,0 };
+	};
+
+	struct LaunchAttack
+	{
+		sf::Vector2i direction = { 0,0 };
+	};
+
+	struct Wait
+	{};
+}

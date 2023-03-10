@@ -17,12 +17,12 @@ namespace drft::system
 	class ActionMap
 	{
 	public:
-		// Adds an action to the map. new in a ptr, don't be scared.
-		void addAction(sf::Keyboard::Key key, action::Action* action);
-		std::unique_ptr<action::Action> operator[](sf::Keyboard::Key key);
-		std::unordered_map<sf::Keyboard::Key, std::unique_ptr<action::Action>>& iterate();
+		using emplaceFunc = std::function<void(entt::handle)>;
+		void addAction(sf::Keyboard::Key key, emplaceFunc);
+		emplaceFunc operator[](sf::Keyboard::Key key);
+		std::unordered_map<sf::Keyboard::Key, emplaceFunc>& iterate();
 	private:
-		std::unordered_map<sf::Keyboard::Key, std::unique_ptr<action::Action>> _map;
+		std::unordered_map<sf::Keyboard::Key, emplaceFunc> _map;
 	};
 
 	class PlayerInput : public System
@@ -39,6 +39,7 @@ namespace drft::system
 	private:
 		std::unordered_map<sf::Keyboard::Key, KeyState> _keyState;
 		ActionMap _actionMap;
+		std::unordered_map<entt::entity, std::queue<ActionMap::emplaceFunc>> _bufferedActions;
 		float _refractoryPeriod = 0.05f; // sec
 		float _holdTime = 0.4f; // sec
 	};

@@ -36,7 +36,7 @@
     <ClCompile Include="src\Utility\SpriteIndexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\EntityRenderer.cpp">
+    <ClCompile Include="src\Systems\Core\EntityRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Systems\System.cpp">
@@ -60,31 +60,22 @@
     <ClCompile Include="src\Spatial\Cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Reactive\WorldGridResolver.cpp">
+    <ClCompile Include="src\Systems\Core\WorldGridResolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\PlayerInput.cpp">
+    <ClCompile Include="src\Systems\Core\PlayerInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\Camera.cpp">
+    <ClCompile Include="src\Systems\Core\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\DebugInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\ChunkManager.cpp">
+    <ClCompile Include="src\Systems\Core\ChunkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\TileRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Actions\Action.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Actions\Move.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Actions\Attack.cpp">
+    <ClCompile Include="src\Systems\Core\TileRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Factory\EntityFactory.cpp">
@@ -93,10 +84,10 @@
     <ClCompile Include="src\Components\Meta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\TurnManager.cpp">
+    <ClCompile Include="src\Systems\Core\TurnManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\RealityBubble.cpp">
+    <ClCompile Include="src\Systems\Core\RealityBubble.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Spatial\Conversions.cpp">
@@ -109,15 +100,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Systems\PresetViews\PresetViews.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Actions\ActionBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Systems\Input\Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Actions\Wait.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Components\Tags.cpp">
@@ -141,7 +123,10 @@
     <ClCompile Include="src\Spatial\VirtualChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\Active\DamageSystem.cpp">
+    <ClCompile Include="src\Systems\Gameplay\DamageSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\Gameplay\MovementSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,7 +155,7 @@
     <ClInclude Include="src\Utility\SpriteIndexer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\EntityRenderer.h">
+    <ClInclude Include="src\Systems\Core\EntityRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\System.h">
@@ -197,31 +182,22 @@
     <ClInclude Include="src\Spatial\Cell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Reactive\WorldGridResolver.h">
+    <ClInclude Include="src\Systems\Core\WorldGridResolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\PlayerInput.h">
+    <ClInclude Include="src\Systems\Core\PlayerInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\Camera.h">
+    <ClInclude Include="src\Systems\Core\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility\DebugInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\ChunkManager.h">
+    <ClInclude Include="src\Systems\Core\ChunkManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\TileRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Actions\Action.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Actions\Move.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Actions\Attack.h">
+    <ClInclude Include="src\Systems\Core\TileRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Factory\EntityFactory.h">
@@ -704,10 +680,10 @@
     <ClInclude Include="deps\cereal\version.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\TurnManager.h">
+    <ClInclude Include="src\Systems\Core\TurnManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\RealityBubble.h">
+    <ClInclude Include="src\Systems\Core\RealityBubble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Spatial\Conversions.h">
@@ -720,15 +696,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\PresetViews\PresetViews.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Actions\ActionBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Systems\Input\Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Actions\Wait.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\Tags.h">
@@ -755,7 +722,10 @@
     <ClInclude Include="src\Spatial\VirtualChunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\Active\DamageSystem.h">
+    <ClInclude Include="src\Systems\Gameplay\DamageSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\Gameplay\MovementSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
