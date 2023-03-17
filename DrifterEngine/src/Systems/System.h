@@ -18,7 +18,6 @@ namespace drft::system
 		virtual void render(sf::RenderTarget& target);
 
 	protected:
-		friend class SystemScheduler; // SystemScheduler needs phase
 		entt::registry* registry = nullptr;
 	};
 

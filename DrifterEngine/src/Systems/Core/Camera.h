@@ -8,9 +8,6 @@ namespace drft::system
 	public:
 		virtual void init() override;
 		virtual void update(const float dt) override;
-
-	private:
-		const float _speed = 5.0f;
 	};
 
 }

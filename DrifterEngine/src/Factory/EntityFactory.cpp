@@ -119,7 +119,7 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 	return true;
 }
 
-entt::handle drft::EntityFactory::build(const std::string& name, entt::registry& registry)
+entt::handle drft::EntityFactory::build(const std::string& name, entt::registry& registry) const
 {
 	if (!_prototypes.contains(name))
 	{
@@ -132,7 +132,7 @@ entt::handle drft::EntityFactory::build(const std::string& name, entt::registry&
 	{
 		info->prototype = name;
 	}
-	util::copyEntity(newEntity, _prototypes[name], registry);
+	util::copyEntity(newEntity, _prototypes.at(name), registry);
 
 	return entt::handle(registry, newEntity);
 }

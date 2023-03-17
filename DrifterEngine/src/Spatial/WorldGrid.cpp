@@ -5,7 +5,7 @@
 
 using namespace drft::spatial;
 
-void drft::spatial::WorldGrid::placeEntity(const entt::entity& entity, const sf::Vector2i worldPosition, int layer)
+void drft::spatial::WorldGrid::placeEntity(const entt::entity entity, const sf::Vector2i worldPosition, int layer)
 {
 	auto chunkCoordinate = toChunkCoordinate(worldPosition);
 	auto localPosition = toLocalChunkSpace(worldPosition);
@@ -19,7 +19,7 @@ void drft::spatial::WorldGrid::placeEntity(const entt::entity& entity, const sf:
 	_entityPositions[entity] = { worldPosition.x, worldPosition.y, layer };
 }
 
-entt::entity drft::spatial::WorldGrid::removeEntity(const entt::entity& entity)
+entt::entity drft::spatial::WorldGrid::removeEntity(const entt::entity entity)
 {
 	if (entity == entt::null) return entity;
 
@@ -80,12 +80,11 @@ void drft::spatial::WorldGrid::removeChunk(const sf::Vector2i coordinate)
 {
 	if (_chunks.contains({ coordinate.x, coordinate.y }))
 	{
-		_chunks.at({ coordinate.x, coordinate.y })->clear();
 		_chunks.erase( {coordinate.x, coordinate.y} );
 	}
 }
 
-EntityList drft::spatial::WorldGrid::getAllEntities(const sf::Vector2i coordinate)
+EntityList drft::spatial::WorldGrid::getAllEntities(const sf::Vector2i coordinate) const
 {
 	if (_chunks.contains({ coordinate.x, coordinate.y }))
 	{

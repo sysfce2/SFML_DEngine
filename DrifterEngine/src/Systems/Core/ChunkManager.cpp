@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ChunkManager.h"
+#include "Spatial/WorldGrid.h"
 #include "Spatial/Conversions.h"
 #include "Spatial/Helpers.h"
 #include "Components/Components.h"
@@ -108,8 +109,10 @@ void drft::system::ChunkManager::cleanUpChunks(sf::Vector2i newPosition)
 			toDelete.push_back(coord);
 		}
 	}
+	auto& grid = registry->ctx().get<spatial::WorldGrid&>();
 	for (auto pair : toDelete)
 	{
+		grid.removeChunk({ pair.first, pair.second });
 		_chunks.erase(pair);
 		std::cout << "Chunk " << pair.first << "_" << pair.second << " cleaned up." << std::endl;
 	}

@@ -19,10 +19,10 @@ namespace drft::spatial
 		// Entities //
 
 		// Places entity in world tile position.
-		void placeEntity(const entt::entity& entity, const sf::Vector2i tilePosition, int layer);
+		void placeEntity(const entt::entity entity, const sf::Vector2i tilePosition, int layer);
 
 		// Removes entity from given world tile position and returns that entity.
-		entt::entity removeEntity(const entt::entity& entity);
+		entt::entity removeEntity(const entt::entity entity);
 
 		// Moves entity from one world tile position to another and returns if successful.
 		bool moveEntity(const entt::entity, const sf::Vector2i toTilePosition, int layer);
@@ -43,7 +43,7 @@ namespace drft::spatial
 		void removeChunk(const sf::Vector2i coordinate);
 
 		// Returns all entities at the given chunk coordinate.
-		EntityList getAllEntities(const sf::Vector2i coordinate);
+		EntityList getAllEntities(const sf::Vector2i coordinate) const;
 
 	private:
 		std::map<std::pair<int, int>, std::unique_ptr<WorldChunk>> _chunks;

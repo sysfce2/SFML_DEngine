@@ -24,7 +24,7 @@ namespace drft::system
 	public:
 		SystemScheduler(entt::registry& registry) : _registry(registry) {}
 
-		void initAll();
+		void initAll() const;
 
 		template <typename T>
 		void add(T&& system, Phase phase)
@@ -36,8 +36,8 @@ namespace drft::system
 			_systems[phase].back()->setRegistry(_registry);
 		}
 
-		void update(const float dt);
-		void render(sf::RenderTarget& target);
+		void update(const float dt) const;
+		void render(sf::RenderTarget& target) const;
 
 	private:
 		using SystemList = std::vector< std::unique_ptr< System > >;

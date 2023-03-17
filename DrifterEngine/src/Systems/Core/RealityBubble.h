@@ -3,8 +3,6 @@
 
 namespace drft::system
 {
-	const int REALITY_RADIUS = 64; // in tiles
-
 	class RealityBubble : public System
 	{
 	public:

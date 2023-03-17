@@ -68,9 +68,9 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg, const char* file
 {
 	if (getState() == ChunkState::ToSave)
 	{
-		auto& grid = reg.ctx().get<spatial::WorldGrid&>();
-		auto entities = grid.getAllEntities(this->_coordinate);
-		grid.removeChunk(this->_coordinate);
+		const auto& grid = reg.ctx().get<spatial::WorldGrid&>();
+		const auto entities = grid.getAllEntities(this->_coordinate);
+
 		if (entities.empty())
 		{
 			std::cout << "No need to save " << toString() << " chunk empty" << std::endl;
@@ -98,7 +98,6 @@ ioStatus drft::spatial::VirtualChunk::save(entt::registry& reg, const char* file
 	}
 	
 	_asyncRegistry.clear();
-	_asyncRegistry.compact();
 
 	setState(ChunkState::Saved);
 
@@ -124,8 +123,10 @@ bool drft::spatial::VirtualChunk::saveChunkToFile(const char* filepath) const
 	using namespace snapshot;
 	std::string fullPath = filepath + this->toString() + ".dat";
 	std::ofstream ofs(fullPath, std::ios::binary | std::ofstream::trunc);
-	cereal::BinaryOutputArchive output{ ofs };
-	Snapshot::save(output, _asyncRegistry);
+	{
+		cereal::BinaryOutputArchive output{ ofs };
+		Snapshot::save(output, _asyncRegistry);
+	}
 
 	return true;
 }

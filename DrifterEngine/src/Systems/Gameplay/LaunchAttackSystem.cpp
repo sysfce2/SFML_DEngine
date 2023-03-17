@@ -4,6 +4,7 @@
 #include "Spatial/Conversions.h"
 #include "Components/Components.h"
 #include "Components/Tags.h"
+#include "Utility/EntityHelpers.h"
 
 void drft::system::LaunchAttackSystem::init()
 {
@@ -25,8 +26,8 @@ void drft::system::LaunchAttackSystem::update(const float dt)
 			registry->emplace_or_replace<component::action::TakeDamage>(target, attack.damage);
 		}
 		
-
-		registry->emplace_or_replace<component::action::SpendPoints>(entity, 100);
+		int actionCost = util::getActionCost({ *registry, entity }, 100, util::ActionType::Act);
+		registry->emplace_or_replace<component::action::SpendPoints>(entity, actionCost);
 		registry->remove<component::action::LaunchAttack>(entity);
 	}
 }

@@ -4,6 +4,7 @@
 #include "Spatial/Conversions.h"
 #include "Components/Components.h"
 #include "Components/Tags.h"
+#include "Utility/EntityHelpers.h"
 
 void drft::system::MovementSystem::init()
 {
@@ -14,7 +15,6 @@ void drft::system::MovementSystem::update(const float dt)
 	auto moveView = registry->view<component::action::Move, component::tag::Active>();
 	for (auto [entity, move] : moveView.each())
 	{
-		// needs a position component - how else could you move?
 		if (!registry->all_of<component::Position>(entity)) {
 			registry->remove<component::action::Move, component::tag::Active >(entity);
 			continue;
@@ -34,7 +34,8 @@ void drft::system::MovementSystem::update(const float dt)
 				}
 			);
 
-			registry->emplace_or_replace<component::action::SpendPoints>(entity, 100);
+			int actionCost = util::getActionCost({ *registry, entity }, 100, util::ActionType::Move);
+			registry->emplace_or_replace<component::action::SpendPoints>(entity, actionCost);
 		}
 		else
 		{
@@ -43,5 +44,12 @@ void drft::system::MovementSystem::update(const float dt)
 
 		// Move should be handled this frame
 		registry->remove<component::action::Move>(entity);
+	}
+
+	auto waitView = registry->view<component::action::Wait, component::tag::Active>();
+	for (auto entity : waitView)
+	{
+		registry->emplace_or_replace<component::action::SpendPoints>(entity, 100);
+		registry->remove<component::action::Wait>(entity);
 	}
 }

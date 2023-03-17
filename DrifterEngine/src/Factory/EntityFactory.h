@@ -15,7 +15,7 @@ namespace drft
 		bool loadPrototypes(std::string JSONfilename, entt::registry& registry);
 
 		// Build a new entity and place into the given registry.
-		entt::handle build(const std::string& name, entt::registry& registry);
+		entt::handle build(const std::string& name, entt::registry& registry) const;
 
 		// Check if the factory has a prototype with the given name.
 		bool has(const std::string& name) const;

@@ -6,6 +6,8 @@
 #include "Spatial/Helpers.h"
 #include "Utility/DebugInfo.h"
 
+static const int REALITY_RADIUS = 64; // in tiles
+
 void drft::system::RealityBubble::init()
 {
 	registry->on_construct<component::Actor>().connect<&RealityBubble::onActorAddOrUpdate>(this);
@@ -61,8 +63,7 @@ void drft::system::RealityBubble::onActorAddOrUpdate(entt::registry& registry, e
 	}
 	else
 	{
-		if (registry.any_of<component::tag::Active>(entity)) return;
-		registry.emplace<component::tag::Active>(entity);
+		registry.emplace_or_replace<component::tag::Active>(entity);
 	}
 }
 

@@ -4,17 +4,19 @@
 #include "Spatial/Conversions.h"
 #include "Engine/State.h"
 
+static const float CAMERA_SPEED = 5.0f;
+
 void drft::system::Camera::init()
 {
 }
 
 void drft::system::Camera::update(const float dt)
 {
-	auto&& cameraView = registry->view<component::Camera, component::Position>(entt::exclude<component::Prototype>);
+	auto cameraView = registry->view<component::Camera, component::Position>(entt::exclude<component::Prototype>);
 
 	for (auto [entity, camera, pos] : cameraView.each())
 	{
-		auto const & target = registry->try_get<const component::Position>(camera.target);
+		const auto& target = registry->try_get<const component::Position>(camera.target);
 
 		if (!target) continue;
 
@@ -24,7 +26,7 @@ void drft::system::Camera::update(const float dt)
 		}
 		else
 		{
-			pos.position.x = std::lerp(pos.position.x, target->position.x, _speed * dt);
+			pos.position.x = std::lerp(pos.position.x, target->position.x, CAMERA_SPEED * dt);
 		}
 		if (std::abs(pos.position.y - target->position.y) < 0.5f)
 		{
@@ -32,7 +34,7 @@ void drft::system::Camera::update(const float dt)
 		}
 		else
 		{
-			pos.position.y = std::lerp(pos.position.y, target->position.y, _speed * dt);
+			pos.position.y = std::lerp(pos.position.y, target->position.y, CAMERA_SPEED * dt);
 		}
 
 		camera.viewport.left = pos.position.x - (camera.viewport.width / 2);

@@ -36,7 +36,6 @@ void drft::system::WorldGridResolver::onPositionRemove(entt::registry& registry,
 {
 	if (registry.any_of<component::Camera, component::Prototype>(entity)) return;
 
-	auto& pos = registry.get<component::Position>(entity);
 	auto& grid = registry.ctx().get<spatial::WorldGrid&>();
 
 	grid.removeEntity(entity);
