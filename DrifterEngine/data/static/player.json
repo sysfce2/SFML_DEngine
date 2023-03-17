@@ -18,7 +18,7 @@
           "Name": "Render",
           "Data": {
             "sprite": 1,
-            "color": [ 100, 100, 100 ]
+            "color": [ 120, 120, 120 ]
           }
         },
         {

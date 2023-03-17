@@ -35,7 +35,6 @@ namespace drft
 		void importSystems();
 
 	private:
-		bool _hasStarted = false;
 		entt::registry _registry;
 		std::unique_ptr<system::SystemScheduler> _systems;
 		std::unique_ptr<spatial::WorldGrid> _world;

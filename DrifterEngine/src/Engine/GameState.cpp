@@ -33,11 +33,6 @@ drft::GameState::GameState(State::Context context) : State(context)
 
 void drft::GameState::update(const float dt)
 {
-	if (!_hasStarted)
-	{
-		std::cout << "Starting Gamestate" << std::endl;
-		_hasStarted = true;
-	}
 	_systems->update(dt);
 }
 
@@ -88,6 +83,7 @@ void drft::GameState::init()
 	_registry.emplace<component::Position>(camera, startingPosition, (int)spatial::Layer::Camera);
 	//
 	////////////////////////////////////////////////////////////////
+	std::cout << "Starting Gamestate" << std::endl;
 }
 
 void drft::GameState::importSystems()
