@@ -61,7 +61,6 @@ void drft::GameState::init()
 	_dispatcher = std::make_unique<entt::dispatcher>();
 
 	_registry.ctx().emplace<spatial::WorldGrid&>(*_world);
-	_registry.ctx().emplace<util::DebugInfo&>(getContext().debugInfo);
 	_registry.ctx().emplace<sf::Texture&>(getContext().textures.get("Sprites"));
 	_registry.ctx().emplace<EntityFactory&>(*_factory);
 	_registry.ctx().emplace<entt::dispatcher&>(*_dispatcher);

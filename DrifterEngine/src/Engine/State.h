@@ -1,6 +1,5 @@
 #pragma once
 #include "Utility/ResourceHolder.h"
-#include "Utility/DebugInfo.h"
 
 namespace drft
 {
@@ -19,8 +18,8 @@ namespace drft
 			using TextureHolder = ResourceHolder<sf::Texture, std::string>;
 			using FontHolder = ResourceHolder<sf::Font, std::string>;
 
-			Context(TextureHolder& textures, FontHolder& fonts, Window window, util::DebugInfo& debugInfo)
-				: textures(textures), fonts(fonts), window(window), debugInfo(debugInfo) {}
+			Context(TextureHolder& textures, FontHolder& fonts, Window window)
+				: textures(textures), fonts(fonts), window(window) {}
 			Context(const Context& c) = default;
 			Context& operator=(const Context&) = default;
 			Context(Context&&) = default;
@@ -29,7 +28,6 @@ namespace drft
 			TextureHolder& textures;
 			FontHolder& fonts;
 			Window window;
-			util::DebugInfo& debugInfo;
 		};
 
 	public:

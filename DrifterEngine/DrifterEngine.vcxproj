@@ -182,7 +182,7 @@
     <ClCompile Include="src\Components\Meta.cpp" />
     <ClCompile Include="src\Factory\EntityFactory.cpp" />
     <ClCompile Include="src\Systems\Core\ChunkManager.cpp" />
-    <ClCompile Include="src\Utility\DebugInfo.cpp" />
+    <ClCompile Include="src\Services\DebugInfo.cpp" />
     <ClCompile Include="src\Systems\Core\PlayerInput.cpp" />
     <ClCompile Include="src\Spatial\Cell.cpp" />
     <ClCompile Include="src\Components\Components.cpp" />
@@ -415,7 +415,7 @@
     <ClInclude Include="src\Components\Meta.h" />
     <ClInclude Include="src\Factory\EntityFactory.h" />
     <ClInclude Include="src\Systems\Core\ChunkManager.h" />
-    <ClInclude Include="src\Utility\DebugInfo.h" />
+    <ClInclude Include="src\Services\DebugInfo.h" />
     <ClInclude Include="src\Systems\Core\PlayerInput.h" />
     <ClInclude Include="src\Spatial\Cell.h" />
     <ClInclude Include="deps\EnTT\entt.h" />

@@ -1,7 +1,6 @@
 #pragma once
 #include "Utility/ResourceHolder.h"
 #include "State.h"
-#include "Utility/DebugInfo.h"
 
 namespace drft
 {
@@ -27,11 +26,6 @@ namespace drft
 		ResourceHolder<sf::Font, std::string> _fonts;
 		std::stack<std::unique_ptr<State> > _states;
 
-		const float _renderRate = 60.0f;
-
-		// Debug
-		util::DebugInfo debugInfo;
-		sf::Text debugText;
 		bool _showDebug;
 	};
 

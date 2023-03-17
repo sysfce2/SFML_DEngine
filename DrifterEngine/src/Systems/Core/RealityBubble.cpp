@@ -4,7 +4,7 @@
 #include "Components/Tags.h"
 #include "Spatial/Conversions.h"
 #include "Spatial/Helpers.h"
-#include "Utility/DebugInfo.h"
+#include "Services/DebugInfo.h"
 
 static const int REALITY_RADIUS = 64; // in tiles
 
@@ -43,10 +43,7 @@ void drft::system::RealityBubble::update(const float)
 		}
 	}
 
-	auto& debug = registry->ctx().get<util::DebugInfo>();
-	std::string dataStr = std::to_string(_activeActors);
-	debug.addString("Actors Active", dataStr);
-
+	service::DebugInfo::instance().putInfo("Actors Active", std::to_string(_activeActors));
 }
 
 void drft::system::RealityBubble::onActorAddOrUpdate(entt::registry& registry, entt::entity entity)

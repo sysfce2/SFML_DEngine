@@ -4,7 +4,7 @@
 #include "Spatial/Conversions.h"
 #include "Spatial/Helpers.h"
 #include "Components/Components.h"
-#include "Utility/DebugInfo.h"
+#include "Services/DebugInfo.h"
 
 using namespace drft::system;
 static constexpr std::string_view CHUNK_SAVE_PATH = ".\\data\\runtime\\chunks\\";
@@ -31,6 +31,7 @@ void drft::system::ChunkManager::update(const float dt)
 	process(_toSave, SAVE);
 
 	cleanUpChunks(newPosition);
+	service::DebugInfo::instance().putInfo("Virtual Chunks", std::to_string(_chunks.size()));
 }
 
 void drft::system::ChunkManager::updateChunkStates(sf::Vector2i newPosition)

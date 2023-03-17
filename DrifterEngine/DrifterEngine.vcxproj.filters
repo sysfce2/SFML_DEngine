@@ -69,7 +69,7 @@
     <ClCompile Include="src\Systems\Core\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\DebugInfo.cpp">
+    <ClCompile Include="src\Services\DebugInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Systems\Core\ChunkManager.cpp">
@@ -194,7 +194,7 @@
     <ClInclude Include="src\Systems\Core\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\DebugInfo.h">
+    <ClInclude Include="src\Services\DebugInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Systems\Core\ChunkManager.h">

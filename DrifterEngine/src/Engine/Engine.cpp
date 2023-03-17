@@ -1,10 +1,14 @@
 #include "pch.h"
 #include "Engine.h"
 #include "GameState.h"
+#include "Services/DebugInfo.h"
 
 using namespace drft;
+constexpr float TARGET_FPS = 60.0f;
 
-drft::Engine::Engine() : _window(sf::VideoMode(960, 540), "Drifter Engine"), _showDebug(false)
+drft::Engine::Engine()
+	: _window(sf::VideoMode(960, 540), "Drifter Engine")
+	, _showDebug(false)
 {
 	initialize();
 }
@@ -24,9 +28,9 @@ void drft::Engine::run()
 void drft::Engine::initialize()
 {
 	loadResources();
-	_states.push(std::make_unique<GameState>(State::Context{ _textures, _fonts, {960, 540}, debugInfo }));
-	debugInfo.addString("FPS", "");
-	debugInfo.addString("dt", "");
+	service::DebugInfo::instance().setFont(_fonts.get("Terminus"));
+	service::DebugInfo::instance().setPosition({ 16,8 });
+	_states.push(std::make_unique<GameState>(State::Context{ _textures, _fonts, {960, 540}}));
 }
 
 void drft::Engine::loadResources()
@@ -69,21 +73,14 @@ void drft::Engine::update(const float dt)
 	{
 		float fps = 1.0f / dt;
 
+		service::DebugInfo::instance().putInfo("FPS", std::to_string(fps));
+		service::DebugInfo::instance().putInfo("dt", std::to_string(dt));
+
 		_states.top()->update(dt);
 		if (_states.top()->getQuit())
 		{
 			_states.top()->endState();
 			_states.pop();
-		}
-		if (_showDebug)
-		{
-			debugText.setFont(_fonts.get("Terminus"));
-			debugText.setFillColor(sf::Color::Yellow);
-			debugText.setPosition({ 16,16 });
-			debugText.setCharacterSize(16);
-			debugInfo.addString("FPS", std::to_string(fps));
-			debugInfo.addString("dt", std::to_string(dt));
-			debugInfo.setStrings(debugText);
 		}
 	}
 	else
@@ -99,13 +96,18 @@ void drft::Engine::render(const float dt)
 	static float dtSinceRender = 0.0f;
 
 	dtSinceRender += dt;
-	if (dtSinceRender >= (1.0f / _renderRate))
+	if (dtSinceRender >= (1.0f / TARGET_FPS))
 	{
 		_window.clear();
 		if (!_states.empty())
+		{
 			_states.top()->render(_window);
+		}
 		if (_showDebug)
-			_window.draw(debugText);
+		{
+			service::DebugInfo::instance().render(_window);
+		}
+			
 		_window.display();
 		dtSinceRender = 0.0f;
 	}
