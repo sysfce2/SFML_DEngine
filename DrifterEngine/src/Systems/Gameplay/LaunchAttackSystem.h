@@ -1,14 +1,17 @@
+#pragma once
 #include "Systems/System.h"
 
 namespace drft::system
 {
-	class DamageSystem : public System
+	class LaunchAttackSystem : public System
 	{
 	public:
 		void init() override;
 		void update(const float dt) override;
 
 	private:
-		void kill(entt::handle entity) const;
+
 	};
 }
+
+

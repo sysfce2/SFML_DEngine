@@ -9,7 +9,7 @@ void drft::system::DamageSystem::init()
 
 void drft::system::DamageSystem::update(const float dt)
 {
-	auto damageView = registry->view<component::Damage>();
+	auto damageView = registry->view<component::action::TakeDamage>();
 
 	for (auto [entity, damage] : damageView.each())
 	{
@@ -19,10 +19,11 @@ void drft::system::DamageSystem::update(const float dt)
 		
 		health->current -= damage.amount;
 		std::cout << "The " << util::getEntityName(handle) << " takes " << damage.amount << " damage!" << std::endl;
-		handle.remove<component::Damage>();
+		handle.remove<component::action::TakeDamage>();
 
 		if (health->current <= 0)
 		{
+			// TODO: add component instead of calling a function - should be handled in a death system 
 			kill(handle);
 		}
 	}
