@@ -10,7 +10,7 @@ std::vector<sf::Vector2i> drft::spatial::getIntPointsInRadius(const sf::Vector2i
 	{
 		for (int x = centerPosition.x - radius; x <= centerPosition.x + radius; ++x)
 		{
-			float distance = std::hypotf((centerPosition.x - x), (centerPosition.y - y));
+			float distance = std::hypotf(static_cast<float>(centerPosition.x - x), static_cast<float>(centerPosition.y - y));
 
 			if (distance < radius)
 			{
@@ -25,7 +25,7 @@ std::vector<sf::Vector2i> drft::spatial::getIntPointsInRadius(const sf::Vector2i
 float drft::spatial::distance(sf::Vector2i pt1, sf::Vector2i pt2)
 {
 	auto delta = pt1 - pt2;
-	return std::hypotf(delta.x, delta.y);
+	return std::hypotf(static_cast<float>(delta.x), static_cast<int>(delta.y));
 }
 
 float drft::spatial::distance(sf::Vector2f pt1, sf::Vector2f pt2)

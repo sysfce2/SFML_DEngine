@@ -41,7 +41,7 @@
 #include <SFML/Window.hpp>
 
 // EnTT
-#include "../deps/EnTT/entt.h"
+#include <EnTT/entt.h>
 
 // Cereal
 #include <cereal/cereal.hpp>
