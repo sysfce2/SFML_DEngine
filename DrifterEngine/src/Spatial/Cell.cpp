@@ -22,14 +22,13 @@ entt::entity drft::spatial::Cell::removeEntity(entt::entity entity, int layer)
 	return result;
 }
 
-std::vector<entt::entity> drft::spatial::Cell::at(int layer) const
+const std::vector<entt::entity>& drft::spatial::Cell::at(int layer) const
 {
 	std::vector<entt::entity> result;
 
 	if (!_entities.contains(layer)) return result;
-	std::copy(_entities.at(layer).begin(), _entities.at(layer).end(), std::back_inserter(result));
 
-	return result;
+	return _entities.at(layer);
 }
 
 bool drft::spatial::Cell::empty()

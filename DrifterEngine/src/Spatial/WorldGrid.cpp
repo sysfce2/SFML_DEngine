@@ -3,6 +3,8 @@
 #include "WorldGrid.h"
 #include "Spatial/Conversions.h"
 
+using namespace drft::spatial;
+
 void drft::spatial::WorldGrid::placeEntity(const entt::entity& entity, const sf::Vector2i worldPosition, int layer)
 {
 	auto chunkCoordinate = toChunkCoordinate(worldPosition);
@@ -61,19 +63,17 @@ const int drft::spatial::WorldGrid::getLayer(const entt::entity entity) const
 	return vec3.z;
 }
 
-std::vector<entt::entity> drft::spatial::WorldGrid::entitiesAt(const sf::Vector2i worldPosition, const int layer)
+const EntityList drft::spatial::WorldGrid::entitiesAt(const sf::Vector2i worldPosition, const int layer) const
 {
-	std::vector<entt::entity> result;
-
 	auto chunkCoordinate = toChunkCoordinate(worldPosition);
 	auto localPosition = toLocalChunkSpace(worldPosition);
 	auto keyablePair = std::make_pair(chunkCoordinate.x, chunkCoordinate.y);
 
-	if (!_chunks.contains(keyablePair)) return result;
+	if (!_chunks.contains(keyablePair)) {
+		return EntityList{};
+	}
 
-	result = _chunks.at(keyablePair)->entitiesAt(localPosition, layer);
-
-	return result;
+	return _chunks.at(keyablePair)->entitiesAt(localPosition, layer);
 }
 
 void drft::spatial::WorldGrid::removeChunk(const sf::Vector2i coordinate)
@@ -85,7 +85,7 @@ void drft::spatial::WorldGrid::removeChunk(const sf::Vector2i coordinate)
 	}
 }
 
-std::vector<entt::entity> drft::spatial::WorldGrid::getAllEntities(const sf::Vector2i coordinate)
+EntityList drft::spatial::WorldGrid::getAllEntities(const sf::Vector2i coordinate)
 {
 	if (_chunks.contains({ coordinate.x, coordinate.y }))
 	{

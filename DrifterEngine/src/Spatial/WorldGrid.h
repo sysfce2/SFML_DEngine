@@ -3,6 +3,8 @@
 
 namespace drft::spatial
 {	
+	using EntityList = std::vector<entt::entity>;
+
 	// Class for single point of access to query/manipulate entity and chunk positions
 	class WorldGrid
 	{
@@ -33,7 +35,7 @@ namespace drft::spatial
 		const int getLayer(const entt::entity entity) const;
 
 		// Returns all entities at the given world tile position.
-		std::vector<entt::entity> entitiesAt(const sf::Vector2i tilePosition, const int layer);
+		const EntityList entitiesAt(const sf::Vector2i tilePosition, const int layer) const;
 
 		// Chunks //
 
@@ -41,7 +43,7 @@ namespace drft::spatial
 		void removeChunk(const sf::Vector2i coordinate);
 
 		// Returns all entities at the given chunk coordinate.
-		std::vector<entt::entity> getAllEntities(const sf::Vector2i coordinate);
+		EntityList getAllEntities(const sf::Vector2i coordinate);
 
 	private:
 		std::map<std::pair<int, int>, std::unique_ptr<WorldChunk>> _chunks;

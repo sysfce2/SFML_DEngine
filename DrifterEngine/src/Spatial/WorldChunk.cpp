@@ -37,15 +37,10 @@ bool drft::spatial::WorldChunk::moveEntity(const entt::entity entity, const sf::
 	return true;
 }
 
-std::vector<entt::entity> drft::spatial::WorldChunk::entitiesAt(sf::Vector2i chunkPosition, int layer) const
+const std::vector<entt::entity>& drft::spatial::WorldChunk::entitiesAt(sf::Vector2i chunkPosition, int layer) const
 {
-	std::vector<entt::entity> result;
-
 	auto& cell = _grid.at(chunkPosition.x, chunkPosition.y);
-
-	result = cell.at(layer);
-
-	return result;
+	return cell.at(layer);;
 }
 
 std::vector<entt::entity> drft::spatial::WorldChunk::getAllEntities()

@@ -17,7 +17,7 @@ namespace drft::spatial
 		entt::entity removeEntity(const entt::entity& entity, const sf::Vector2i chunkPosition, int layer);
 		// Moves entity from one chunk tile position to another and returns if successful.
 		bool moveEntity(const entt::entity, const sf::Vector2i fromChunkPosition, const sf::Vector2i toChunkPosition, int layer);
-		std::vector<entt::entity> entitiesAt(sf::Vector2i chunkPosition, int layer) const;
+		const std::vector<entt::entity>& entitiesAt(sf::Vector2i chunkPosition, int layer) const;
 		std::vector<entt::entity> getAllEntities();
 		// Removes all entities reverting the WorldChunk to its default constructed state.
 		void clear();
