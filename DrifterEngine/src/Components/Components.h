@@ -61,16 +61,6 @@ namespace component
 		std::string protocol = { "random" };
 	};
 
-	struct Damage
-	{
-		int amount = 0;
-	};
-
-	struct SpendActionPoints
-	{
-		int amount = 0;
-	};
-
 }
 
 namespace component::action
@@ -83,8 +73,19 @@ namespace component::action
 	struct LaunchAttack
 	{
 		sf::Vector2i direction = { 0,0 };
+		int damage = 0;
 	};
 
 	struct Wait
 	{};
+
+	struct TakeDamage
+	{
+		int amount = 0;
+	};
+
+	struct SpendPoints
+	{
+		int amount = 0;
+	};
 }
