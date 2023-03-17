@@ -15,6 +15,7 @@
 #include "Systems/Core/WorldGridResolver.h"
 #include "Systems/Gameplay/DamageSystem.h"
 #include "Systems/Gameplay/MovementSystem.h"
+#include "Systems/Gameplay/LaunchAttackSystem.h"
 
 #include "Components/Components.h"
 #include "Components/Tags.h"
@@ -94,17 +95,22 @@ void drft::GameState::importSystems()
 {
 	std::cout << "Importing Systems..." << std::endl;
 
+	using namespace system;
+
 	// Import all systems into game state
-	_systems->add(system::TileRenderer());
-	_systems->add(system::EntityRenderer());
-	_systems->add(system::Camera());
-	_systems->add(system::WorldGridResolver());
-	_systems->add(system::RealityBubble());
-	_systems->add(system::TurnManager());
-	_systems->add(system::PlayerInput());
-	_systems->add(system::ChunkManager());
-	_systems->add(system::DamageSystem());
-	_systems->add(system::MovementSystem());
+	_systems->add(PlayerInput(),		Phase::OnProcessInput);
+	_systems->add(TurnManager(),		Phase::OnPreUpdate);
+
+	_systems->add(DamageSystem(),		Phase::OnUpdate);
+	_systems->add(MovementSystem(),		Phase::OnUpdate);
+	_systems->add(LaunchAttackSystem(), Phase::OnUpdate);
+
+	_systems->add(Camera(),				Phase::OnPostUpdate);
+	_systems->add(ChunkManager(),		Phase::OnPostUpdate);
+	_systems->add(RealityBubble(),		Phase::OnValidation);
+	_systems->add(TileRenderer(),		Phase::OnRender);
+	_systems->add(EntityRenderer(),		Phase::OnRender);
+	_systems->add(WorldGridResolver(),	Phase::Reactive);
 
 	_systems->initAll();
 }

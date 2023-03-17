@@ -6,11 +6,6 @@ namespace drft::system
 	class Camera : public System
 	{
 	public:
-		Camera()
-		{
-			phase = Phase::OnPostUpdate;
-		}
-
 		virtual void init() override;
 		virtual void update(const float dt) override;
 

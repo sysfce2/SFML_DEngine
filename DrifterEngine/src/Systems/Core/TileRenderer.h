@@ -7,11 +7,6 @@ namespace drft::system
 	class TileRenderer : public System
 	{
     public:
-        TileRenderer()
-        {
-            phase = Phase::OnRender;
-        }
-
         virtual void init() override;
         virtual void render(sf::RenderTarget& target) override;
 

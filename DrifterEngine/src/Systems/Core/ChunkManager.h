@@ -17,11 +17,6 @@ namespace drft::system
 	class ChunkManager : public System
 	{
 	public:
-		ChunkManager()
-		{
-			phase = Phase::OnPostUpdate;
-		}
-
 		virtual void init() override;
 		virtual void update(const float dt) override;
 

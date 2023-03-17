@@ -111,6 +111,7 @@ void drft::system::ChunkManager::cleanUpChunks(sf::Vector2i newPosition)
 	for (auto pair : toDelete)
 	{
 		_chunks.erase(pair);
+		std::cout << "Chunk " << pair.first << "_" << pair.second << " cleaned up." << std::endl;
 	}
 }
 

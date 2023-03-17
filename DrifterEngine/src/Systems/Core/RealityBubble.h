@@ -8,10 +8,6 @@ namespace drft::system
 	class RealityBubble : public System
 	{
 	public:
-		RealityBubble()
-		{
-			phase = Phase::OnValidation;
-		}
 		virtual void init() override;
 		virtual void update(const float) override;
 

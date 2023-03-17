@@ -28,11 +28,6 @@ namespace drft::system
 	class PlayerInput : public System
 	{
 	public:
-		PlayerInput()
-		{
-			phase = Phase::OnProcessInput;
-		}
-
 		virtual void init() override;
 		virtual void update(const float dt) override;
 

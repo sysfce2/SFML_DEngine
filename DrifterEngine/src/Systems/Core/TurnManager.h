@@ -31,12 +31,6 @@ namespace drft::system
 	class TurnManager : public System
 	{
 	public:
-		TurnManager()
-			: _timeKeeper(entt::null)
-		{
-			phase = Phase::OnPreUpdate;
-		}
-
 		virtual void init() override;
 		virtual void update(const float dt) override;
 

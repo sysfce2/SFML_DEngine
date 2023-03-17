@@ -7,11 +7,6 @@ namespace drft::system
 	class WorldGridResolver : public System
 	{
 	public:
-		WorldGridResolver()
-		{
-			phase = Phase::Reactive;
-		}
-
 		virtual void init() override;
 
 	private:

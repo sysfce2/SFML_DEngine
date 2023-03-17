@@ -8,11 +8,6 @@ namespace drft::system
     class EntityRenderer : public System
     {
     public:
-        EntityRenderer()
-        {
-            phase = Phase::OnRender;
-        }
-
         virtual void init() override;
         virtual void render(sf::RenderTarget& target) override;
 

@@ -20,11 +20,11 @@ void drft::system::TurnManager::init()
 void drft::system::TurnManager::update(const float)
 {
 	_actorQueue->refresh(_managedEntities);
-	auto spendPointsView = registry->view<component::SpendActionPoints, component::Actor>();
+	auto spendPointsView = registry->view<component::action::SpendPoints, component::Actor>();
 	for (auto [entity, points, actor] : spendPointsView.each())
 	{
 		actor.ap -= points.amount;
-		registry->remove<component::SpendActionPoints>(entity);
+		registry->remove<component::action::SpendPoints>(entity);
 	}
 
 	auto currentActor = registry->get<component::Actor>(_actorQueue->front());

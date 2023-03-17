@@ -2,22 +2,6 @@
 
 namespace drft::system
 {
-	enum class Phase
-	{
-		OnStartUp = -2,
-		Reactive = -1,
-		OnProcessInput,
-		OnPreUpdate,
-		OnUpdate,
-		OnPostUpdate,
-		OnValidation,
-		AllUpdate,
-		OnRender,
-		AllPhases,
-		None
-	};
-
-
 	class System
 	{
 	public:
@@ -36,7 +20,6 @@ namespace drft::system
 	protected:
 		friend class SystemScheduler; // SystemScheduler needs phase
 		entt::registry* registry = nullptr;
-		Phase phase = Phase::None;
 	};
 
 } // namespace drft::system

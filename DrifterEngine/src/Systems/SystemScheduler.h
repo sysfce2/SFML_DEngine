@@ -5,7 +5,20 @@
 // Container class that orders systems by their phase
 namespace drft::system
 {
-
+	enum class Phase
+	{
+		OnStartUp = -2,
+		Reactive = -1,
+		OnProcessInput,
+		OnPreUpdate,
+		OnUpdate,
+		OnPostUpdate,
+		OnValidation,
+		AllUpdate,
+		OnRender,
+		AllPhases,
+		None
+	};
 	class SystemScheduler
 	{
 	public:
@@ -14,13 +27,11 @@ namespace drft::system
 		void initAll();
 
 		template <typename T>
-		void add(T&& system)
+		void add(T&& system, Phase phase)
 		{
 			std::string typeName = typeid(T).name();
 			static_assert(std::is_base_of<System, T>::value, "In SystemScheduler: type is not a system.");
-			assert(system.phase != Phase::None);
 			std::cout << "Adding " << typeName << "..." << std::endl;
-			Phase phase = system.phase;
 			_systems[phase].push_back(std::make_unique<T>());
 			_systems[phase].back()->setRegistry(_registry);
 		}
