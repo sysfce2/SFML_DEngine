@@ -101,7 +101,7 @@ void drft::GameState::importSystems()
 	_systems->add(DamageSystem(),		Phase::OnUpdate + 10);
 
 	_systems->add(Camera(),				Phase::OnPostUpdate);
-	_systems->add(ChunkManager(),		Phase::OnPostUpdate + 5);
+	_systems->add(ChunkManager(),		Phase::OnPostUpdate);
 
 	_systems->add(RealityBubble(),		Phase::OnValidation);
 

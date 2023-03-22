@@ -10,14 +10,14 @@ void drft::system::SystemScheduler::initAll() const
 		{
 			system->init();
 			std::string typeName = typeid(*system).name();
-			std::cout << "Initializing" << typeName << "..." << std::endl;
+			std::cout << "Initializing " << typeName << "..." << std::endl;
 		}
 	}
 }
 
 void drft::system::SystemScheduler::update(const float dt) const
 {
-	for (auto& [system, _] : _systems.at(OnUpdate))
+	for (auto& [system, _] : _systems.at(Phase::OnUpdate))
 	{
 		system->update(dt);
 	}
@@ -25,7 +25,7 @@ void drft::system::SystemScheduler::update(const float dt) const
 
 void drft::system::SystemScheduler::render(sf::RenderTarget& target) const
 {
-	for (auto& [system, _] : _systems.at(OnRender))
+	for (auto& [system, _] : _systems.at(Phase::OnRender))
 	{
 		system->render(target);
 	}

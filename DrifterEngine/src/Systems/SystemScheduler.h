@@ -37,26 +37,26 @@ namespace drft::system
 		{
 			static_assert(std::is_base_of<System, T>::value, "In SystemScheduler: type is not a system.");
 
-			if (priority >= OnRender)
+			if (priority >= static_cast<int>(Phase::OnRender))
 			{
-				_systems[OnRender].push_back({ std::make_unique<T>(), priority });
-				_systems[OnRender].back().system->setRegistry(_registry);
-				std::stable_sort(_systems[OnRender].begin(), _systems[OnRender].end(),
+				_systems[Phase::OnRender].push_back({ std::make_unique<T>(), priority });
+				_systems[Phase::OnRender].back().system->setRegistry(_registry);
+				std::stable_sort(_systems[Phase::OnRender].begin(), _systems[Phase::OnRender].end(),
 					[](const SystemPriorityPair& lhs, const SystemPriorityPair& rhs)
 					{
 						return lhs.priority < rhs.priority;
 					});
 			}
-			else if (priority < OnProcessInput)
+			else if (priority < static_cast<int>(Phase::OnProcessInput))
 			{
-				_systems[Reactive].push_back({ std::make_unique<T>(), priority });
-				_systems[Reactive].back().system->setRegistry(_registry);
+				_systems[Phase::Reactive].push_back({ std::make_unique<T>(), priority });
+				_systems[Phase::Reactive].back().system->setRegistry(_registry);
 			}
 			else
 			{
-				_systems[OnUpdate].push_back({ std::make_unique<T>(), priority });
-				_systems[OnUpdate].back().system->setRegistry(_registry);
-				std::stable_sort(_systems[OnUpdate].begin(), _systems[OnUpdate].end(),
+				_systems[Phase::OnUpdate].push_back({ std::make_unique<T>(), priority });
+				_systems[Phase::OnUpdate].back().system->setRegistry(_registry);
+				std::stable_sort(_systems[Phase::OnUpdate].begin(), _systems[Phase::OnUpdate].end(),
 					[](const SystemPriorityPair& lhs, const SystemPriorityPair& rhs)
 					{
 						return lhs.priority < rhs.priority;
@@ -70,7 +70,7 @@ namespace drft::system
 	private:
 		using SystemList = std::vector< SystemPriorityPair >;
 
-		std::unordered_map<int, SystemList> _systems;
+		std::unordered_map<Phase, SystemList> _systems;
 		entt::registry& _registry;
 	};
 
