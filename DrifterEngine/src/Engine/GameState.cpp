@@ -96,15 +96,18 @@ void drft::GameState::importSystems()
 	_systems->add(PlayerInput(),		Phase::OnProcessInput);
 	_systems->add(TurnManager(),		Phase::OnPreUpdate);
 
-	_systems->add(DamageSystem(),		Phase::OnUpdate);
 	_systems->add(MovementSystem(),		Phase::OnUpdate);
-	_systems->add(LaunchAttackSystem(), Phase::OnUpdate);
+	_systems->add(LaunchAttackSystem(), Phase::OnUpdate + 5);
+	_systems->add(DamageSystem(),		Phase::OnUpdate + 10);
 
 	_systems->add(Camera(),				Phase::OnPostUpdate);
-	_systems->add(ChunkManager(),		Phase::OnPostUpdate);
+	_systems->add(ChunkManager(),		Phase::OnPostUpdate + 5);
+
 	_systems->add(RealityBubble(),		Phase::OnValidation);
+
 	_systems->add(TileRenderer(),		Phase::OnRender);
 	_systems->add(EntityRenderer(),		Phase::OnRender);
+
 	_systems->add(WorldGridResolver(),	Phase::Reactive);
 
 	_systems->initAll();

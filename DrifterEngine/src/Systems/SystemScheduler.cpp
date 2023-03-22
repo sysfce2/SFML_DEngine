@@ -4,30 +4,29 @@
 void drft::system::SystemScheduler::initAll() const
 {
 	std::cout << "Initializing Systems..." << std::endl;
-	for (auto& [phase, systems] : _systems)
+	for (auto& [_, systems] : _systems)
 	{
-		for (auto &sys : systems)
+		for (auto& [system, _] : systems)
 		{
-			sys->init();
+			system->init();
+			std::string typeName = typeid(*system).name();
+			std::cout << "Initializing" << typeName << "..." << std::endl;
 		}
 	}
 }
 
 void drft::system::SystemScheduler::update(const float dt) const
 {
-	for (unsigned int i = (int)Phase::OnProcessInput; i < (int)Phase::AllUpdate; ++i)
+	for (auto& [system, _] : _systems.at(OnUpdate))
 	{
-		for (auto& sys : _systems.at(static_cast<Phase>(i)))
-		{
-			sys->update(dt);
-		}
+		system->update(dt);
 	}
 }
 
 void drft::system::SystemScheduler::render(sf::RenderTarget& target) const
 {
-	for (auto& sys : _systems.at(Phase::OnRender))
+	for (auto& [system, _] : _systems.at(OnRender))
 	{
-		sys->render(target);
+		system->render(target);
 	}
 }

@@ -5,20 +5,26 @@
 // Container class that orders systems by their phase
 namespace drft::system
 {
-	enum class Phase
+	enum Phase : int
 	{
-		OnStartUp = -2,
-		Reactive = -1,
-		OnProcessInput,
-		OnPreUpdate,
-		OnUpdate,
-		OnPostUpdate,
-		OnValidation,
-		AllUpdate,
-		OnRender,
-		AllPhases,
-		None
+		Reactive = -100,
+		OnProcessInput = 0,
+		OnPreUpdate = 100,
+		OnUpdate = 200,
+		OnPostUpdate = 300,
+		OnValidation = 400,
+		OnRender = 500
 	};
+
+	namespace
+	{
+		struct SystemPriorityPair
+		{
+			std::unique_ptr<System> system = nullptr;
+			int priority = 0;
+		};
+	}
+
 	class SystemScheduler
 	{
 	public:
@@ -27,21 +33,44 @@ namespace drft::system
 		void initAll() const;
 
 		template <typename T>
-		void add(T&& system, Phase phase)
+		void add(T&& system, int priority)
 		{
-			std::string typeName = typeid(T).name();
 			static_assert(std::is_base_of<System, T>::value, "In SystemScheduler: type is not a system.");
-			std::cout << "Adding " << typeName << "..." << std::endl;
-			_systems[phase].push_back(std::make_unique<T>());
-			_systems[phase].back()->setRegistry(_registry);
+
+			if (priority >= OnRender)
+			{
+				_systems[OnRender].push_back({ std::make_unique<T>(), priority });
+				_systems[OnRender].back().system->setRegistry(_registry);
+				std::stable_sort(_systems[OnRender].begin(), _systems[OnRender].end(),
+					[](const SystemPriorityPair& lhs, const SystemPriorityPair& rhs)
+					{
+						return lhs.priority < rhs.priority;
+					});
+			}
+			else if (priority < OnProcessInput)
+			{
+				_systems[Reactive].push_back({ std::make_unique<T>(), priority });
+				_systems[Reactive].back().system->setRegistry(_registry);
+			}
+			else
+			{
+				_systems[OnUpdate].push_back({ std::make_unique<T>(), priority });
+				_systems[OnUpdate].back().system->setRegistry(_registry);
+				std::stable_sort(_systems[OnUpdate].begin(), _systems[OnUpdate].end(),
+					[](const SystemPriorityPair& lhs, const SystemPriorityPair& rhs)
+					{
+						return lhs.priority < rhs.priority;
+					});
+			}
 		}
 
 		void update(const float dt) const;
 		void render(sf::RenderTarget& target) const;
 
 	private:
-		using SystemList = std::vector< std::unique_ptr< System > >;
-		std::map<system::Phase, SystemList> _systems;
+		using SystemList = std::vector< SystemPriorityPair >;
+
+		std::unordered_map<int, SystemList> _systems;
 		entt::registry& _registry;
 	};
 
