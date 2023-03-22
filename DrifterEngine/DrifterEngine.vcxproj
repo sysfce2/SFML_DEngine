@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\Core\ArtificialInput.cpp" />
     <ClCompile Include="src\Systems\Gameplay\DeathSystem.cpp" />
     <ClCompile Include="src\Systems\Gameplay\LaunchAttackSystem.cpp" />
     <ClCompile Include="src\Systems\Gameplay\MovementSystem.cpp" />
@@ -242,6 +243,7 @@
     <ClCompile Include="src\Spatial\VirtualChunk.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\Core\ArtificialInput.h" />
     <ClInclude Include="src\Systems\Gameplay\DeathSystem.h" />
     <ClInclude Include="src\Systems\Gameplay\LaunchAttackSystem.h" />
     <ClInclude Include="src\Systems\Gameplay\MovementSystem.h" />

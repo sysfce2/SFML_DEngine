@@ -54,7 +54,7 @@ namespace component
 
 	struct AI
 	{
-		std::string protocol = { "random" };
+		std::vector<std::string> goals;
 	};
 
 }

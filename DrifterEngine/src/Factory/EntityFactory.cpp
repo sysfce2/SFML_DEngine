@@ -2,6 +2,7 @@
 #include "EntityFactory.h"
 #include "Components/Meta.h"
 #include "Utility/CopyEntity.h"
+#include <EnTT/meta/container.hpp>
 #include "../deps/Cereal/external/rapidjson/istreamwrapper.h"
 #include "../deps/Cereal/external/rapidjson/document.h"
 #include "../deps/Cereal/external/rapidjson/stringbuffer.h"
@@ -78,15 +79,15 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 					auto memberName = data.name.GetString();
 					if (data.value.IsArray())
 					{
-						// HACKZZ: Assumes only Vector2f or Color data types represented by array
+						// HACKZZ: Inflexible - assumes certain types in arrays
 						auto arr = data.value.GetArray();
 						int size = arr.Size();
-						if (size == 2)
+						if (size == 2 && arr[0].IsFloat())
 						{
 							sf::Vector2f vec2 = { arr[0].GetFloat(), arr[1].GetFloat() };
 							meta.data(entt::hashed_string(memberName)).set(any, vec2);
 						}
-						else if (size == 3)
+						else if (size == 3 && arr[0].IsInt())
 						{
 							sf::Color col = {
 								static_cast<sf::Uint8>(arr[0].GetInt()),
@@ -94,7 +95,18 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 								static_cast<sf::Uint8>(arr[2].GetInt())
 							};
 							meta.data(entt::hashed_string(memberName)).set(any, col);
-
+						}
+						else if (arr[0].IsString())
+						{
+							std::vector<std::string> strings;
+							for (int i = 0; i < size; ++i)
+							{
+								strings.push_back(arr[i].GetString());
+							}
+							if (meta.data(entt::hashed_string(memberName)).type().is_sequence_container())
+							{
+								meta.data(entt::hashed_string(memberName)).set(any, strings);
+							}
 						}
 					}
 					else if (data.value.IsString())

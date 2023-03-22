@@ -44,7 +44,7 @@ namespace cereal
 	template<class Archive>
 	void serialize(Archive& archive, AI& ai)
 	{
-		archive(ai.protocol);
+		archive(ai.goals);
 	}
 }
 

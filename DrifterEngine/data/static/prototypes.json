@@ -44,7 +44,9 @@
         {
           "Name": "AI",
           "Data": {
-            "protocol": "random"
+            "goals": [
+              "random_move"
+            ]
           }
         }
       ]
@@ -127,7 +129,10 @@
         {
           "Name": "AI",
           "Data": {
-            "protocol": "random"
+            "goals": [
+              "random_move",
+              "kill_target"
+            ]
           }
         },
         {

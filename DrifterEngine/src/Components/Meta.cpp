@@ -46,5 +46,5 @@ void component::Meta::initialize()
 
 	snapshot::reflectComponent<AI, AI_STRING>()
 		.prop("serialize"_hs)
-		.data<&AI::protocol>("protocol"_hs);
+		.data<&AI::goals>("goals"_hs);
 }
