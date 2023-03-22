@@ -14,6 +14,7 @@
 #include "Systems/Core/TurnManager.h"
 #include "Systems/Core/WorldGridResolver.h"
 #include "Systems/Gameplay/DamageSystem.h"
+#include "Systems/Gameplay/DeathSystem.h"
 #include "Systems/Gameplay/MovementSystem.h"
 #include "Systems/Gameplay/LaunchAttackSystem.h"
 
@@ -93,21 +94,18 @@ void drft::GameState::importSystems()
 	using namespace system;
 
 	// Import all systems into game state
+	// Add an offset to adjust execution order of systems
 	_systems->add(PlayerInput(),		Phase::OnProcessInput);
 	_systems->add(TurnManager(),		Phase::OnPreUpdate);
-
 	_systems->add(MovementSystem(),		Phase::OnUpdate);
-	_systems->add(LaunchAttackSystem(), Phase::OnUpdate + 5);
+	_systems->add(LaunchAttackSystem(), Phase::OnUpdate + 10);
 	_systems->add(DamageSystem(),		Phase::OnUpdate + 10);
-
+	_systems->add(DeathSystem(),		Phase::OnUpdate + 15);
 	_systems->add(Camera(),				Phase::OnPostUpdate);
 	_systems->add(ChunkManager(),		Phase::OnPostUpdate);
-
 	_systems->add(RealityBubble(),		Phase::OnValidation);
-
 	_systems->add(TileRenderer(),		Phase::OnRender);
 	_systems->add(EntityRenderer(),		Phase::OnRender);
-
 	_systems->add(WorldGridResolver(),	Phase::Reactive);
 
 	_systems->initAll();

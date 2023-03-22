@@ -13,14 +13,12 @@ namespace component
 		std::string description = { "" };
 	};
 
-	// Position in world space.
 	struct Position
 	{
 		sf::Vector2f position = { 0,0 };
 		int depth = { 0 };
 	};
 
-	// Sprite and color.
 	struct Render
 	{
 		unsigned int sprite = { 0 };
@@ -51,11 +49,9 @@ namespace component
 		int baseDamage = 1;
 	};
 
-	// Represents a player
 	struct Player
 	{};
 
-	// Represents an AI
 	struct AI
 	{
 		std::string protocol = { "random" };
@@ -88,4 +84,7 @@ namespace component::action
 	{
 		int amount = 0;
 	};
+
+	struct Die
+	{};
 }

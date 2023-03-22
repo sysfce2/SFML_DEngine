@@ -12,8 +12,14 @@ void drft::system::LaunchAttackSystem::init()
 
 void drft::system::LaunchAttackSystem::update(const float dt)
 {
-	auto view = registry->view<component::action::LaunchAttack, component::tag::Active>();
-	for (auto [entity, attack] : view.each())
+	auto attackerView = registry->view<component::action::LaunchAttack, component::Attacker, component::tag::Active>();
+	for (auto [entity, attack, attacker] : attackerView.each())
+	{
+		attack.damage += attacker.baseDamage;
+	}
+
+	auto launchAttackView = registry->view<component::action::LaunchAttack, component::tag::Active>();
+	for (auto [entity, attack] : launchAttackView.each())
 	{
 		const auto& grid = registry->ctx().get<spatial::WorldGrid&>();
 		auto& posComp = registry->get<component::Position>(entity);

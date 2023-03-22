@@ -13,7 +13,7 @@ namespace drft::system
 		OnUpdate = 200,
 		OnPostUpdate = 300,
 		OnValidation = 400,
-		OnRender = 500
+		OnRender = 10000
 	};
 
 	namespace

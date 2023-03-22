@@ -12,7 +12,7 @@ void drft::system::TileRenderer::init()
 	{
 		for (int x = 0; x < spatial::CHUNK_WIDTH; ++x)
 		{
-			_spriteBatch.addSprite(3, sf::Color(50, 50, 50, 255), spatial::toWorldSpace({ x,y }));
+			_spriteBatch.addSprite(3, sf::Color(90, 90, 90, 255), spatial::toWorldSpace({ x,y }));
 		}
 	}
 }
