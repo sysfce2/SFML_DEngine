@@ -48,6 +48,12 @@
           "Data": {
             "baseDamage": 2
           }
+        },
+        {
+          "Name": "Faction",
+          "Data": {
+            "name": "good"
+          }
         }
       ]
     }

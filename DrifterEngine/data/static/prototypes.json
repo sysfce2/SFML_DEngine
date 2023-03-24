@@ -129,6 +129,7 @@
         {
           "Name": "AI",
           "Data": {
+            "sightRange": 8,
             "goals": [
               "random_move",
               "kill_target"
@@ -146,6 +147,12 @@
           "Name": "Attacker",
           "Data": {
             "baseDamage": 2
+          }
+        },
+        {
+          "Name": "Faction",
+          "Data": {
+            "name": "bad"
           }
         }
       ]

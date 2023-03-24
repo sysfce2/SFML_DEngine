@@ -167,6 +167,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Random\RandomNumberGenerator.cpp" />
+    <ClCompile Include="src\Systems\Gameplay\FactionSystem.cpp" />
     <ClCompile Include="src\Systems\Core\ArtificialInput.cpp" />
     <ClCompile Include="src\Systems\Gameplay\DeathSystem.cpp" />
     <ClCompile Include="src\Systems\Gameplay\LaunchAttackSystem.cpp" />
@@ -243,6 +245,8 @@
     <ClCompile Include="src\Spatial\VirtualChunk.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Random\RandomNumberGenerator.h" />
+    <ClInclude Include="src\Systems\Gameplay\FactionSystem.h" />
     <ClInclude Include="src\Systems\Core\ArtificialInput.h" />
     <ClInclude Include="src\Systems\Gameplay\DeathSystem.h" />
     <ClInclude Include="src\Systems\Gameplay\LaunchAttackSystem.h" />
