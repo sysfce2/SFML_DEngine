@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GameState.h"
 
+#include "Random/RandomNumberGenerator.h"
+
 #include "Spatial/WorldGrid.h"
 #include "Spatial/Conversions.h"
 
@@ -9,6 +11,7 @@
 #include "Systems/Core/EntityRenderer.h"
 #include "Systems/Core/RealityBubble.h"
 #include "Systems/Core/PlayerInput.h"
+#include "Systems/Core/ArtificialInput.h"
 #include "Systems/Core/Camera.h"
 #include "Systems/Core/ChunkManager.h"
 #include "Systems/Core/TurnManager.h"
@@ -50,6 +53,8 @@ void drft::GameState::endState()
 void drft::GameState::init()
 {
 	std::cout << "Initializing GameState..." << std::endl;
+
+	rng::RandomNumberGenerator::setSeed(rng::generateSeed());
 
 	_systems = std::make_unique<system::SystemScheduler>(_registry);
 	_world = std::make_unique<spatial::WorldGrid>();
@@ -96,6 +101,7 @@ void drft::GameState::importSystems()
 	// Import all systems into game state
 	// Add an offset to adjust execution order of systems
 	_systems->add(PlayerInput(),		Phase::OnProcessInput);
+	_systems->add(ArtificialInput(),	Phase::OnProcessInput);
 	_systems->add(TurnManager(),		Phase::OnPreUpdate);
 	_systems->add(MovementSystem(),		Phase::OnUpdate);
 	_systems->add(LaunchAttackSystem(), Phase::OnUpdate + 10);

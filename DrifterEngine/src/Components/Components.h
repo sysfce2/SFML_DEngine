@@ -54,7 +54,14 @@ namespace component
 
 	struct AI
 	{
-		std::vector<std::string> goals;
+		entt::entity target = entt::null;
+		int sightRange = 0;
+		std::unordered_set<std::string> goals;
+	};
+
+	struct Faction
+	{
+		std::string name;
 	};
 
 }

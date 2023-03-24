@@ -44,7 +44,13 @@ namespace cereal
 	template<class Archive>
 	void serialize(Archive& archive, AI& ai)
 	{
-		archive(ai.goals);
+		archive(ai.sightRange, ai.goals);
+	}
+
+	template<class Archive>
+	void serialize(Archive& archive, Faction& faction)
+	{
+		archive(faction.name);
 	}
 }
 

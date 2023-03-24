@@ -10,5 +10,4 @@ namespace drft::util
 	};
 
 	int getActionCost(const entt::handle entity, int baseCost, ActionType type);
-
 }

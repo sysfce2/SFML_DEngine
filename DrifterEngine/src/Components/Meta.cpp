@@ -46,5 +46,11 @@ void component::Meta::initialize()
 
 	snapshot::reflectComponent<AI, AI_STRING>()
 		.prop("serialize"_hs)
+		.data<&AI::target>("target"_hs)
+		.data<&AI::sightRange>("sightRange"_hs)
 		.data<&AI::goals>("goals"_hs);
+
+	snapshot::reflectComponent<Faction, FACTION_STRING>()
+		.prop("serialize"_hs)
+		.data<&Faction::name>("name"_hs);
 }

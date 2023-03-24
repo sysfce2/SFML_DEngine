@@ -98,12 +98,12 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 						}
 						else if (arr[0].IsString())
 						{
-							std::vector<std::string> strings;
+							std::unordered_set<std::string> strings;
 							for (int i = 0; i < size; ++i)
 							{
-								strings.push_back(arr[i].GetString());
+								strings.insert(arr[i].GetString());
 							}
-							if (meta.data(entt::hashed_string(memberName)).type().is_sequence_container())
+							if (meta.data(entt::hashed_string(memberName)).type().is_associative_container())
 							{
 								meta.data(entt::hashed_string(memberName)).set(any, strings);
 							}
