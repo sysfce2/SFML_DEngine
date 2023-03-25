@@ -16,7 +16,7 @@ void drft::system::MovementSystem::update(const float dt)
 	for (auto [entity, move] : moveView.each())
 	{
 		if (!registry->all_of<component::Position>(entity)) {
-			registry->remove<component::action::Move, component::tag::Active >(entity);
+			registry->remove<component::action::Move>(entity);
 			continue;
 		}
 

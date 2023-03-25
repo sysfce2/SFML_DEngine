@@ -19,10 +19,10 @@ int drft::util::getActionCost(const entt::handle entity, int baseCost, ActionTyp
 		switch (type)
 		{
 		case ActionType::Move:
-			actionCost *= actor->moveSpeed;
+			actionCost *= (1.0f / actor->moveSpeed);
 			break;
 		case ActionType::Act:
-			actionCost *= actor->actSpeed;
+			actionCost *= (1.0f / actor->actSpeed);
 			break;
 		default:
 			break;

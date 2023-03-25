@@ -80,6 +80,12 @@ void drft::GameState::init()
 			pos.position = startingPosition;
 		});
 
+	auto npc = _factory->build("NPC", _registry);
+	npc.patch<component::Position>([](auto& pos)
+		{
+			pos.position = spatial::toWorldSpace({ 40, 32 });
+		});
+
 	// ADD CAMERA ENTITY // 
 	//
 	auto camera = _registry.create();
@@ -100,9 +106,9 @@ void drft::GameState::importSystems()
 
 	// Import all systems into game state
 	// Add an offset to adjust execution order of systems
+	_systems->add(TurnManager(),		Phase::OnPreUpdate);
 	_systems->add(PlayerInput(),		Phase::OnProcessInput);
 	_systems->add(ArtificialInput(),	Phase::OnProcessInput);
-	_systems->add(TurnManager(),		Phase::OnPreUpdate);
 	_systems->add(MovementSystem(),		Phase::OnUpdate);
 	_systems->add(LaunchAttackSystem(), Phase::OnUpdate + 10);
 	_systems->add(DamageSystem(),		Phase::OnUpdate + 10);

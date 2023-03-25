@@ -16,7 +16,7 @@ namespace drft::system
 	public:
 		ActorQueue(entt::registry& registry);
 		void refresh(std::set<entt::entity>& currentEntities);
-		component::Actor& next();
+		void rotate();
 		entt::entity front() const;
 		void tick();
 		void printQueue() const;
@@ -25,7 +25,7 @@ namespace drft::system
 	private:
 		entt::registry& registry;
 		entt::entity _sentinel;
-		std::vector<entt::entity> _queue;
+		std::deque<entt::entity> _queue;
 	};
 
 	class TurnManager : public System
@@ -36,11 +36,16 @@ namespace drft::system
 
 	private:
 		void onActorRemove(entt::registry& registry, entt::entity entity);
+		void processSpentPoints();
+		entt::entity determineCurrentActor();
 
 	private:
 		std::unique_ptr<ActorQueue> _actorQueue;
 		std::set<entt::entity> _managedEntities;
 		entt::entity _timeKeeper;
+
+		entt::entity _currentActor = entt::null;
+		entt::entity _previousActor = entt::null;
 	};
 
 	

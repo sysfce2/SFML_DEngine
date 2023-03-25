@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TestEntities.h"
 #include "Components/Components.h"
+#include "Random/RandomNumberGenerator.h"
 #include "Spatial/Conversions.h"
 #include "Factory/EntityFactory.h"
 
@@ -10,13 +11,13 @@ void drft::util::buildMany(std::string entity, int number, sf::IntRect inArea, e
 
 	for (int i = 0; i < number; ++i)
 	{
-		int x = (std::rand() % inArea.width) + inArea.left;
-		int y = (std::rand() % inArea.height) + inArea.top;
+		int x = rng::RandomNumberGenerator::intInRange(inArea.left, inArea.left + inArea.width);
+		int y = rng::RandomNumberGenerator::intInRange(inArea.top, inArea.top + inArea.height);
 		auto position = spatial::toWorldSpace({ x,y });
 
 		auto tree = factory.build(entity, registry);
 		tree.patch<component::Position>(
-			[&](auto& pos)
+			[&position](auto& pos)
 			{
 				pos.position = position;
 			}

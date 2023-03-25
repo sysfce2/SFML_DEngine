@@ -65,12 +65,12 @@ entt::entity drft::system::ArtificialInput::findTarget(entt::handle entity) cons
 
 void drft::system::ArtificialInput::randomMove(entt::handle entity) const
 {
-	int randx = rng::RandomNumberGenerator::generateInRange(-1l, 1l);
-	int randy = rng::RandomNumberGenerator::generateInRange(-1l, 1l);
+	int randx = rng::RandomNumberGenerator::intInRange(-1, 1);
+	int randy = rng::RandomNumberGenerator::intInRange(-1, 1);
 
 	if (randx == 0 and randy == 0)
 	{
-		entity.emplace<component::action::Wait>(sf::Vector2i(randx, randy));
+		entity.emplace<component::action::Wait>();
 	}
 	else
 	{

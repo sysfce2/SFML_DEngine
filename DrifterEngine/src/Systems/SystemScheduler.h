@@ -8,8 +8,8 @@ namespace drft::system
 	enum Phase : int
 	{
 		Reactive = -100,
-		OnProcessInput = 0,
-		OnPreUpdate = 100,
+		OnPreUpdate = 0,
+		OnProcessInput = 100,
 		OnUpdate = 200,
 		OnPostUpdate = 300,
 		OnValidation = 400,
@@ -47,7 +47,7 @@ namespace drft::system
 						return lhs.priority < rhs.priority;
 					});
 			}
-			else if (priority < static_cast<int>(Phase::OnProcessInput))
+			else if (priority < static_cast<int>(Phase::OnPreUpdate))
 			{
 				_systems[Phase::Reactive].push_back({ std::make_unique<T>(), priority });
 				_systems[Phase::Reactive].back().system->setRegistry(_registry);

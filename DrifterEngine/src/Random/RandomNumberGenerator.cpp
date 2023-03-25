@@ -10,16 +10,18 @@ void RandomNumberGenerator::setSeed(unsigned int seed)
 	_rng.seed(seed);
 }
 
-double RandomNumberGenerator::generateInRange(double min, double max)
+double RandomNumberGenerator::realInRange(double min, double max)
 {
-	static std::uniform_real_distribution<double> dist(min, max);
-	return dist(_rng);
+	using Dist = std::uniform_real_distribution<double>;
+	static Dist dist{};
+	return dist(_rng, Dist::param_type(min, max));
 }
 
-long drft::rng::RandomNumberGenerator::generateInRange(long min, long max)
+int drft::rng::RandomNumberGenerator::intInRange(int min, int max)
 {
-	static std::uniform_int_distribution<long> dist(min, max);
-	return dist(_rng);
+	using Dist = std::uniform_int_distribution<int>;
+	static Dist dist{};
+	return dist(_rng, Dist::param_type(min, max));
 }
 
 unsigned int drft::rng::generateSeed()
