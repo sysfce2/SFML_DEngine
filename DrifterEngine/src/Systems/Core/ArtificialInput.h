@@ -12,6 +12,7 @@ namespace drft::system
 	private:
 		entt::entity findTarget(entt::handle entity) const;
 		void randomMove(entt::handle entity) const;
+		void moveToTarget(entt::handle entity, entt::entity target) const;
 	};
 }
 

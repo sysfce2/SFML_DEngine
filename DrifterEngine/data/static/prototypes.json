@@ -156,6 +156,105 @@
           }
         }
       ]
+    },
+    {
+      "Name": "Zombie",
+      "Inherits": [
+        ""
+      ],
+      "Components": [
+        {
+          "Name": "Info",
+          "Data": {
+            "prototype": "PROTOTYPE",
+            "name": "Zombie",
+            "extendedName": "",
+            "description": "The walking dead."
+          }
+        },
+        {
+          "Name": "Render",
+          "Data": {
+            "sprite": 11,
+            "color": [ 113, 90, 49 ]
+          }
+        },
+        {
+          "Name": "Position",
+          "Data": {
+            "position": [ 0.0, 0.0 ],
+            "depth": 3
+          }
+        },
+        {
+          "Name": "Actor",
+          "Data": {
+            "ap": 0,
+            "moveSpeed": 0.5,
+            "actSpeed": 0.5
+          }
+        },
+        {
+          "Name": "AI",
+          "Data": {
+            "sightRange": 10,
+            "goals": [
+              "random_move",
+              "kill_target"
+            ]
+          }
+        },
+        {
+          "Name": "Health",
+          "Data": {
+            "max": 10,
+            "current": 10
+          }
+        },
+        {
+          "Name": "Attacker",
+          "Data": {
+            "baseDamage": 1
+          }
+        },
+        {
+          "Name": "Faction",
+          "Data": {
+            "name": "bad"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Corpse",
+      "Inherits": [
+        ""
+      ],
+      "Components": [
+        {
+          "Name": "Info",
+          "Data": {
+            "prototype": "PROTOTYPE",
+            "name": "corpse",
+            "extendedName": "",
+            "description": "A corpse"
+          }
+        },
+        {
+          "Name": "Render",
+          "Data": {
+            "sprite": 7,
+            "color": [ 150, 60, 60 ]
+          }
+        },
+        {
+          "Name": "Position",
+          "Data": {
+            "position": [ 0.0, 0.0 ],
+            "depth": 3
+          }
+        }
+      ]
     }
   ]
 }

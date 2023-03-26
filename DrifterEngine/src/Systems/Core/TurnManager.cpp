@@ -32,10 +32,7 @@ void drft::system::TurnManager::update(const float)
 		_currentActor = _actorQueue->front();
 		return;
 	}
-	if (_previousActor != _currentActor)
-	{
-		registry->emplace<component::tag::CurrentActor>(_currentActor);
-	}
+	registry->emplace_or_replace<component::tag::CurrentActor>(_currentActor);
 	_previousActor = _currentActor;
 }
 
@@ -56,7 +53,6 @@ void drft::system::TurnManager::processSpentPoints()
 	for (auto [entity, points, actor] : spendPointsView.each())
 	{
 		actor.ap -= points.amount;
-		std::cout << util::getEntityName({ *registry, entity }) << " spent " << points.amount << "pts" << std::endl;
 		registry->remove<component::action::SpendPoints>(entity);
 	}
 }

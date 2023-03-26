@@ -20,6 +20,7 @@
 #include "Systems/Gameplay/DeathSystem.h"
 #include "Systems/Gameplay/MovementSystem.h"
 #include "Systems/Gameplay/LaunchAttackSystem.h"
+#include "Systems/Gameplay/FactionSystem.h"
 
 #include "Components/Components.h"
 #include "Components/Tags.h"
@@ -80,11 +81,6 @@ void drft::GameState::init()
 			pos.position = startingPosition;
 		});
 
-	auto npc = _factory->build("NPC", _registry);
-	npc.patch<component::Position>([](auto& pos)
-		{
-			pos.position = spatial::toWorldSpace({ 40, 32 });
-		});
 
 	// ADD CAMERA ENTITY // 
 	//
@@ -119,6 +115,7 @@ void drft::GameState::importSystems()
 	_systems->add(TileRenderer(),		Phase::OnRender);
 	_systems->add(EntityRenderer(),		Phase::OnRender);
 	_systems->add(WorldGridResolver(),	Phase::Reactive);
+	_systems->add(FactionSystem(),		Phase::Reactive);
 
 	_systems->initAll();
 }
