@@ -17,7 +17,6 @@ void drft::system::ArtificialInput::update(const float dt)
 	auto view = registry->view<component::AI, const component::Position, component::tag::CurrentActor>();
 	for (auto [entity, ai, myPos] : view.each())
 	{
-
 		ai.target = findTarget({ *registry, entity });
 		if (ai.target != entt::null && ai.goals.contains("kill_target"))
 		{
@@ -69,14 +68,8 @@ void drft::system::ArtificialInput::randomMove(entt::handle entity) const
 	int randx = rng::RandomNumberGenerator::intInRange(-1, 1);
 	int randy = rng::RandomNumberGenerator::intInRange(-1, 1);
 
-	if (randx == 0 and randy == 0)
-	{
-		entity.emplace<component::action::Wait>();
-	}
-	else
-	{
-		entity.emplace<component::action::Move>(sf::Vector2i(randx, randy));
-	}
+
+	entity.emplace<component::action::Move>(sf::Vector2i(randx, randy));
 }
 
 void drft::system::ArtificialInput::moveToTarget(entt::handle entity, entt::entity target) const

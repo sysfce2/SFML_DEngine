@@ -25,8 +25,7 @@ void drft::system::LaunchAttackSystem::update(const float dt)
 		auto& posComp = registry->get<component::Position>(entity);
 		sf::Vector2i targetPosition = spatial::toTileSpace(posComp.position) + attack.direction;
 
-		// TODO: check all depths for entities
-		const auto targets = grid.entitiesAt(targetPosition, posComp.depth);
+		const auto targets = grid.entitiesAt(targetPosition, spatial::Layer::Blocking);
 		for (auto target : targets)
 		{
 			registry->emplace_or_replace<component::action::TakeDamage>(target, attack.damage);

@@ -19,12 +19,18 @@ void drft::system::MovementSystem::update(const float dt)
 			registry->remove<component::action::Move>(entity);
 			continue;
 		}
+		if (move.direction == sf::Vector2i{ 0,0 })
+		{
+			registry->emplace_or_replace<component::action::Wait>(entity);
+			registry->remove<component::action::Move>(entity);
+			continue;
+		}
 
 		const auto& grid = registry->ctx().get<spatial::WorldGrid&>();
 		auto& posComp = registry->get<component::Position>(entity);
 		sf::Vector2i targetPosition = spatial::toTileSpace(posComp.position) + move.direction;
 
-		const auto blockers = grid.entitiesAt(targetPosition, posComp.depth);
+		const auto blockers = grid.entitiesAt(targetPosition, spatial::Layer::Blocking);
 		if (blockers.empty())
 		{
 			registry->patch<component::Position>(entity,

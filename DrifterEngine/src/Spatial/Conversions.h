@@ -12,8 +12,7 @@ namespace drft::spatial
 	{
 		Tile,
 		Item,
-		Prop,
-		Actor,
+		Blocking,
 		Effect,
 		Camera,
 		Total
