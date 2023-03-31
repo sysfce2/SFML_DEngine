@@ -1,56 +1,6 @@
 {
   "Prototypes": [
-    {
-      "Name": "TesterBase1",
-      "Components": [
-        {
-          "Name": "Info",
-          "Data": {
-            "prototype": "PROTOTYPE",
-            "name": "Test",
-            "extendedName": "Tester",
-            "description": "An entity used for unit testing purposes."
-          }
-        }
-      ]
-    },
-    {
-      "Name": "TesterBase2",
-      "Components": [
-      {
-        "Name": "Position",
-        "Data": {
-          "position": [ -30.0, 90.0 ],
-          "depth": 2
-        }
-      }
-      ]
-    },
-    {
-      "Name": "TesterObject",
-      "Inherits": [
-        "TesterBase1",
-        "TesterBase2",
-        "MISTAKE"
-      ],
-      "Components": [
-        {
-          "Name": "Render",
-          "Data": {
-            "sprite": 0,
-            "color": [ 200, 150, 100 ]
-          }
-        },
-        {
-          "Name": "AI",
-          "Data": {
-            "goals": [
-              "random_move"
-            ]
-          }
-        }
-      ]
-    },
+    // Tree
     {
       "Name": "Tree",
       "Inherits": [
@@ -89,6 +39,7 @@
         }
       ]
     },
+    // NPC
     {
       "Name": "NPC",
       "Inherits": [
@@ -157,6 +108,7 @@
         }
       ]
     },
+    // Zombie
     {
       "Name": "Zombie",
       "Inherits": [
@@ -214,7 +166,7 @@
         {
           "Name": "Attacker",
           "Data": {
-            "baseDamage": 1
+            "baseDamage": 5
           }
         },
         {
@@ -225,6 +177,7 @@
         }
       ]
     },
+    // Corpse
     {
       "Name": "Corpse",
       "Inherits": [

@@ -20,7 +20,6 @@ void drft::system::DeathSystem::update(const float dt)
 			{
 				position.position = pos.position;
 			});
-		std::cout << "The " << util::getEntityName({ *registry, entity }) << " is destroyed!" << std::endl;
 		registry->destroy(entity);
 	}
 }

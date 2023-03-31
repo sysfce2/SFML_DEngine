@@ -54,7 +54,6 @@ namespace component
 
 	struct AI
 	{
-		entt::entity target = entt::null;
 		int sightRange = 0;
 		std::unordered_set<std::string> goals;
 	};
@@ -64,6 +63,10 @@ namespace component
 		std::string name;
 	};
 
+	struct Container
+	{
+		std::vector<entt::entity> contents;
+	};
 }
 
 namespace component::action

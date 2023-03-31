@@ -11,7 +11,6 @@ using namespace entt::literals;
 void component::Meta::initialize()
 {
 	// Meta types initialized here. Use the current ones as examples to 'meta' new compenents
-	
 	snapshot::reflectComponent<Info, INFO_STRING>()
 		.prop("serialize"_hs)
 		.data<&Info::prototype>("prototype"_hs)
@@ -46,7 +45,6 @@ void component::Meta::initialize()
 
 	snapshot::reflectComponent<AI, AI_STRING>()
 		.prop("serialize"_hs)
-		.data<&AI::target>("target"_hs)
 		.data<&AI::sightRange>("sightRange"_hs)
 		.data<&AI::goals>("goals"_hs);
 

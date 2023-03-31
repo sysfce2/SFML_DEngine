@@ -31,7 +31,7 @@ bool drft::EntityFactory::loadPrototypes(std::string filename, entt::registry& r
 	}
 	IStreamWrapper isw{ ifs };
 	Document doc{};
-	doc.ParseStream(isw);
+	doc.ParseStream<kParseCommentsFlag>(isw);
 
 	if (!doc.HasMember("Prototypes") || doc.HasParseError())
 	{

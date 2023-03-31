@@ -17,10 +17,10 @@ void drft::system::ArtificialInput::update(const float dt)
 	auto view = registry->view<component::AI, const component::Position, component::tag::CurrentActor>();
 	for (auto [entity, ai, myPos] : view.each())
 	{
-		ai.target = findTarget({ *registry, entity });
-		if (ai.target != entt::null && ai.goals.contains("kill_target"))
+		auto target = findTarget({ *registry, entity });
+		if (target != entt::null && ai.goals.contains("kill_target"))
 		{
-			moveToTarget({ *registry, entity }, ai.target);
+			moveToTarget({ *registry, entity }, target);
 		}
 		else
 		{
